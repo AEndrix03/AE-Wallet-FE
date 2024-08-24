@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="app-name">Wallets</span>
+
+  <span class="spacer"></span>
+  <div class="user-info">
+    <span>User Name</span>
+    <button mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" class="sidenav" [opened]="false">
+    <mat-nav-list>
+      <a mat-list-item (click)="sidenav.close(); routeTo(homeRoute)">Home</a>
+      <a mat-list-item (click)="sidenav.close(); routeTo(walletsRoute)"
+        >Wallets</a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content />
+  </mat-sidenav-content>
+</mat-sidenav-container>
