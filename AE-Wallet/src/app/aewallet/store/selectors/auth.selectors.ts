@@ -1,14 +1,24 @@
 import { createSelector } from '@ngrx/store';
-import { AuthState } from '../models/auth-state.model';
+import { AuthState } from '../models/auth.model';
 
-const selectAuthState = (state: AuthState) => state;
+export const selectAuthState = (state: AuthState) => state;
 
 export const selectIsAuthenticated = createSelector(
   selectAuthState,
-  (authState: AuthState) => authState.user != null
+  (state: AuthState) => state.user != null
 );
 
 export const selectUser = createSelector(
   selectAuthState,
-  (authState: AuthState) => authState.user
+  (state: AuthState) => state.user
+);
+
+export const selectIsLoading = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.loading
+);
+
+export const selectToken = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.token
 );

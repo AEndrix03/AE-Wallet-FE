@@ -1,25 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserDto } from '../../shared/models/user.model';
-import { selectIsAuthenticated, selectUser } from './selectors/auth.selectors';
+import {
+  selectIsAuthenticated,
+  selectIsLoading,
+  selectToken,
+  selectUser,
+} from './selectors/auth.selectors';
 import { Store } from '@ngrx/store';
+import { AuthState } from './models/auth.model';
+import { AuthAction } from './actions/auth.action';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthFacadeService {
+  constructor(private store: Store<AuthState>) {}
 
-  constructor(private store: Store) {
+  selectIsAuthenticated$: Observable<boolean> = this.store.select(
+    selectIsAuthenticated
+  );
+  selectUser$: Observable<UserDto | null> = this.store.select(selectUser);
+  selectIsLoading$: Observable<boolean> = this.store.select(selectIsLoading);
+  selectToken$: Observable<string> = this.store.select(selectToken);
+
+  login(username: string, password: string): void {
+    this.store.dispatch(AuthAction.login({ username, password }));
   }
 
-  selectIsAuthenticated$: Observable<boolean> = this.store.select(selectIsAuthenticated);
-  selectUser$: Observable<UserDto> = this.store.select(selectUser);
-
-  login(user: any): void {
-    this.store.dispatch(login({ user }));
-  }
-
-  logout(): void {
-    this.store.dispatch(logout());
+  getUserInfo(token: string): void {
+    this.store.dispatch(AuthAction.getUserInfo({ token }));
   }
 }

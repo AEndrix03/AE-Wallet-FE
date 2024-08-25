@@ -1,10 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { AuthState } from '../models/auth-state.model';
+import { AuthState } from '../models/auth.model';
 import { AuthAction } from '../actions/auth.action';
 
 export const initialState: AuthState = {
   user: null,
   loading: false,
+  token: '',
 };
 
 const _authReducer = createReducer(
@@ -13,9 +14,14 @@ const _authReducer = createReducer(
     ...state,
     loading: true,
   })),
-  on(AuthAction.loginSuccess, (state, { user }) => ({
-    user,
+  on(AuthAction.loginSuccess, (state, { token }) => ({
+    ...state,
+    token,
     loading: false,
+  })),
+  on(AuthAction.setUserInfo, (state, { user }) => ({
+    ...state,
+    user,
   }))
 );
 
