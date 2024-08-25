@@ -1,0 +1,59 @@
+@import "../../../../styles/variables.scss";
+
+.user-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: $primary;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+.user-name {
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+  padding: 12px;
+  border: 3px solid #f8f8f8;
+  border-radius: 8px;
+}
+
+.user-info-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.buttons {
+  width: 100%;
+  align-self: flex-end;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logout,
+.settings {
+  width: 36px;
+  height: 36px;
+  color: rgb(54, 54, 54);
+  background-color: white;
+  box-shadow: none;
+  //justify-self: end;
+
+  mat-icon {
+    width: 24px;
+    height: 24px;
+  }
+}

@@ -1,1 +1,20 @@
-<p>user-info works!</p>
+<div class="container">
+  <div class="user-info-container">
+    <div class="user-circle" *ngIf="!!user">
+      {{ (user.name.at(0) || "") + (user.surname.at(0) || "") }}
+    </div>
+    <p class="user-name" *ngIf="!!user">
+      {{ (user.name || "") + " " + (user.surname || "") }}
+    </p>
+  </div>
+  <div class="buttons">
+    <button mat-fab class="settings">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <button mat-fab class="logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+    <button mat-button color="accent" *ngIf="!user">Login</button>
+    <button mat-button color="accent" *ngIf="!user">Register</button>
+  </div>
+</div>

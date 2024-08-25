@@ -7,8 +7,7 @@
 
   <span class="spacer"></span>
   <div class="user-info">
-    <span>User Name</span>
-    <button mat-icon-button>
+    <button mat-icon-button [mat-menu-trigger-for]="usermenu">
       <mat-icon>account_circle</mat-icon>
     </button>
   </div>
@@ -28,3 +27,7 @@
     <ng-content />
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-menu #usermenu>
+  <app-user-info [user]="user" />
+</mat-menu>
