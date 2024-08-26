@@ -7,7 +7,23 @@
 
   <span class="spacer"></span>
   <div class="user-info">
-    <button mat-icon-button [mat-menu-trigger-for]="usermenu">
+    <button
+      class="user-circle"
+      mat-icon-button
+      [mat-menu-trigger-for]="usermenu"
+      *ngIf="!!user"
+    >
+      {{
+        (user.name.at(0)?.toUpperCase() || "") +
+          (user.surname.at(0)?.toUpperCase() || "")
+      }}
+    </button>
+    <button
+      mat-icon-button
+      [mat-menu-trigger-for]="usermenu"
+      class="user-info"
+      *ngIf="!user"
+    >
       <mat-icon>account_circle</mat-icon>
     </button>
   </div>

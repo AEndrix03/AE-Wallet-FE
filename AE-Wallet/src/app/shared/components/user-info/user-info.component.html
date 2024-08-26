@@ -1,20 +1,32 @@
 <div class="container">
-  <div class="user-info-container">
-    <div class="user-circle" *ngIf="!!user">
-      {{ (user.name.at(0) || "") + (user.surname.at(0) || "") }}
+  <div class="user-info-container" *ngIf="!!user">
+    <div class="user-circle">
+      {{
+        (user.name.at(0)?.toUpperCase() || "") +
+          (user.surname.at(0)?.toUpperCase() || "")
+      }}
     </div>
-    <p class="user-name" *ngIf="!!user">
+    <p class="user-name">
       {{ (user.name || "") + " " + (user.surname || "") }}
     </p>
   </div>
-  <div class="buttons">
+  <div class="logged-buttons" *ngIf="!!user" (click)="settings.emit()">
     <button mat-fab class="settings">
       <mat-icon>settings</mat-icon>
     </button>
-    <button mat-fab class="logout">
+    <button mat-fab class="logout" (click)="logout.emit()">
       <mat-icon>logout</mat-icon>
     </button>
-    <button mat-button color="accent" *ngIf="!user">Login</button>
-    <button mat-button color="accent" *ngIf="!user">Register</button>
+  </div>
+  <div class="unlogged-buttons" *ngIf="!user">
+    <h2 style="margin: 20px 0">Welcome</h2>
+    <button mat-button class="login" (click)="login.emit()">Login</button>
+    <app-line-centered-text
+      [text]="'or'"
+      [width]="'50px'"
+    ></app-line-centered-text>
+    <button mat-button class="register" (click)="register.emit()">
+      Register
+    </button>
   </div>
 </div>

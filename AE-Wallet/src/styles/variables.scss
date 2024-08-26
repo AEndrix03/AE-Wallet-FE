@@ -3,6 +3,7 @@
 @import "styles";
 
 $primary: mat.get-color-from-palette($primary-palette, 500);
-$secondary: #9c9c9c;
+$secondary: mat.get-color-from-palette($primary-palette, 400);
+$third: mat.get-color-from-palette($primary-palette, 300);
 $accent: mat.get-color-from-palette($accent-palette, 500);
 $warn: mat.get-color-from-palette($warn-palette, 500);

@@ -1,0 +1,40 @@
+.line-with-text {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  margin: 10px 0;
+}
+
+.line-with-text::before,
+.line-with-text::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  width: var(--line-width);
+  background-color: black;
+  margin: 0 12px;
+}
+
+.line-with-text span {
+  font-size: 16px;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.line-with-text {
+  ::before,
+  ::after {
+    border-style: solid;
+  }
+
+  &.dotted::before,
+  &.dotted::after {
+    border-style: dotted;
+  }
+
+  &.dashed::before,
+  &.dashed::after {
+    border-style: dashed;
+  }
+}

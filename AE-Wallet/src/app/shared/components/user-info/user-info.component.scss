@@ -36,11 +36,19 @@
   flex-direction: column;
 }
 
-.buttons {
+.logged-buttons {
   width: 100%;
   align-self: flex-end;
   display: flex;
   justify-content: space-between;
+}
+
+.unlogged-buttons {
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logout,
@@ -56,4 +64,16 @@
     width: 24px;
     height: 24px;
   }
+}
+
+.login {
+  width: 196px;
+  color: white !important;
+  background-color: $secondary;
+}
+
+.register {
+  width: 176px;
+  color: white !important;
+  background-color: $third;
 }

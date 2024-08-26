@@ -1,3 +1,5 @@
+@import "../../../../styles/variables.scss";
+
 .sidenav-container {
   height: 100%;
 }
@@ -8,6 +10,19 @@
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.user-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: $secondary;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .user-info {
