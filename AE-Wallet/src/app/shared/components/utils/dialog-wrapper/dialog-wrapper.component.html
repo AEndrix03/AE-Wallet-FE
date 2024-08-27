@@ -1,0 +1,6 @@
+<ng-template #defaultButtons>
+  <button mat-button (click)="dialogRef?.close()">Cancel</button>
+  <button mat-button [mat-dialog-close]="true">Ok</button>
+</ng-template>
+
+<button mat-raised-button (click)="openDialog()">Open Dialog</button>

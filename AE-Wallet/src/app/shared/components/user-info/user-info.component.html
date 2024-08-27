@@ -19,6 +19,9 @@
     </button>
   </div>
   <div class="unlogged-buttons" *ngIf="!user">
+    <mat-icon class="user-circle" style="background-color: grey !important"
+      >account_circle</mat-icon
+    >
     <h2 style="margin: 20px 0">Welcome</h2>
     <button mat-button class="login" (click)="login.emit()">Login</button>
     <app-line-centered-text

@@ -45,5 +45,5 @@
 </mat-sidenav-container>
 
 <mat-menu #usermenu>
-  <app-user-info [user]="user" />
+  <app-user-info [user]="user" (login)="openLogin()" />
 </mat-menu>
