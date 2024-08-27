@@ -7,5 +7,5 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimationsAsync(), provideStore(), provideEffects()]
+  providers: [provideRouter(routes), provideAnimationsAsync(), provideStore(), provideEffects(), provideAnimationsAsync()]
 };
