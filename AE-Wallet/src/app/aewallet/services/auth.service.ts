@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UriCostants } from '../utils/uri-costants';
 import { UserDto } from '../../shared/models/user.model';
 import { setHttpParams } from '../../shared/utils/http-params';
+import { LoginDto, TokenDto } from '../store/models/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,16 +12,11 @@ import { setHttpParams } from '../../shared/utils/http-params';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<string> {
-    return this.http.post<string>(UriCostants.authPath, { username, password });
+  login(loginDto: LoginDto): Observable<TokenDto> {
+    return this.http.post<TokenDto>(`${UriCostants.authPath}/login`, loginDto);
   }
 
-  getUserInfo(token: string): Observable<UserDto> {
-    let params = new HttpParams();
-    params = setHttpParams(params, { token });
-
-    return this.http.get<UserDto>(`${UriCostants.authPath}/user-info`, {
-      params,
-    });
+  getUserInfo(): Observable<UserDto> {
+    return this.http.get<UserDto>(`${UriCostants.authPath}/user-info`);
   }
 }

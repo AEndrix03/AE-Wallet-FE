@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { Action, createFeature, createReducer, on } from '@ngrx/store';
 import { AuthState } from '../models/auth.model';
 import { AuthAction } from '../actions/auth.action';
 
@@ -7,6 +7,8 @@ export const initialState: AuthState = {
   loading: false,
   token: '',
 };
+
+export const authFeatureKey = 'auth';
 
 const _authReducer = createReducer(
   initialState,

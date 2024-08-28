@@ -1,34 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthAction } from '../actions/auth.action';
-import { map, switchMap } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { AuthState } from '../models/auth.model';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private actions$: Actions, private authService: AuthService) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store<AuthState>,
+    private authService: AuthService
+  ) {}
 
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAction.login),
-      switchMap(({ username, password }) =>
-        this.authService.login(username, password)
+      switchMap(({ mail, password }) =>
+        this.authService.login({ mail, password })
       ),
-      map((token) => AuthAction.loginSuccess({ token }))
+      filter((res) => !!res.token),
+      tap(({ token }) => localStorage.setItem('token', token)),
+      map((token) => AuthAction.loginSuccess(token))
     )
   );
 
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAction.loginSuccess),
-      map(({ token }) => AuthAction.loginSuccess({ token }))
+      map(() => AuthAction.getUserInfo())
     )
   );
 
   getUserInfo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAction.getUserInfo),
-      switchMap(({ token }) => this.authService.getUserInfo(token)),
+      switchMap(() => this.authService.getUserInfo()),
       map((user) => AuthAction.setUserInfo({ user }))
     )
   );

@@ -1,12 +1,12 @@
-import { createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { UserDto } from '../../../shared/models/user.model';
 
 export const AuthAction = createActionGroup({
   source: 'Auth',
   events: {
-    Login: props<{ username: string; password: string }>(),
+    Login: props<{ mail: string; password: string }>(),
     'Login Success': props<{ token: string }>(),
-    'Get User Info': props<{ token: string }>(),
+    'Get User Info': emptyProps(),
     'Set User Info': props<{ user: UserDto }>(),
   },
 });

@@ -10,6 +10,7 @@ import { MaterialModule } from '../../modules/material.module';
 import { DialogWrapperComponent } from '../utils/dialog-wrapper/dialog-wrapper.component';
 import { AuthService } from '../../../aewallet/services/auth.service';
 import { tap } from 'rxjs';
+import { AuthFacadeService } from '../../../aewallet/store/auth-facade.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ import { tap } from 'rxjs';
 export class LoginComponent {
   fg: FormGroup<LoginForm> | null = null;
 
-  constructor(private _fb: FormBuilder, private authService: AuthService) {
+  constructor(private _fb: FormBuilder, private authFacade: AuthFacadeService) {
     this.fg = this._fb.group({
       email: this._fb.control('', {
         validators: [Validators.required, Validators.email],
@@ -32,10 +33,10 @@ export class LoginComponent {
 
   login() {
     if (this.fg?.valid) {
-      this.authService
-        .login(this.fg.value.email || '', this.fg.value.password || '')
-        .pipe(tap((x) => console.log(x)))
-        .subscribe();
+      this.authFacade.login(
+        this.fg.value.email || '',
+        this.fg.value.password || ''
+      );
     }
   }
 

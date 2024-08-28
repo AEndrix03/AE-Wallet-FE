@@ -5,3 +5,12 @@ export interface AuthState {
   loading: boolean;
   token: string;
 }
+
+export interface LoginDto {
+  mail: string;
+  password: string;
+}
+
+export interface TokenDto {
+  token: string;
+}

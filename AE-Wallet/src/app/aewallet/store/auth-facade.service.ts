@@ -24,11 +24,11 @@ export class AuthFacadeService {
   selectIsLoading$: Observable<boolean> = this.store.select(selectIsLoading);
   selectToken$: Observable<string> = this.store.select(selectToken);
 
-  login(username: string, password: string): void {
-    this.store.dispatch(AuthAction.login({ username, password }));
+  login(mail: string, password: string): void {
+    this.store.dispatch(AuthAction.login({ mail, password }));
   }
 
-  getUserInfo(token: string): void {
-    this.store.dispatch(AuthAction.getUserInfo({ token }));
+  getUserInfo(): void {
+    this.store.dispatch(AuthAction.getUserInfo());
   }
 }
