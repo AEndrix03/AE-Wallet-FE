@@ -18,12 +18,7 @@ import { LoginComponent } from '../login/login.component';
   styleUrl: './nav-bar.component.scss',
 })
 export class NavBarComponent {
-  @Input() user: UserDto | null = null; /*{
-    id: 1,
-    name: 'Andrea',
-    surname: 'Redegalli',
-    email: '',
-  };*/
+  @Input() user: UserDto | null = null;
 
   homeRoute: string = 'home';
   walletsRoute: string = 'wallets';

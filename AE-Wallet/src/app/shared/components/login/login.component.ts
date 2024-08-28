@@ -11,6 +11,7 @@ import { DialogWrapperComponent } from '../utils/dialog-wrapper/dialog-wrapper.c
 import { AuthService } from '../../../aewallet/services/auth.service';
 import { tap } from 'rxjs';
 import { AuthFacadeService } from '../../../aewallet/store/auth-facade.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,11 @@ import { AuthFacadeService } from '../../../aewallet/store/auth-facade.service';
 export class LoginComponent {
   fg: FormGroup<LoginForm> | null = null;
 
-  constructor(private _fb: FormBuilder, private authFacade: AuthFacadeService) {
+  constructor(
+    private _fb: FormBuilder,
+    private authFacade: AuthFacadeService,
+    private dialogRef: MatDialogRef<LoginComponent>
+  ) {
     this.fg = this._fb.group({
       email: this._fb.control('', {
         validators: [Validators.required, Validators.email],
@@ -37,6 +42,7 @@ export class LoginComponent {
         this.fg.value.email || '',
         this.fg.value.password || ''
       );
+      this.dialogRef.close();
     }
   }
 
