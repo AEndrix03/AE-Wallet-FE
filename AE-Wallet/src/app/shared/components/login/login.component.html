@@ -1,18 +1,28 @@
-<div class="center-cols" style="gap: 12px">
+<div class="center-cols container" style="gap: 12px">
   <h1>Login</h1>
   <div class="center-cols" style="gap: 8px">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput placeholder="Email" />
+      <input
+        matInput
+        placeholder="Email"
+        type="email"
+        [formControl]="emailFc()"
+      />
       <mat-error>Email is required</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
-      <input matInput placeholder="Password" />
+      <input
+        matInput
+        placeholder="Password"
+        type="password"
+        [formControl]="passwordFc()"
+      />
       <mat-error>Password is required</mat-error>
     </mat-form-field>
   </div>
   <div class="end-row" #dialogButtons>
-    <button mat-raised-button color="primary">Login</button>
+    <button mat-raised-button color="primary" (click)="login()">Login</button>
   </div>
 </div>

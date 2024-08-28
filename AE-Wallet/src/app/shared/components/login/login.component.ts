@@ -7,7 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { MaterialModule } from '../../modules/material.module';
-import { DialogWrapperComponent } from "../utils/dialog-wrapper/dialog-wrapper.component";
+import { DialogWrapperComponent } from '../utils/dialog-wrapper/dialog-wrapper.component';
+import { AuthService } from '../../../aewallet/services/auth.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +21,30 @@ import { DialogWrapperComponent } from "../utils/dialog-wrapper/dialog-wrapper.c
 export class LoginComponent {
   fg: FormGroup<LoginForm> | null = null;
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private authService: AuthService) {
     this.fg = this._fb.group({
       email: this._fb.control('', {
         validators: [Validators.required, Validators.email],
       }),
       password: this._fb.control('', { validators: [Validators.required] }),
     });
+  }
+
+  login() {
+    if (this.fg?.valid) {
+      this.authService
+        .login(this.fg.value.email || '', this.fg.value.password || '')
+        .pipe(tap((x) => console.log(x)))
+        .subscribe();
+    }
+  }
+
+  emailFc(): FormControl<string | null> {
+    return this.fg?.controls.email as FormControl<string | null>;
+  }
+
+  passwordFc(): FormControl<string | null> {
+    return this.fg?.controls.password as FormControl<string | null>;
   }
 }
 

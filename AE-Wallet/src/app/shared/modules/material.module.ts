@@ -8,6 +8,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [],
@@ -20,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   exports: [
     MatToolbarModule,
@@ -30,6 +34,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
 })
 export class MaterialModule {}

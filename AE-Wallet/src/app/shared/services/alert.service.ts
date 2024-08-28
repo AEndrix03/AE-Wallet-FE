@@ -9,7 +9,7 @@ export class AlertService {
 
   openDialog<T>(component: T, data?: any, config?: any): MatDialogRef<any> {
     return this.dialog.open(component as any, {
-      width: '400px',
+      width: '450px',
       data: data,
       ...config,
     });
