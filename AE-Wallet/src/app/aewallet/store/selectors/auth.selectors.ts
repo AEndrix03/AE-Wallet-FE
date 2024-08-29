@@ -18,8 +18,3 @@ export const selectIsLoading = createSelector(
   selectAuthState,
   (state: AuthState) => state.loading
 );
-
-export const selectToken = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.token
-);

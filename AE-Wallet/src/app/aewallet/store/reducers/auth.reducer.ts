@@ -5,7 +5,6 @@ import { AuthAction } from '../actions/auth.action';
 export const initialState: AuthState = {
   user: null,
   loading: false,
-  token: '',
 };
 
 export const authFeatureKey = 'auth';
@@ -16,14 +15,26 @@ const _authReducer = createReducer(
     ...state,
     loading: true,
   })),
-  on(AuthAction.loginSuccess, (state, { token }) => ({
+  on(AuthAction.loginSuccess, (state) => ({
     ...state,
-    token,
     loading: false,
   })),
   on(AuthAction.setUserInfo, (state, { user }) => ({
     ...state,
     user,
+  })),
+  on(AuthAction.refreshToken, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(AuthAction.logout, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(AuthAction.logoutSuccess, (state) => ({
+    ...state,
+    user: null,
+    loading: false,
   }))
 );
 

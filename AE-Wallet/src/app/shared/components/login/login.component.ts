@@ -7,16 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { MaterialModule } from '../../modules/material.module';
-import { DialogWrapperComponent } from '../utils/dialog-wrapper/dialog-wrapper.component';
-import { AuthService } from '../../../aewallet/services/auth.service';
-import { tap } from 'rxjs';
 import { AuthFacadeService } from '../../../aewallet/store/auth-facade.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MaterialModule, DialogWrapperComponent],
+  imports: [MaterialModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -38,7 +35,7 @@ export class LoginComponent {
 
   login() {
     if (this.fg?.valid) {
-      this.authFacade.login(
+      this.authFacade.dispatchLogin(
         this.fg.value.email || '',
         this.fg.value.password || ''
       );

@@ -19,4 +19,8 @@ export class AuthService {
   getUserInfo(): Observable<UserDto> {
     return this.http.get<UserDto>(`${UriCostants.authPath}/user-info`);
   }
+
+  refreshToken(): Observable<TokenDto> {
+    return this.http.get<TokenDto>(`${UriCostants.apiPath}/token`);
+  }
 }

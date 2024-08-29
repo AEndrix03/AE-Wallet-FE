@@ -1,5 +1,6 @@
 import { environment } from '../../environments/environment';
 
 export class UriCostants {
-  public static readonly authPath = `${environment.apiUrl}/auth`;
+  public static readonly apiPath = `${environment.apiUrl}`;
+  public static readonly authPath = `${this.apiPath}/auth`;
 }

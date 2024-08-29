@@ -8,15 +8,12 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AuthEffects {
-  constructor(
-    private actions$: Actions,
-    private store: Store<AuthState>,
-    private authService: AuthService
-  ) {}
+  constructor(private actions$: Actions, private authService: AuthService) {}
 
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAction.login),
+      tap(() => localStorage.removeItem('token')),
       switchMap(({ mail, password }) =>
         this.authService.login({ mail, password })
       ),
@@ -38,6 +35,25 @@ export class AuthEffects {
       ofType(AuthAction.getUserInfo),
       switchMap(() => this.authService.getUserInfo()),
       map((user) => AuthAction.setUserInfo({ user }))
+    )
+  );
+
+  refreshToken$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthAction.refreshToken),
+      filter(() => !!localStorage.getItem('token')),
+      switchMap(() => this.authService.refreshToken()),
+      filter((res) => !!res.token),
+      tap(({ token }) => localStorage.setItem('token', token)),
+      map((token) => AuthAction.loginSuccess(token))
+    )
+  );
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthAction.logout),
+      tap(() => localStorage.removeItem('token')),
+      map(() => AuthAction.logoutSuccess())
     )
   );
 }

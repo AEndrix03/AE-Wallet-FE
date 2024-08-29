@@ -4,7 +4,6 @@ import { UserDto } from '../../shared/models/user.model';
 import {
   selectIsAuthenticated,
   selectIsLoading,
-  selectToken,
   selectUser,
 } from './selectors/auth.selectors';
 import { Store } from '@ngrx/store';
@@ -22,13 +21,20 @@ export class AuthFacadeService {
   );
   selectUser$: Observable<UserDto | null> = this.store.select(selectUser);
   selectIsLoading$: Observable<boolean> = this.store.select(selectIsLoading);
-  selectToken$: Observable<string> = this.store.select(selectToken);
 
-  login(mail: string, password: string): void {
+  dispatchLogin(mail: string, password: string): void {
     this.store.dispatch(AuthAction.login({ mail, password }));
   }
 
-  getUserInfo(): void {
+  dispatchGetUserInfo(): void {
     this.store.dispatch(AuthAction.getUserInfo());
+  }
+
+  dispatchRefreshToken(): void {
+    this.store.dispatch(AuthAction.refreshToken());
+  }
+
+  dispatchLogout(): void {
+    this.store.dispatch(AuthAction.logout());
   }
 }
