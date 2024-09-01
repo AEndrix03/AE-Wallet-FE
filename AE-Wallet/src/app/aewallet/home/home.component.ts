@@ -8,14 +8,8 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavBarComponent, AsyncPipe],
+  imports: [],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
-  selectedUser$: Observable<UserDto | null> = of(null);
-
-  constructor(private authFacade: AuthFacadeService) {
-    this.selectedUser$ = this.authFacade.selectUser$;
-  }
-}
+export class HomeComponent {}
