@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
 import { RouterModule, Routes } from '@angular/router';
+import { WalletsComponent } from './wallets.component';
 
 const subRoutes: Routes = [];
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: WalletsComponent,
     children:
       /*{ path: 'dashboard', component: HomeDashboardComponent },
       { path: 'detail/:id', component: HomeDetailComponent }*/
@@ -21,4 +21,4 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AEWalletModule {}
+export class WalletsModule {}

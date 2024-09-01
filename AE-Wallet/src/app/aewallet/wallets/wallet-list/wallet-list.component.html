@@ -1,0 +1,22 @@
+<div class="container">
+  <h2>Wallets</h2>
+  <div style="display: flex; flex-direction: row; flex-wrap: nowrap; gap: 12px">
+    <div *ngFor="let wallet of wallets">
+      <app-wallet-card [wallet]="wallet"></app-wallet-card>
+    </div>
+    <div>
+      <mat-card>
+        <mat-card-content>
+          <button
+            mat-fab
+            color="primary"
+            (click)="createWallet()"
+            class="create"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

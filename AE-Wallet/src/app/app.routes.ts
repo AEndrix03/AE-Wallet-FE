@@ -11,7 +11,12 @@ export const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./aewallet/aewallet.module').then((m) => m.AEWalletModule),
+      import('./aewallet/home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'wallets',
+    loadChildren: () =>
+      import('./aewallet/wallets/wallets.module').then((m) => m.WalletsModule),
   },
   {
     path: 'not-found',

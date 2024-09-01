@@ -1,0 +1,26 @@
+<mat-card>
+  <div>
+    <mat-card-header>
+      <mat-card-title
+        class="roundbg"
+        [ngStyle]="{
+          '--header-color': wallet?.headerColor,
+          '--header-bg-color': wallet?.headerBackgroundColor
+        }"
+      >
+        <h3>{{ wallet?.name }}</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="description">
+      <p>{{ wallet?.description }}</p>
+    </mat-card-content>
+  </div>
+  <mat-card-actions>
+    <button mat-fab color="primary" (click)="open(wallet?.id || -1)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-fab color="warn" (click)="delete(wallet?.id || -1)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
