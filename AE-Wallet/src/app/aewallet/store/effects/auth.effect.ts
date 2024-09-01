@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthAction } from '../actions/auth.action';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { filter, interval, map, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { AuthState } from '../models/auth.model';
 import { Store } from '@ngrx/store';
@@ -42,9 +42,13 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthAction.refreshToken),
       filter(() => !!localStorage.getItem('token')),
-      switchMap(() => this.authService.refreshToken()),
-      filter((res) => !!res.token),
-      tap(({ token }) => localStorage.setItem('token', token)),
+      switchMap(() =>
+        interval(300000).pipe(
+          switchMap(() => this.authService.refreshToken()),
+          filter((res) => !!res.token),
+          tap(({ token }) => localStorage.setItem('token', token))
+        )
+      ),
       map((token) => AuthAction.loginSuccess(token))
     )
   );
