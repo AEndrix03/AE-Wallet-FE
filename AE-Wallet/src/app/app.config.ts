@@ -17,6 +17,11 @@ import {
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AuthEffects } from './aewallet/store/effects/auth.effect';
 import { authInterceptor } from './shared/services/interceptors/auth-interceptor';
+import {
+  walletReducer,
+  walletsFeatureKey,
+} from './aewallet/store/reducers/wallets.reducer';
+import { WalletEffects } from './aewallet/store/effects/wallets.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,5 +35,7 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideState(authFeatureKey, authReducer),
     provideEffects(AuthEffects),
+    provideState(walletsFeatureKey, walletReducer),
+    provideEffects(WalletEffects),
   ],
 };

@@ -1,9 +1,9 @@
-import { UserDto } from '../../../shared/models/user.model';
-
-/*export interface AuthState {
-  user: UserDto | null;
+export interface WalletsState {
+  allWallets: WalletDto[];
+  selectedWallet: WalletDto | null;
+  patchedWallet: WalletDto | null;
   loading: boolean;
-}*/
+}
 
 export interface WalletDto {
   id: number;

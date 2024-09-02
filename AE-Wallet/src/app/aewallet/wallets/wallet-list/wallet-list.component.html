@@ -1,8 +1,12 @@
 <div class="container">
   <h2>Wallets</h2>
-  <div style="display: flex; flex-direction: row; flex-wrap: nowrap; gap: 12px">
+  <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 12px">
     <div *ngFor="let wallet of wallets">
-      <app-wallet-card [wallet]="wallet"></app-wallet-card>
+      <app-wallet-card
+        [wallet]="wallet"
+        (openWallet)="openWallet.emit(wallet?.id)"
+        (deleteWallet)="deleteWallet.emit(wallet?.id)"
+      ></app-wallet-card>
     </div>
     <div>
       <mat-card>
@@ -10,7 +14,7 @@
           <button
             mat-fab
             color="primary"
-            (click)="createWallet()"
+            (click)="createWallet.emit()"
             class="create"
           >
             <mat-icon>add</mat-icon>
