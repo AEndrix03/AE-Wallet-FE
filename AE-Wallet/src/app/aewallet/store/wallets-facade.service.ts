@@ -29,4 +29,8 @@ export class AuthFacadeService {
   dispatchEditWallet(walletId: number): void {
     this.store.dispatch(WalletAction.editWallet({ walletId }));
   }
+
+  dispatchCreateWallet(): void {
+    this.store.dispatch(WalletAction.createWallet());
+  }
 }

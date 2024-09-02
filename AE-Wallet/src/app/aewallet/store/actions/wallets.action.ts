@@ -8,8 +8,6 @@ export const WalletAction = createActionGroup({
     'Loaded All Wallets': props<{ wallets: WalletDto[] }>(),
     'Edit Wallet': props<{ walletId: number }>(),
     'Edited Wallet': props<{ wallet: WalletDto }>(),
-    'Delete Wallet': props<{ walletId: number }>(),
-    'Deleted Wallet': emptyProps(),
     'Create Wallet': emptyProps(),
     'Created Wallet': props<{ wallet: WalletDto }>(),
   },
