@@ -12,3 +12,14 @@ export interface WalletDto {
   headerColor: string;
   headerBackgroundColor: string;
 }
+
+export interface WalletCreateDto {
+  name: string;
+  description: string;
+  headerColor: string;
+  headerBackgroundColor: string;
+}
+
+export interface WalletUpdateDto extends WalletCreateDto {
+  id: number;
+}

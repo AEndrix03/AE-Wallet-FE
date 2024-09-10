@@ -1,1 +1,4 @@
-<app-wallet-list [wallets]="selectedWallets$ | async"></app-wallet-list>
+<app-wallet-list
+  [wallets]="selectedWallets$ | async"
+  (openWallet)="openWallet($event)"
+></app-wallet-list>
