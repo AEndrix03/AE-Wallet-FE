@@ -25,6 +25,7 @@
     "@ngrx/operators": "^18.0.0",
     "@ngrx/store": "^18.0.2",
     "@ngrx/store-devtools": "^18.0.2",
+    "ngx-color-picker": "^17.0.0",
     "redux-devtools-extension": "^2.13.9",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

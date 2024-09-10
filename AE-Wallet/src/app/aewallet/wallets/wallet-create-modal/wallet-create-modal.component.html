@@ -1,0 +1,44 @@
+<div class="center-cols container" style="gap: 12px">
+  <h1>Create new Wallet</h1>
+  <div class="center-cols" style="gap: 8px">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput [formControl]="nameFc" />
+      <mat-error>Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput [formControl]="descriptionFc"></textarea>
+    </mat-form-field>
+    <div class="center-cols" style="gap: 5px">
+      <div class="center-row" style="gap: 15px">
+        <h4>Header text color</h4>
+        <input
+          style="width: 30px; height: 30px; cursor: pointer"
+          [(colorPicker)]="selectedColor"
+          [style.background]="selectedColor"
+          readonly
+        />
+      </div>
+      <div class="center-row" style="gap: 15px">
+        <h4>Header background color</h4>
+        <input
+          style="width: 30px; height: 30px; cursor: pointer"
+          [(colorPicker)]="selectedBackgroundColor"
+          [style.background]="selectedBackgroundColor"
+          readonly
+        />
+      </div>
+    </div>
+  </div>
+  <div class="end-row" #dialogButtons>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="close()"
+      [disabled]="fg?.invalid"
+    >
+      Create Wallet
+    </button>
+  </div>
+</div>
