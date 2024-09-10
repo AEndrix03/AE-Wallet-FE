@@ -39,4 +39,8 @@ export class WalletFacadeService {
   dispatchCreateWallet(walletCreate: WalletCreateDto): void {
     this.store.dispatch(WalletAction.createWallet({ walletCreate }));
   }
+
+  dispatchDeleteWallet(walletId: number): void {
+    this.store.dispatch(WalletAction.deleteWallet({ walletId }));
+  }
 }

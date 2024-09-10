@@ -23,4 +23,8 @@ export class WalletService {
   createWallet(walletCreateDto: WalletCreateDto): Observable<number> {
     return this.http.post<number>(`${UriCostants.walletPath}`, walletCreateDto);
   }
+
+  deleteWallet(walletId: number): Observable<number> {
+    return this.http.delete<number>(`${UriCostants.walletPath}/${walletId}`);
+  }
 }

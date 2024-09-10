@@ -34,6 +34,18 @@ export class WalletsComponent implements OnInit {
     this.walletFacade.dispatchEditWallet(walletId);
   }
 
+  deleteWallet(walletId: number) {
+    this.alert
+      .openConfirmDialog({
+        message: 'Are you sure you want to delete this wallet?',
+      })
+      .pipe(
+        take(1),
+        tap(() => this.walletFacade.dispatchDeleteWallet(walletId))
+      )
+      .subscribe();
+  }
+
   createWallet() {
     this.alert
       .openDialog(WalletCreateModalComponent, {})

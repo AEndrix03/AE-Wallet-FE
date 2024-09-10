@@ -35,6 +35,10 @@ const _walletsReducer = createReducer(
   on(WalletAction.createWallet, (state) => ({
     ...state,
     loading: true,
+  })),
+  on(WalletAction.deleteWallet, (state) => ({
+    ...state,
+    loading: true,
   }))
 );
 
