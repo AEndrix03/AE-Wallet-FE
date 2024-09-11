@@ -23,3 +23,12 @@ export interface WalletCreateDto {
 export interface WalletUpdateDto extends WalletCreateDto {
   id: number;
 }
+
+export interface EntryDto {
+  id: number;
+  value: number;
+  title: string;
+  description: string;
+  date: Date;
+  id_wallet: number;
+}
