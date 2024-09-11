@@ -28,7 +28,7 @@ export class WalletEffects {
       switchMap(({ walletId }) => this.walletService.getWallet(walletId)),
       filter((wlt) => !!wlt),
       map((wallet) => WalletAction.editedWallet({ wallet })),
-      tap(() => this.router.navigate(['/wallet/edit']))
+      tap(() => this.router.navigate(['/wallets/edit']))
     )
   );
 

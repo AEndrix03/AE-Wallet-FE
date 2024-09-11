@@ -2,18 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { WalletsComponent } from './wallets.component';
-
-const subRoutes: Routes = [];
+import { WalletDetailComponent } from './wallet-detail/wallet-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: WalletsComponent,
-    children:
-      /*{ path: 'dashboard', component: HomeDashboardComponent },
-      { path: 'detail/:id', component: HomeDetailComponent }*/
-      subRoutes,
   },
+  { path: 'edit', component: WalletDetailComponent },
 ];
 
 @NgModule({
