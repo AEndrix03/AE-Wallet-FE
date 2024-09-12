@@ -1,10 +1,21 @@
 <app-form-container [title]="'Wallet Detail'">
   <div
-    style="display: flex; flex-direction: row; gap: 12px; align-items: center"
+    style="
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    "
   >
     <mat-form-field appearance="outline" style="width: 300px">
       <mat-label>Name</mat-label>
       <input matInput [formControl]="nameFc" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 150px">
+      <mat-label>Balance</mat-label>
+      <input matInput type="number" [(ngModel)]="balance" readonly />
     </mat-form-field>
   </div>
   <div

@@ -5,6 +5,7 @@ export interface WalletsState {
   loading: boolean;
   selectedEntries: EntryDto[];
   patchedEntries: EntryDto[];
+  balance: number;
 }
 
 export interface WalletDto {

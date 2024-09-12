@@ -21,6 +21,7 @@ export class WalletDetailComponent {
   patchedWallet$: Observable<WalletDto> = of(null);
   isLoading$: Observable<boolean> = of(false);
   walletEntries$: Observable<EntryDto[]> = of([]);
+  balance$: Observable<number> = of(0);
 
   constructor(
     private walletFacade: WalletFacadeService,
@@ -31,6 +32,7 @@ export class WalletDetailComponent {
     this.isLoading$ = this.walletFacade.selectIsLoading$;
     this.walletEntries$ = this.walletFacade.selectPatchedEntries$;
     this.walletId$ = this.walletFacade.selectWalletId$;
+    this.balance$ = this.walletFacade.selectBalance$;
   }
 
   addEntry(walletId: number) {

@@ -1,5 +1,8 @@
 <div style="display: flex; gap: 16px; flex-direction: column">
-  <app-wallet-info [wallet]="patchedWallet$ | async"></app-wallet-info>
+  <app-wallet-info
+    [wallet]="patchedWallet$ | async"
+    [balance]="balance$ | async"
+  ></app-wallet-info>
   <app-wallet-entry-table
     [walletId]="walletId$ | async"
     [entries]="walletEntries$ | async"

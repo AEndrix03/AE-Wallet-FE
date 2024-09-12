@@ -84,4 +84,15 @@ export class WalletEffects {
       map((walletId) => WalletAction.loadWalletEntries({ walletId }))
     )
   );
+
+  loadBalance$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WalletAction.loadWalletEntries),
+      switchMap(({ walletId }) =>
+        this.walletService.getWalletBalance(walletId)
+      ),
+      filter((balance) => balance !== null && balance !== undefined),
+      map((balance) => WalletAction.loadedBalance({ balance }))
+    )
+  );
 }

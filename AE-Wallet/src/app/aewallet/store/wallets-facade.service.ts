@@ -9,6 +9,7 @@ import {
 } from './models/wallet.model';
 import {
   selectAllWallets,
+  selectBalance,
   selectIsLoading,
   selectPatchedEntries,
   selectPatchedWallet,
@@ -37,6 +38,7 @@ export class WalletFacadeService {
   selectPatchedEntries$: Observable<EntryDto[]> =
     this.store.select(selectPatchedEntries);
   selectWalletId$: Observable<number> = this.store.select(selectWalletId);
+  selectBalance$: Observable<number> = this.store.select(selectBalance);
 
   dispatchLoadAllWallets(): void {
     this.store.dispatch(WalletAction.loadAllWallets());

@@ -57,4 +57,10 @@ export class WalletService {
       `${UriCostants.walletPath}/entry/${entryId}`
     );
   }
+
+  getWalletBalance(walletId: number): Observable<number> {
+    return this.http.get<number>(
+      `${UriCostants.walletPath}/${walletId}/balance`
+    );
+  }
 }

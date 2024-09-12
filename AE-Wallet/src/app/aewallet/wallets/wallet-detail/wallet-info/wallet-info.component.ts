@@ -14,6 +14,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  NgModel,
   Validators,
 } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -33,6 +34,7 @@ export class WalletInfoComponent
 {
   @Input() wallet: WalletDto;
   @Output() edit = new EventEmitter<WalletDto>();
+  @Input() balance: number = 0;
 
   fg: FormGroup<WalletDetailForm> = null;
 

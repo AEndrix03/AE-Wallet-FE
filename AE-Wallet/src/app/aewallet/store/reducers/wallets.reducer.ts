@@ -9,6 +9,7 @@ export const initialState: WalletsState = {
   loading: false,
   selectedEntries: [],
   patchedEntries: [],
+  balance: 0,
 };
 
 export const walletsFeatureKey = 'wallets';
@@ -51,6 +52,10 @@ const _walletsReducer = createReducer(
     loading: false,
     selectedEntries: [...entries],
     patchedEntries: [...entries],
+  })),
+  on(WalletAction.loadedBalance, (state, { balance }) => ({
+    ...state,
+    balance,
   }))
 );
 

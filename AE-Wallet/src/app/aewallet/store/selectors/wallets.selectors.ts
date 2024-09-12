@@ -39,3 +39,8 @@ export const selectWalletId = createSelector(
   selectSelectedWallet,
   (wallet) => wallet?.id
 );
+
+export const selectBalance = createSelector(
+  selectWalletState,
+  (state: WalletsState) => state.balance
+);
