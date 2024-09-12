@@ -24,3 +24,13 @@ export const selectIsLoading = createSelector(
   selectWalletState,
   (state: WalletsState) => state.loading
 );
+
+export const selectSelectedEntries = createSelector(
+  selectWalletState,
+  (state: WalletsState) => state.selectedEntries || []
+);
+
+export const selectPatchedEntries = createSelector(
+  selectWalletState,
+  (state: WalletsState) => state.patchedEntries || []
+);

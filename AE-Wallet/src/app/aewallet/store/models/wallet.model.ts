@@ -3,6 +3,8 @@ export interface WalletsState {
   selectedWallet: WalletDto | null;
   patchedWallet: WalletDto | null;
   loading: boolean;
+  selectedEntries: EntryDto[];
+  patchedEntries: EntryDto[];
 }
 
 export interface WalletDto {
@@ -30,5 +32,5 @@ export interface EntryDto {
   title: string;
   description: string;
   date: Date;
-  id_wallet: number;
+  walletId: number;
 }

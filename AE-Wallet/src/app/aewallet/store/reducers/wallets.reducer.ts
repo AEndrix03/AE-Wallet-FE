@@ -7,6 +7,8 @@ export const initialState: WalletsState = {
   selectedWallet: null,
   patchedWallet: null,
   loading: false,
+  selectedEntries: [],
+  patchedEntries: [],
 };
 
 export const walletsFeatureKey = 'wallets';
@@ -39,6 +41,16 @@ const _walletsReducer = createReducer(
   on(WalletAction.deleteWallet, (state) => ({
     ...state,
     loading: true,
+  })),
+  on(WalletAction.loadWalletEntries, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(WalletAction.loadedWalletEntries, (state, { entries }) => ({
+    ...state,
+    loading: false,
+    selectedEntries: [...entries],
+    patchedEntries: [...entries],
   }))
 );
 

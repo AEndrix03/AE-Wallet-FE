@@ -14,31 +14,13 @@ import { WalletEntryTableComponent } from '../wallet-entry-table/wallet-entry-ta
   styleUrl: './wallet-detail.component.scss',
 })
 export class WalletDetailComponent {
-  selectedWallet$: Observable<WalletDto> = of(null);
   patchedWallet$: Observable<WalletDto> = of(null);
   isLoading$: Observable<boolean> = of(false);
-  walletEntries$: Observable<EntryDto[]> = of([
-    {
-      id: 0,
-      title: 'Test',
-      description: 'Test',
-      value: 50.56,
-      date: new Date(),
-      id_wallet: 0,
-    },
-    {
-      id: 1,
-      title: 'Test 2',
-      description: 'Test 2',
-      value: 100,
-      date: new Date(),
-      id_wallet: 0,
-    },
-  ]);
+  walletEntries$: Observable<EntryDto[]> = of([]);
 
   constructor(private walletFacade: WalletFacadeService) {
-    this.selectedWallet$ = this.walletFacade.selectSelectedWallet$;
     this.patchedWallet$ = this.walletFacade.selectPatchedWallet$;
     this.isLoading$ = this.walletFacade.selectIsLoading$;
+    this.walletEntries$ = this.walletFacade.selectPatchedEntries$;
   }
 }

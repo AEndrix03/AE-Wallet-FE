@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WalletDto, WalletCreateDto } from '../store/models/wallet.model';
+import {
+  WalletDto,
+  WalletCreateDto,
+  EntryDto,
+} from '../store/models/wallet.model';
 import { UriCostants } from '../utils/uri-costants';
 
 @Injectable({
@@ -26,5 +30,11 @@ export class WalletService {
 
   deleteWallet(walletId: number): Observable<number> {
     return this.http.delete<number>(`${UriCostants.walletPath}/${walletId}`);
+  }
+
+  getWalletEntries(walletId: number): Observable<EntryDto[]> {
+    return this.http.get<EntryDto[]>(
+      `${UriCostants.walletPath}/${walletId}/entries`
+    );
   }
 }

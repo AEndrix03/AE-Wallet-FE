@@ -32,6 +32,13 @@ export class WalletEffects {
     )
   );
 
+  editWalletAndGetEntries$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WalletAction.editWallet),
+      map(({ walletId }) => WalletAction.loadWalletEntries({ walletId }))
+    )
+  );
+
   createWallet$ = createEffect(() =>
     this.actions$.pipe(
       ofType(WalletAction.createWallet),
@@ -49,6 +56,17 @@ export class WalletEffects {
       switchMap(({ walletId }) => this.walletService.deleteWallet(walletId)),
       filter((walletId) => !!walletId),
       map(() => WalletAction.loadAllWallets())
+    )
+  );
+
+  loadWalletEntries$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WalletAction.loadWalletEntries),
+      switchMap(({ walletId }) =>
+        this.walletService.getWalletEntries(walletId)
+      ),
+      filter((entries) => !!entries),
+      map((entries) => WalletAction.loadedWalletEntries({ entries }))
     )
   );
 }
