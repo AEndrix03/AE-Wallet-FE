@@ -3,5 +3,7 @@
   <app-wallet-entry-table
     [entries]="walletEntries$ | async"
     [hideAdd]="false"
+    (add)="addEntry()"
+    (refresh)="refreshEntries()"
   ></app-wallet-entry-table>
 </div>

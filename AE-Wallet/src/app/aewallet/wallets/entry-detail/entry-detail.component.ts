@@ -11,11 +11,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { WalletService } from '../../services/wallet.service';
 import { tap } from 'rxjs';
 import { EntryDto } from '../../store/models/wallet.model';
+import { FormContainerComponent } from '../../../shared/components/utils/form-container/form-container.component';
+import { DialogWrapperComponent } from '../../../shared/components/utils/dialog-wrapper/dialog-wrapper.component';
 
 @Component({
   selector: 'app-entry-detail',
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, FormContainerComponent, DialogWrapperComponent],
   templateUrl: './entry-detail.component.html',
   styleUrl: './entry-detail.component.scss',
 })
@@ -46,7 +48,7 @@ export class EntryDetailComponent {
         validators: [Validators.required],
       }),
       description: new FormControl(entry?.description || ''),
-      amount: new FormControl(entry?.value || 0, {
+      value: new FormControl(entry?.value || 0, {
         validators: [Validators.required],
       }),
       date: new FormControl(entry?.date || new Date(), {
@@ -56,7 +58,11 @@ export class EntryDetailComponent {
   }
 
   save() {
-    this._dialogRef.close(this.fg.value);
+    this._dialogRef.close({ id: this.data.entryId, ...this.fg.value });
+  }
+
+  close() {
+    this._dialogRef.close();
   }
 
   get titleFc(): FormControl<string> {
@@ -68,7 +74,7 @@ export class EntryDetailComponent {
   }
 
   get amountFc(): FormControl<number> {
-    return this.fg.get('amount') as FormControl<number>;
+    return this.fg.get('value') as FormControl<number>;
   }
 
   get dateFc(): FormControl<Date> {
@@ -79,6 +85,6 @@ export class EntryDetailComponent {
 export interface EntryDetailForm {
   title: FormControl<string>;
   description: FormControl<string>;
-  amount: FormControl<number>;
+  value: FormControl<number>;
   date: FormControl<Date>;
 }

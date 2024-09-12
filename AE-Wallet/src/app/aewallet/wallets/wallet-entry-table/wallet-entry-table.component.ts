@@ -26,6 +26,7 @@ export class WalletEntryTableComponent implements OnInit, OnChanges {
   @Input() hideAdd: boolean = true;
 
   @Output() add = new EventEmitter<void>();
+  @Output() refresh = new EventEmitter<void>();
 
   displayedColumns: string[] = ['title', 'description', 'value', 'date'];
   dataSource = new MatTableDataSource<EntryDto>([]);

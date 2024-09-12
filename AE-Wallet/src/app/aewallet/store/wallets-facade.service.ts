@@ -51,4 +51,12 @@ export class WalletFacadeService {
   dispatchDeleteWallet(walletId: number): void {
     this.store.dispatch(WalletAction.deleteWallet({ walletId }));
   }
+
+  dispatchLoadWalletEntries(walletId: number): void {
+    this.store.dispatch(WalletAction.loadWalletEntries({ walletId }));
+  }
+
+  dispatchReloadWalletEntries(): void {
+    this.store.dispatch(WalletAction.reloadWalletEntries());
+  }
 }

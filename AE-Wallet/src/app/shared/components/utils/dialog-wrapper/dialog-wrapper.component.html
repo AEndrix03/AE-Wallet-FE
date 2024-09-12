@@ -1,0 +1,7 @@
+<div class="dialog-wrapper">
+  <div class="dialog-header">
+    <h2>{{ title }}</h2>
+        <mat-icon *ngIf="!hideClose" (click)="close.emit()">close</mat-icon>
+  </div>
+  <div class="dialog-content"><ng-content /></div>
+</div>

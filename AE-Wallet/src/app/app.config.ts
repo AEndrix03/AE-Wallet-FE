@@ -22,6 +22,7 @@ import {
   walletsFeatureKey,
 } from './aewallet/store/reducers/wallets.reducer';
 import { WalletEffects } from './aewallet/store/effects/wallets.effect';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,5 +38,7 @@ export const appConfig: ApplicationConfig = {
     provideEffects(AuthEffects),
     provideState(walletsFeatureKey, walletReducer),
     provideEffects(WalletEffects),
+    //Date
+    provideNativeDateAdapter(),
   ],
 };

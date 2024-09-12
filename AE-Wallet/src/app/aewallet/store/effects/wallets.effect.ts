@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { WalletAction } from '../actions/wallets.action';
 import { WalletService } from '../../services/wallet.service';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { WalletsState } from '../models/wallet.model';
+import { select, Store } from '@ngrx/store';
 
 @Injectable()
 export class WalletEffects {
   constructor(
     private actions$: Actions,
     private walletService: WalletService,
-    private router: Router
+    private router: Router,
+    private store: Store<WalletsState>
   ) {}
 
   loadAllWallets$ = createEffect(() =>
@@ -67,6 +70,18 @@ export class WalletEffects {
       ),
       filter((entries) => !!entries),
       map((entries) => WalletAction.loadedWalletEntries({ entries }))
+    )
+  );
+
+  reloadWalletEntries$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WalletAction.reloadWalletEntries),
+      switchMap(() =>
+        this.store.select((state: any) => state.wallets.selectedWallet)
+      ),
+      map((selectedWallet) => selectedWallet?.id),
+      filter((walletId) => !!walletId),
+      map((walletId) => WalletAction.loadWalletEntries({ walletId }))
     )
   );
 }
