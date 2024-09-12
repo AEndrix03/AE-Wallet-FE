@@ -1,4 +1,4 @@
-<app-form-container [title]="'Entries'">
+<app-form-container [title]="'Entries'" [hideAdd]="hideAdd" (add)="add.emit()">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Title</th>

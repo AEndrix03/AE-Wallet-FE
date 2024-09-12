@@ -2,5 +2,6 @@
   <app-wallet-info [wallet]="patchedWallet$ | async"></app-wallet-info>
   <app-wallet-entry-table
     [entries]="walletEntries$ | async"
+    [hideAdd]="false"
   ></app-wallet-entry-table>
 </div>
