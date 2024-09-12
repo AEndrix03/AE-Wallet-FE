@@ -48,7 +48,7 @@ export class WalletsComponent implements OnInit {
 
   createWallet() {
     this.alert
-      .openDialog(WalletCreateModalComponent, {})
+      .openComponent$(WalletCreateModalComponent, {})
       .afterClosed()
       .pipe(
         take(1),

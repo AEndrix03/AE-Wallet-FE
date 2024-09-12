@@ -34,7 +34,7 @@ export class NavBarComponent {
   }
 
   openLogin() {
-    this.alert.openDialog(LoginComponent);
+    this.alert.openComponent$(LoginComponent);
   }
 
   confirmLogout() {

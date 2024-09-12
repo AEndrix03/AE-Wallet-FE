@@ -1,0 +1,22 @@
+.title {
+  width: 300px !important;
+}
+
+.date {
+  width: 200px !important;
+}
+
+.amount {
+  width: 100px !important;
+}
+
+.description {
+  width: 100% !important;
+}
+
+.end-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}

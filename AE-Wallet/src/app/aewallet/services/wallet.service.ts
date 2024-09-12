@@ -37,4 +37,24 @@ export class WalletService {
       `${UriCostants.walletPath}/${walletId}/entries`
     );
   }
+
+  getWalletEntryById(entryId: number): Observable<EntryDto> {
+    return this.http.get<EntryDto>(
+      `${UriCostants.walletPath}/entry/${entryId}`
+    );
+  }
+
+  createEntry(entryDto: EntryDto): Observable<number> {
+    return this.http.post<number>(`${UriCostants.walletPath}/entry`, entryDto);
+  }
+
+  updateEntry(entryDto: EntryDto): Observable<number> {
+    return this.http.put<number>(`${UriCostants.walletPath}/entry`, entryDto);
+  }
+
+  deleteEntry(entryId: number): Observable<number> {
+    return this.http.delete<number>(
+      `${UriCostants.walletPath}/entry/${entryId}`
+    );
+  }
 }

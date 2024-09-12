@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import {
   ConfirmDialogComponent,
   ConfirmDialogState,
 } from '../components/dialogs/confirm-dialog/confirm-dialog.component';
 import { filter, Observable } from 'rxjs';
+import { ComponentType } from '@angular/cdk/portal';
 
 @Injectable({
   providedIn: 'root',
@@ -12,20 +17,24 @@ import { filter, Observable } from 'rxjs';
 export class AlertService {
   constructor(private dialog: MatDialog) {}
 
-  openDialog<T>(component: T, data?: any, config?: any): MatDialogRef<any> {
-    return this.dialog.open(component as any, {
-      width: '450px',
-      data: data,
-      ...config,
+  openComponent$<T>(
+    component: ComponentType<T>,
+    config?: MatDialogConfig
+  ): MatDialogRef<T> {
+    const conf = config || {};
+    return this.dialog.open(component, {
+      minWidth: '40vw',
+      minHeight: '30vh',
+      disableClose: true,
+      ...conf,
     });
   }
-
   openConfirmDialog(data: {
     message?: string;
     title?: string;
     displayCancel?: boolean;
   }): Observable<any> {
-    return this.openDialog(ConfirmDialogComponent, data, { width: '350px' })
+    return this.openComponent$(ConfirmDialogComponent, { data })
       .afterClosed()
       .pipe(filter((result) => result === ConfirmDialogState.Confirm));
   }
