@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { WalletService } from '../../services/wallet.service';
-import { tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { EntryDto } from '../../store/models/wallet.model';
 import { FormContainerComponent } from '../../../shared/components/utils/form-container/form-container.component';
 import { DialogWrapperComponent } from '../../../shared/components/utils/dialog-wrapper/dialog-wrapper.component';
@@ -33,13 +33,19 @@ export class EntryDetailComponent {
     if (this.data.entryId != null) {
       this.walletService
         .getWalletEntryById(this.data.entryId)
-        .pipe(tap((entry) => this.initForm(entry)))
+        .pipe(
+          tap((entry) => this.initForm(entry)),
+          catchError(() => {
+            this.close();
+            return of(null);
+          })
+        )
         .subscribe();
     } else {
       this.initForm(null);
     }
 
-    this.fg.markAllAsTouched();
+    this.fg?.markAllAsTouched();
   }
 
   initForm(entry: EntryDto | null) {

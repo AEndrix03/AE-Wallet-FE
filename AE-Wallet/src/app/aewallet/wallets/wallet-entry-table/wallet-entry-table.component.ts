@@ -27,8 +27,16 @@ export class WalletEntryTableComponent implements OnInit, OnChanges {
 
   @Output() add = new EventEmitter<void>();
   @Output() refresh = new EventEmitter<void>();
+  @Output() edit = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<number>();
 
-  displayedColumns: string[] = ['title', 'description', 'value', 'date'];
+  displayedColumns: string[] = [
+    'title',
+    'description',
+    'value',
+    'date',
+    'actions',
+  ];
   dataSource = new MatTableDataSource<EntryDto>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
