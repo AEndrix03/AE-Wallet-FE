@@ -2,7 +2,7 @@
   [title]="'Entries'"
   [hideAdd]="hideAdd"
   [hideRefresh]="false"
-  (add)="add.emit()"
+  (add)="add.emit(walletId)"
   (refresh)="refresh.emit()"
 >
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">

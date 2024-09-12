@@ -22,10 +22,11 @@ import { FormContainerComponent } from '../../../shared/components/utils/form-co
   styleUrl: './wallet-entry-table.component.scss',
 })
 export class WalletEntryTableComponent implements OnInit, OnChanges {
+  @Input() walletId: number = null;
   @Input() entries: EntryDto[] = [];
   @Input() hideAdd: boolean = true;
 
-  @Output() add = new EventEmitter<void>();
+  @Output() add = new EventEmitter<number>();
   @Output() refresh = new EventEmitter<void>();
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();

@@ -17,6 +17,7 @@ import { WalletService } from '../../services/wallet.service';
   styleUrl: './wallet-detail.component.scss',
 })
 export class WalletDetailComponent {
+  walletId$: Observable<number> = of(null);
   patchedWallet$: Observable<WalletDto> = of(null);
   isLoading$: Observable<boolean> = of(false);
   walletEntries$: Observable<EntryDto[]> = of([]);
@@ -29,12 +30,13 @@ export class WalletDetailComponent {
     this.patchedWallet$ = this.walletFacade.selectPatchedWallet$;
     this.isLoading$ = this.walletFacade.selectIsLoading$;
     this.walletEntries$ = this.walletFacade.selectPatchedEntries$;
+    this.walletId$ = this.walletFacade.selectWalletId$;
   }
 
-  addEntry() {
+  addEntry(walletId: number) {
     this.alert
       .openComponent$(EntryDetailComponent, {
-        data: { entryId: null },
+        data: { entryId: null, walletId },
       })
       .afterClosed()
       .pipe(
@@ -67,7 +69,7 @@ export class WalletDetailComponent {
         message: 'Are you sure you want to delete this entry?',
       })
       .pipe(
-        tap(() => this.walletService.deleteEntry(entryId)),
+        switchMap(() => this.walletService.deleteEntry(entryId)),
         tap(() => this.walletFacade.dispatchReloadWalletEntries())
       )
       .subscribe();

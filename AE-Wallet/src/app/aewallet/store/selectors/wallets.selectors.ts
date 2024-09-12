@@ -34,3 +34,8 @@ export const selectPatchedEntries = createSelector(
   selectWalletState,
   (state: WalletsState) => state.patchedEntries || []
 );
+
+export const selectWalletId = createSelector(
+  selectSelectedWallet,
+  (wallet) => wallet?.id
+);

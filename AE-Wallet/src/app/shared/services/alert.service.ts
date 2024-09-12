@@ -23,8 +23,8 @@ export class AlertService {
   ): MatDialogRef<T> {
     const conf = config || {};
     return this.dialog.open(component, {
-      minWidth: '40vw',
-      minHeight: '30vh',
+      minWidth: '10vw',
+      minHeight: '10vh',
       disableClose: true,
       ...conf,
     });

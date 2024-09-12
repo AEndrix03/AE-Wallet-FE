@@ -14,6 +14,7 @@ import {
   selectPatchedWallet,
   selectSelectedEntries,
   selectSelectedWallet,
+  selectWalletId,
 } from './selectors/wallets.selectors';
 import { WalletAction } from './actions/wallets.action';
 
@@ -35,6 +36,7 @@ export class WalletFacadeService {
   );
   selectPatchedEntries$: Observable<EntryDto[]> =
     this.store.select(selectPatchedEntries);
+  selectWalletId$: Observable<number> = this.store.select(selectWalletId);
 
   dispatchLoadAllWallets(): void {
     this.store.dispatch(WalletAction.loadAllWallets());

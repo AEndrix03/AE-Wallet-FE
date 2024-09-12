@@ -64,7 +64,7 @@ export class EntryDetailComponent {
   }
 
   save() {
-    this._dialogRef.close({ id: this.data.entryId, ...this.fg.value });
+    this._dialogRef.close({ id: this.data.entryId, ...this.fg.value, walletId: this.data.walletId });
   }
 
   close() {
@@ -72,19 +72,19 @@ export class EntryDetailComponent {
   }
 
   get titleFc(): FormControl<string> {
-    return this.fg.get('title') as FormControl<string>;
+    return this.fg?.get('title') as FormControl<string>;
   }
 
   get descriptionFc(): FormControl<string> {
-    return this.fg.get('description') as FormControl<string>;
+    return this.fg?.get('description') as FormControl<string>;
   }
 
   get amountFc(): FormControl<number> {
-    return this.fg.get('value') as FormControl<number>;
+    return this.fg?.get('value') as FormControl<number>;
   }
 
   get dateFc(): FormControl<Date> {
-    return this.fg.get('date') as FormControl<Date>;
+    return this.fg?.get('date') as FormControl<Date>;
   }
 }
 
