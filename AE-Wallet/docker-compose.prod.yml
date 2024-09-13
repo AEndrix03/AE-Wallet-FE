@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  aewallet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - ae-wallet-fe
+
+networks:
+  ae-wallet-fe:
+    driver: bridge
