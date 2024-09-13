@@ -9,11 +9,12 @@ import {
 import { MaterialModule } from '../../modules/material.module';
 import { AuthFacadeService } from '../../../aewallet/store/auth-facade.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DialogWrapperComponent } from '../utils/dialog-wrapper/dialog-wrapper.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, DialogWrapperComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -41,6 +42,10 @@ export class LoginComponent {
       );
       this.dialogRef.close();
     }
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
   emailFc(): FormControl<string | null> {
