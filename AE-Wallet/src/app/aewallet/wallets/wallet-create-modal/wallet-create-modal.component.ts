@@ -10,11 +10,12 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { WalletCreateDto } from '../../store/models/wallet.model';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { DialogWrapperComponent } from "../../../shared/components/utils/dialog-wrapper/dialog-wrapper.component";
 
 @Component({
   selector: 'app-wallet-create-modal',
   standalone: true,
-  imports: [MaterialModule, ColorPickerModule],
+  imports: [MaterialModule, ColorPickerModule, DialogWrapperComponent],
   templateUrl: './wallet-create-modal.component.html',
   styleUrl: './wallet-create-modal.component.scss',
 })
