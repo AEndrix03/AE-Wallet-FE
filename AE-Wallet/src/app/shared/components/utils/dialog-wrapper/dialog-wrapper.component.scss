@@ -1,0 +1,36 @@
+@import "../../../../../styles/variables.scss";
+
+h2 {
+  color: whitesmoke;
+  margin: 0;
+}
+
+mat-icon {
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+.dialog-wraper {
+  display: flex;
+  flex-direction: row;
+  min-width: 10vw;
+  max-width: 80vw;
+  min-height: 10vh;
+  max-height: 80vh;
+}
+
+.dialog-content {
+  padding: 16px;
+  background-color: whitesmoke;
+}
+
+.dialog-header {
+  padding: 3px 16px;
+  background-color: $primary;
+  min-height: 24px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

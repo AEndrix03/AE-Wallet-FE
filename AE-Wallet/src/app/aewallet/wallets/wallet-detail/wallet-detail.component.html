@@ -1,0 +1,15 @@
+<div style="display: flex; gap: 16px; flex-direction: column">
+  <app-wallet-info
+    [wallet]="patchedWallet$ | async"
+    [balance]="balance$ | async"
+  ></app-wallet-info>
+  <app-wallet-entry-table
+    [walletId]="walletId$ | async"
+    [entries]="walletEntries$ | async"
+    [hideAdd]="false"
+    (add)="addEntry($event)"
+    (refresh)="refreshEntries()"
+    (edit)="editEntry($event)"
+    (delete)="deleteEntry($event)"
+  ></app-wallet-entry-table>
+</div>

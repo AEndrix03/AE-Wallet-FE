@@ -1,0 +1,9 @@
+@use "@angular/material" as mat;
+
+@import "styles";
+
+$primary: mat.m2-get-color-from-palette($primary-palette, 500);
+$secondary: mat.m2-get-color-from-palette($primary-palette, 400);
+$third: mat.m2-get-color-from-palette($primary-palette, 300);
+$accent: mat.m2-get-color-from-palette($accent-palette, 500);
+$warn: mat.m2-get-color-from-palette($warn-palette, 500);

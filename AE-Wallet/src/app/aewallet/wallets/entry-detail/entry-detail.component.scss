@@ -1,0 +1,30 @@
+.title {
+  flex-grow: 1;
+}
+
+.date {
+  width: 200px !important;
+}
+
+.amount {
+  width: 100px !important;
+}
+
+.description {
+  width: 100% !important;
+}
+
+.end-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 16px;
+}

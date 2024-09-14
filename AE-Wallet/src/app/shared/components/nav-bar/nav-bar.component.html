@@ -7,8 +7,23 @@
 
   <span class="spacer"></span>
   <div class="user-info">
-    <span>User Name</span>
-    <button mat-icon-button>
+    <button
+      class="user-circle"
+      mat-icon-button
+      [mat-menu-trigger-for]="usermenu"
+      *ngIf="!!user"
+    >
+      {{
+        (user.name.at(0)?.toUpperCase() || "") +
+          (user.surname.at(0)?.toUpperCase() || "")
+      }}
+    </button>
+    <button
+      mat-icon-button
+      [mat-menu-trigger-for]="usermenu"
+      class="user-info"
+      *ngIf="!user"
+    >
       <mat-icon>account_circle</mat-icon>
     </button>
   </div>
@@ -25,6 +40,14 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <ng-content />
+    <div class="side-content"><ng-content /></div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-menu #usermenu>
+  <app-user-info
+    [user]="user"
+    (login)="openLogin()"
+    (logout)="confirmLogout()"
+  />
+</mat-menu>

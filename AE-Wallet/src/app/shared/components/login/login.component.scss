@@ -1,0 +1,22 @@
+.container {
+  padding: 12px;
+  overflow: hidden;
+}
+
+.center-cols {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.end-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+}

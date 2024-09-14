@@ -1,0 +1,49 @@
+@import "../../../../../styles/variables.scss";
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+}
+
+.dialog-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: row-reverse;
+  margin-right: 0.2rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: start;
+  color: $primary;
+}
+
+p {
+  font-size: 1rem;
+  margin: 0;
+  text-align: start;
+  color: black;
+}
+
+button {
+  width: 100px;
+}
+
+.confirm {
+  background-color: $warn;
+  color: white;
+}
+
+.cancel {
+  border: 2px solid $primary;
+}

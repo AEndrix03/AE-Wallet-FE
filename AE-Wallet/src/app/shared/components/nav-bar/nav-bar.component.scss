@@ -1,3 +1,5 @@
+@import "../../../../styles/variables.scss";
+
 .sidenav-container {
   height: 100%;
 }
@@ -8,6 +10,19 @@
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.user-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: $secondary;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .user-info {
@@ -27,10 +42,15 @@ mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 .app-name {
   text-align: center;
   font-size: 1.25rem;
   font-weight: bold;
+}
+
+.side-content {
+  padding: 16px;
 }

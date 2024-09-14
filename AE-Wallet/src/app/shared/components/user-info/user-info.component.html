@@ -1,1 +1,35 @@
-<p>user-info works!</p>
+<div class="container">
+  <div class="user-info-container" *ngIf="!!user">
+    <div class="user-circle">
+      {{
+        (user.name.at(0)?.toUpperCase() || "") +
+          (user.surname.at(0)?.toUpperCase() || "")
+      }}
+    </div>
+    <p class="user-name">
+      {{ (user.name || "") + " " + (user.surname || "") }}
+    </p>
+  </div>
+  <div class="logged-buttons" *ngIf="!!user" (click)="settings.emit()">
+    <button mat-fab class="settings">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <button mat-fab class="logout" (click)="logout.emit()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+  <div class="unlogged-buttons" *ngIf="!user">
+    <mat-icon class="user-circle" style="background-color: grey !important"
+      >account_circle</mat-icon
+    >
+    <h2 style="margin: 20px 0">Welcome</h2>
+    <button mat-button class="login" (click)="login.emit()">Login</button>
+    <app-line-centered-text
+      [text]="'or'"
+      [width]="'50px'"
+    ></app-line-centered-text>
+    <button mat-button class="register" (click)="register.emit()">
+      Register
+    </button>
+  </div>
+</div>
