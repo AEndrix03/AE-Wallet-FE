@@ -63,4 +63,12 @@ export class WalletFacadeService {
   dispatchReloadWalletEntries(): void {
     this.store.dispatch(WalletAction.reloadWalletEntries());
   }
+
+  dispatchUpdateWallet(wallet: WalletDto): void {
+    this.store.dispatch(WalletAction.updateWallet({ wallet }));
+  }
+
+  dispatchSaveWallet(): void {
+    this.store.dispatch(WalletAction.saveWallet());
+  }
 }

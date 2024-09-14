@@ -33,8 +33,10 @@ export class WalletInfoComponent
   implements OnChanges, AfterViewInit, OnDestroy
 {
   @Input() wallet: WalletDto;
-  @Output() edit = new EventEmitter<WalletDto>();
   @Input() balance: number = 0;
+
+  @Output() edit = new EventEmitter<WalletDto>();
+  @Output() save = new EventEmitter();
 
   fg: FormGroup<WalletDetailForm> = null;
 

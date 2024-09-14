@@ -14,5 +14,7 @@ export const WalletAction = createActionGroup({
     'Loaded Wallet Entries': props<{ entries: EntryDto[] }>(),
     'Reload Wallet Entries': emptyProps(),
     'Loaded Balance': props<{ balance: number }>(),
+    'Update Wallet': props<{ wallet: WalletDto }>(),
+    'Save Wallet': emptyProps(),
   },
 });

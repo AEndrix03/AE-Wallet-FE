@@ -32,6 +32,10 @@ export class WalletService {
     return this.http.delete<number>(`${UriCostants.walletPath}/${walletId}`);
   }
 
+  updateWallet(walletDto: WalletDto): Observable<number> {
+    return this.http.put<number>(`${UriCostants.walletPath}`, walletDto);
+  }
+
   getWalletEntries(walletId: number): Observable<EntryDto[]> {
     return this.http.get<EntryDto[]>(
       `${UriCostants.walletPath}/${walletId}/entries`

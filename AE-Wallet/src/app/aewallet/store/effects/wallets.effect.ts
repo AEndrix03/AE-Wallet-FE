@@ -95,4 +95,17 @@ export class WalletEffects {
       map((balance) => WalletAction.loadedBalance({ balance }))
     )
   );
+
+  saveWallet$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WalletAction.saveWallet),
+      withLatestFrom(
+        this.store.pipe(select((state: any) => state.wallets.patchedWallet))
+      ),
+      filter(([_, wallet]) => !!wallet),
+      switchMap(([_, wallet]) => this.walletService.updateWallet(wallet)),
+      filter((wallet) => !!wallet),
+      map(() => WalletAction.loadAllWallets())
+    )
+  );
 }

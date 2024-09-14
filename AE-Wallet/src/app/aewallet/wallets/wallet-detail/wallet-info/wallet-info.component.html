@@ -1,4 +1,8 @@
-<app-form-container [title]="'Wallet Detail'">
+<app-form-container
+  [title]="'Wallet Detail'"
+  [hideSave]="false"
+  (save)="save.emit()"
+>
   <div
     style="
       display: flex;

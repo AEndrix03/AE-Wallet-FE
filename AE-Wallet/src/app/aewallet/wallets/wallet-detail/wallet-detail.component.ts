@@ -80,4 +80,12 @@ export class WalletDetailComponent {
   refreshEntries() {
     this.walletFacade.dispatchReloadWalletEntries();
   }
+
+  saveWallet() {
+    this.walletFacade.dispatchSaveWallet();
+  }
+
+  editWallet(wallet: WalletDto) {
+    this.walletFacade.dispatchUpdateWallet(wallet);
+  }
 }

@@ -56,6 +56,14 @@ const _walletsReducer = createReducer(
   on(WalletAction.loadedBalance, (state, { balance }) => ({
     ...state,
     balance,
+  })),
+  on(WalletAction.updateWallet, (state, { wallet }) => ({
+    ...state,
+    patchedWallet: { ...wallet },
+  })),
+  on(WalletAction.saveWallet, (state) => ({
+    ...state,
+    loading: true,
   }))
 );
 

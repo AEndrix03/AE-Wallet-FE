@@ -2,6 +2,8 @@
   <app-wallet-info
     [wallet]="patchedWallet$ | async"
     [balance]="balance$ | async"
+    (edit)="editWallet($event)"
+    (save)="saveWallet()"
   ></app-wallet-info>
   <app-wallet-entry-table
     [walletId]="walletId$ | async"

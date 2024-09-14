@@ -15,8 +15,10 @@ export class FormContainerComponent {
   @Input() hideAdd: boolean = true;
   @Input() hideRefresh: boolean = true;
   @Input() hideSearch: boolean = true;
+  @Input() hideSave: boolean = true;
 
   @Output() add = new EventEmitter<void>();
   @Output() refresh = new EventEmitter<void>();
   @Output() search = new EventEmitter<void>();
+  @Output() save = new EventEmitter<void>();
 }
