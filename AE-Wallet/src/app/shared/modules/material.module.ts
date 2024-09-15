@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -33,6 +34,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatTableModule,
     MatPaginatorModule,
     MatDatepickerModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     FormsModule,
@@ -50,6 +52,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatTableModule,
     MatPaginatorModule,
     MatDatepickerModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MaterialModule {}

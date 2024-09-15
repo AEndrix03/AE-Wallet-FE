@@ -8,11 +8,17 @@ import { WalletEntryTableComponent } from '../wallet-entry-table/wallet-entry-ta
 import { AlertService } from '../../../shared/services/alert.service';
 import { EntryDetailComponent } from '../entry-detail/entry-detail.component';
 import { WalletService } from '../../services/wallet.service';
+import { LoadingInfoComponent } from '../../../shared/components/utils/loading-info/loading-info.component';
 
 @Component({
   selector: 'app-wallet-detail',
   standalone: true,
-  imports: [WalletInfoComponent, AsyncPipe, WalletEntryTableComponent],
+  imports: [
+    WalletInfoComponent,
+    AsyncPipe,
+    WalletEntryTableComponent,
+    LoadingInfoComponent,
+  ],
   templateUrl: './wallet-detail.component.html',
   styleUrl: './wallet-detail.component.scss',
 })

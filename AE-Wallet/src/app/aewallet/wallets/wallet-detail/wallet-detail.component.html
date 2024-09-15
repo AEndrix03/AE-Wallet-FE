@@ -1,3 +1,4 @@
+<app-loading-info [isLoading]="isLoading$ | async"></app-loading-info>
 <div style="display: flex; gap: 16px; flex-direction: column">
   <app-wallet-info
     [wallet]="patchedWallet$ | async"
