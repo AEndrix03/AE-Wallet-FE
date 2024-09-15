@@ -8,7 +8,8 @@ export const initialState: WalletsState = {
   patchedWallet: null,
   loading: false,
   selectedEntries: [],
-  patchedEntries: [],
+  filteredEntries: [],
+  entriesFilter: {},
   balance: 0,
 };
 
@@ -34,6 +35,7 @@ const _walletsReducer = createReducer(
     loading: false,
     selectedWallet: { ...wallet },
     patchedWallet: { ...wallet },
+    entriesFilter: { walletId: wallet.id },
   })),
   on(WalletAction.createWallet, (state) => ({
     ...state,
@@ -51,7 +53,7 @@ const _walletsReducer = createReducer(
     ...state,
     loading: false,
     selectedEntries: [...entries],
-    patchedEntries: [...entries],
+    filteredEntries: [...entries],
   })),
   on(WalletAction.loadedBalance, (state, { balance }) => ({
     ...state,
@@ -64,6 +66,19 @@ const _walletsReducer = createReducer(
   on(WalletAction.saveWallet, (state) => ({
     ...state,
     loading: true,
+  })),
+  on(WalletAction.filterEntries, (state, { filter }) => ({
+    ...state,
+    entriesFilter: { ...filter },
+  })),
+  on(WalletAction.filteredEntries, (state, { entries }) => ({
+    ...state,
+    filteredEntries: [...entries],
+  })),
+  on(WalletAction.resetFilter, (state) => ({
+    ...state,
+    entriesFilter: {},
+    filteredEntries: [...state.selectedEntries],
   }))
 );
 

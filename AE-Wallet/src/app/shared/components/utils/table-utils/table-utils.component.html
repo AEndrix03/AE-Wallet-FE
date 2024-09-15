@@ -1,0 +1,19 @@
+<div
+  class="container"
+  [ngStyle]="{ '--align': align, '--direction': direction }"
+>
+  <div class="actions">
+    <button mat-fab color="primary" (click)="filter.emit()">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button
+      mat-fab
+      class="reset"
+      (click)="resetFilter.emit()"
+      [disabled]="disableResetFilter"
+    >
+      <mat-icon>reset</mat-icon>
+    </button>
+  </div>
+  <p *ngIf="results !== null">Results: {{ results }}</p>
+</div>

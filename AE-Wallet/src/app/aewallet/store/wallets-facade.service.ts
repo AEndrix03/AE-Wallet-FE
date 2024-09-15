@@ -6,16 +6,18 @@ import {
   WalletsState,
   WalletCreateDto,
   EntryDto,
+  EntryFilterDto,
 } from './models/wallet.model';
 import {
   selectAllWallets,
   selectBalance,
   selectIsLoading,
-  selectPatchedEntries,
+  selectFilteredEntries,
   selectPatchedWallet,
   selectSelectedEntries,
   selectSelectedWallet,
   selectWalletId,
+  selectEntriesFilter,
 } from './selectors/wallets.selectors';
 import { WalletAction } from './actions/wallets.action';
 
@@ -35,10 +37,13 @@ export class WalletFacadeService {
   selectSelectedEntries$: Observable<EntryDto[]> = this.store.select(
     selectSelectedEntries
   );
-  selectPatchedEntries$: Observable<EntryDto[]> =
-    this.store.select(selectPatchedEntries);
+  selectFilteredEntries$: Observable<EntryDto[]> = this.store.select(
+    selectFilteredEntries
+  );
   selectWalletId$: Observable<number> = this.store.select(selectWalletId);
   selectBalance$: Observable<number> = this.store.select(selectBalance);
+  selectEntriesFilter$: Observable<EntryFilterDto> =
+    this.store.select(selectEntriesFilter);
 
   dispatchLoadAllWallets(): void {
     this.store.dispatch(WalletAction.loadAllWallets());
@@ -70,5 +75,13 @@ export class WalletFacadeService {
 
   dispatchSaveWallet(): void {
     this.store.dispatch(WalletAction.saveWallet());
+  }
+
+  dispatchFilterEntries(filter: EntryDto): void {
+    this.store.dispatch(WalletAction.filterEntries({ filter }));
+  }
+
+  dispatchResetFilter(): void {
+    this.store.dispatch(WalletAction.resetFilter());
   }
 }

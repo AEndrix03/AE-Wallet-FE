@@ -108,4 +108,12 @@ export class WalletEffects {
       map(() => WalletAction.loadAllWallets())
     )
   );
+
+  filterEntries$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WalletAction.filterEntries),
+      switchMap(({ filter }) => this.walletService.getFilteredEntries(filter)),
+      map((entries) => WalletAction.filteredEntries({ entries }))
+    )
+  );
 }

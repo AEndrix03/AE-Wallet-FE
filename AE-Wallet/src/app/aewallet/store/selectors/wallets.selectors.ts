@@ -30,9 +30,9 @@ export const selectSelectedEntries = createSelector(
   (state: WalletsState) => state.selectedEntries || []
 );
 
-export const selectPatchedEntries = createSelector(
+export const selectFilteredEntries = createSelector(
   selectWalletState,
-  (state: WalletsState) => state.patchedEntries || []
+  (state: WalletsState) => state.filteredEntries || []
 );
 
 export const selectWalletId = createSelector(
@@ -43,4 +43,9 @@ export const selectWalletId = createSelector(
 export const selectBalance = createSelector(
   selectWalletState,
   (state: WalletsState) => state.balance
+);
+
+export const selectEntriesFilter = createSelector(
+  selectWalletState,
+  (state: WalletsState) => state.entriesFilter
 );

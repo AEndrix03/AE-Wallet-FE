@@ -1,5 +1,10 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { EntryDto, WalletCreateDto, WalletDto } from '../models/wallet.model';
+import {
+  EntryDto,
+  EntryFilterDto,
+  WalletCreateDto,
+  WalletDto,
+} from '../models/wallet.model';
 
 export const WalletAction = createActionGroup({
   source: 'Wallet',
@@ -16,5 +21,8 @@ export const WalletAction = createActionGroup({
     'Loaded Balance': props<{ balance: number }>(),
     'Update Wallet': props<{ wallet: WalletDto }>(),
     'Save Wallet': emptyProps(),
+    'Filter Entries': props<{ filter: EntryFilterDto }>(),
+    'Filtered Entries': props<{ entries: EntryDto[] }>(),
+    'Reset Filter': emptyProps(),
   },
 });

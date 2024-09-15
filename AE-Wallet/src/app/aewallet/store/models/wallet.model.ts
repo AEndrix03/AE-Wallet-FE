@@ -4,7 +4,8 @@ export interface WalletsState {
   patchedWallet: WalletDto | null;
   loading: boolean;
   selectedEntries: EntryDto[];
-  patchedEntries: EntryDto[];
+  filteredEntries: EntryDto[];
+  entriesFilter: EntryFilterDto;
   balance: number;
 }
 
@@ -34,4 +35,14 @@ export interface EntryDto {
   description: string;
   date: Date;
   walletId: number;
+}
+
+export interface EntryFilterDto {
+  title?: string;
+  description?: string;
+  dateFrom?: Date;
+  dateTo?: Date;
+  valueFrom?: number;
+  valueTo?: number;
+  walletId?: number;
 }

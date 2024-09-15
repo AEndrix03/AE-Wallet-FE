@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: var(--direction);
+  justify-content: var(--align);
+  align-items: center;
+  gap: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+
+  button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .reset {
+    background-color: rgb(160, 160, 160);
+  }
+}

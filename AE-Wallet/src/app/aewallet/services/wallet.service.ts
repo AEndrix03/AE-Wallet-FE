@@ -5,6 +5,7 @@ import {
   WalletDto,
   WalletCreateDto,
   EntryDto,
+  EntryFilterDto,
 } from '../store/models/wallet.model';
 import { UriCostants } from '../utils/uri-costants';
 
@@ -65,6 +66,13 @@ export class WalletService {
   getWalletBalance(walletId: number): Observable<number> {
     return this.http.get<number>(
       `${UriCostants.walletPath}/${walletId}/balance`
+    );
+  }
+
+  getFilteredEntries(filter: EntryFilterDto): Observable<EntryDto[]> {
+    return this.http.post<EntryDto[]>(
+      `${UriCostants.walletPath}/entries/filter`,
+      filter
     );
   }
 }

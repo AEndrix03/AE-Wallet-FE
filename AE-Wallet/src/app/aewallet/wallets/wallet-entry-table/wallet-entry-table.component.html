@@ -2,8 +2,10 @@
   [title]="'Entries'"
   [hideAdd]="hideAdd"
   [hideRefresh]="false"
+  [hideSearch]="false"
   (add)="add.emit(walletId)"
   (refresh)="refresh.emit()"
+  (search)="filter.emit()"
 >
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
     <ng-container matColumnDef="title">
