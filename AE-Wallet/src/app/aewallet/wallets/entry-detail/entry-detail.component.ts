@@ -30,6 +30,7 @@ export class EntryDetailComponent {
     private _dialogRef: MatDialogRef<EntryDetailComponent>,
     private walletService: WalletService
   ) {
+    this.initForm(null);
     if (this.data.entryId != null) {
       this.walletService
         .getWalletEntryById(this.data.entryId)
@@ -41,8 +42,6 @@ export class EntryDetailComponent {
           })
         )
         .subscribe();
-    } else {
-      this.initForm(null);
     }
 
     this.fg?.markAllAsTouched();
@@ -64,7 +63,11 @@ export class EntryDetailComponent {
   }
 
   save() {
-    this._dialogRef.close({ id: this.data.entryId, ...this.fg.value, walletId: this.data.walletId });
+    this._dialogRef.close({
+      id: this.data.entryId,
+      ...this.fg.value,
+      walletId: this.data.walletId,
+    });
   }
 
   close() {
@@ -83,8 +86,8 @@ export class EntryDetailComponent {
     return this.fg?.get('value') as FormControl<number>;
   }
 
-  get dateFc(): FormControl<Date> {
-    return this.fg?.get('date') as FormControl<Date>;
+  get dateFc(): FormControl<Date | null> {
+    return this.fg?.get('date') as FormControl<Date | null>;
   }
 }
 

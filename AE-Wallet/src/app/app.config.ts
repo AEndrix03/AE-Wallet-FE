@@ -1,15 +1,11 @@
-import { ApplicationConfig, isDevMode } from '@angular/core';
+import { ApplicationConfig, isDevMode, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withInterceptors,
-} from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   authFeatureKey,
   authReducer,
@@ -22,7 +18,16 @@ import {
   walletsFeatureKey,
 } from './aewallet/store/reducers/wallets.reducer';
 import { WalletEffects } from './aewallet/store/effects/wallets.effect';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { NgLocaleLocalization, registerLocaleData } from '@angular/common';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+  provideMomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { dateTransformInterceptor } from './shared/services/interceptors/date-transform-interceptor';
+
+registerLocaleData(NgLocaleLocalization, 'it-IT');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,7 +36,9 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideEffects(),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withInterceptors([authInterceptor, dateTransformInterceptor])
+    ),
     // Stores
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideState(authFeatureKey, authReducer),
@@ -39,6 +46,19 @@ export const appConfig: ApplicationConfig = {
     provideState(walletsFeatureKey, walletReducer),
     provideEffects(WalletEffects),
     //Date
-    provideNativeDateAdapter(),
+    provideMomentDateAdapter(),
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'it-IT',
+    },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    {
+      provide: DateAdapter,
+      deps: [MAT_DATE_LOCALE],
+      useFactory: (locale: string) => {
+        const adapter = new MomentDateAdapter(locale);
+        return adapter;
+      },
+    },
   ],
 };
