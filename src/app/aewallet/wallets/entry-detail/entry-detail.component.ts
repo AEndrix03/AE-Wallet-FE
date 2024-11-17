@@ -11,13 +11,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { WalletService } from '../../services/wallet.service';
 import { catchError, of, tap } from 'rxjs';
 import { EntryDto } from '../../store/models/wallet.model';
-import { FormContainerComponent } from '../../../shared/components/utils/form-container/form-container.component';
 import { DialogWrapperComponent } from '../../../shared/components/utils/dialog-wrapper/dialog-wrapper.component';
+import { NgxCurrencyDirective } from 'ngx-currency';
 
 @Component({
   selector: 'app-entry-detail',
   standalone: true,
-  imports: [MaterialModule, FormContainerComponent, DialogWrapperComponent],
+  imports: [MaterialModule, DialogWrapperComponent, NgxCurrencyDirective],
   templateUrl: './entry-detail.component.html',
   styleUrl: './entry-detail.component.scss',
 })

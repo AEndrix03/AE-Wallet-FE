@@ -26,6 +26,10 @@ import {
 } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { dateTransformInterceptor } from './shared/services/interceptors/date-transform-interceptor';
+import {
+  NgxCurrencyInputMode,
+  provideEnvironmentNgxCurrency,
+} from 'ngx-currency';
 
 registerLocaleData(NgLocaleLocalization, 'it-IT');
 
@@ -45,7 +49,7 @@ export const appConfig: ApplicationConfig = {
     provideEffects(AuthEffects),
     provideState(walletsFeatureKey, walletReducer),
     provideEffects(WalletEffects),
-    //Date
+    // Date
     provideMomentDateAdapter(),
     {
       provide: MAT_DATE_LOCALE,
@@ -60,5 +64,21 @@ export const appConfig: ApplicationConfig = {
         return adapter;
       },
     },
+
+    // Currency
+    provideEnvironmentNgxCurrency({
+      align: 'right',
+      allowNegative: true,
+      allowZero: true,
+      decimal: ',',
+      precision: 2,
+      prefix: '',
+      suffix: ' €',
+      thousands: '.',
+      nullable: true,
+      min: null,
+      max: null,
+      inputMode: NgxCurrencyInputMode.Financial,
+    }),
   ],
 };

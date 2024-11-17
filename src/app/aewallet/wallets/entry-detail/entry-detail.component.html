@@ -19,9 +19,9 @@
         <mat-error>Insert a valid title</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="amount">
-        <mat-label>Amount</mat-label>
-        <input matInput type="number" name="amount" [formControl]="amountFc" />
-        <mat-error>Insert a valid amount</mat-error>
+        <mat-label>Value</mat-label>
+        <input matInput name="amount" [formControl]="amountFc" currencyMask />
+        <mat-error>Insert a valid value</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="date">
         <mat-label>Action date</mat-label>
