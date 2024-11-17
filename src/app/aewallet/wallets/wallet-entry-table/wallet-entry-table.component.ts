@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -13,17 +14,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { EntryDto } from '../../store/models/wallet.model';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { FormContainerComponent } from '../../../shared/components/utils/form-container/form-container.component';
-import { TableUtilsComponent } from '../../../shared/components/utils/table-utils/table-utils.component';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-wallet-entry-table',
   standalone: true,
-  imports: [MaterialModule, FormContainerComponent, TableUtilsComponent, NgIf],
+  imports: [MaterialModule, FormContainerComponent],
   templateUrl: './wallet-entry-table.component.html',
   styleUrl: './wallet-entry-table.component.scss',
 })
-export class WalletEntryTableComponent implements OnInit, OnChanges {
+export class WalletEntryTableComponent implements OnChanges, AfterViewInit {
   @Input() walletId: number = null;
   @Input() entries: EntryDto[] = [];
   @Input() hideAdd: boolean = true;
@@ -45,7 +44,7 @@ export class WalletEntryTableComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
