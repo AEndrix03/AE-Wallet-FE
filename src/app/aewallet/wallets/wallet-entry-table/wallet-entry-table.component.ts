@@ -17,6 +17,7 @@ import { FormContainerComponent } from '../../../shared/components/utils/form-co
 import { MatSort } from '@angular/material/sort';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { DatePipe } from '@angular/common';
+import { ColoredCurrencyInputComponent } from '../../../shared/components/colored-currency-input/colored-currency-input.component';
 
 @Component({
   selector: 'app-wallet-entry-table',
@@ -24,8 +25,8 @@ import { DatePipe } from '@angular/common';
   imports: [
     MaterialModule,
     FormContainerComponent,
-    NgxCurrencyDirective,
     DatePipe,
+    ColoredCurrencyInputComponent,
   ],
   templateUrl: './wallet-entry-table.component.html',
   styleUrl: './wallet-entry-table.component.scss',

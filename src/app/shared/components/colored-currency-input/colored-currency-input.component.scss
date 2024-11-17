@@ -1,0 +1,19 @@
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
+
+.zero {
+  color: black;
+}
+
+.hidden-input {
+  border: 0;
+  background-color: transparent;
+  min-width: 0;
+  max-width: 70px;
+  text-align: left !important;
+}

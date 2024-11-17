@@ -1,0 +1,10 @@
+<input
+  [ngClass]="
+    (isNegative ? 'negative' : readValue === 0 ? 'zero' : 'positive') +
+    ' hidden-input'
+  "
+  matInput
+  currencyMask
+  [disabled]="true"
+  [ngModel]="readValue"
+/>
