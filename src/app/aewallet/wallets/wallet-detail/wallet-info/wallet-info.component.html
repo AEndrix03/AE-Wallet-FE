@@ -17,10 +17,10 @@
       <input matInput [formControl]="nameFc" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline" style="width: 150px">
-      <mat-label>Balance</mat-label>
-      <input matInput type="number" [(ngModel)]="balance" readonly />
-    </mat-form-field>
+    <div style="display: flex; flex-flow: row nowrap; gap: 16px">
+      <p style="color: black; font-weight: 600">Balance:</p>
+      <app-colored-currency-input [value]="balance" />
+    </div>
   </div>
   <div
     style="display: flex; flex-direction: row; gap: 32px; align-items: center"

@@ -75,4 +75,10 @@ export class WalletService {
       filter
     );
   }
+
+  getAllTimeEntries(): Observable<EntryDto[]> {
+    return this.http.get<EntryDto[]>(
+      `${UriCostants.walletPath}/entries/alltime`
+    );
+  }
 }

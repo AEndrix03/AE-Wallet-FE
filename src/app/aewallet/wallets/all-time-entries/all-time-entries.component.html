@@ -1,0 +1,9 @@
+<div class="container">
+  <h2>All Time Entries</h2>
+  <app-wallet-entry-table
+    [entries]="entries"
+    [hideAdd]="true"
+    (refresh)="refreshEntries()"
+    (filter)="filterEntries({})"
+  ></app-wallet-entry-table>
+</div>

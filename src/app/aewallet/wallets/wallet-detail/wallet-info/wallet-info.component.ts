@@ -21,11 +21,12 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { FormContainerComponent } from '../../../../shared/components/utils/form-container/form-container.component';
 import { WalletDto } from '../../../store/models/wallet.model';
 import { filter, map, Subject, take, takeUntil, tap } from 'rxjs';
+import { ColoredCurrencyInputComponent } from "../../../../shared/components/colored-currency-input/colored-currency-input.component";
 
 @Component({
   selector: 'app-wallet-info',
   standalone: true,
-  imports: [MaterialModule, ColorPickerModule, FormContainerComponent],
+  imports: [MaterialModule, ColorPickerModule, FormContainerComponent, ColoredCurrencyInputComponent],
   templateUrl: './wallet-info.component.html',
   styleUrl: './wallet-info.component.scss',
 })
