@@ -4,10 +4,12 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
-COPY . .
-
+COPY . . 
 RUN npm install -g @angular/cli
 
-EXPOSE 81
+RUN ng build --configuration production
+FROM httpd:alpine
 
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "81"]
+COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
+EXPOSE 80
+CMD ["httpd-foreground"]
