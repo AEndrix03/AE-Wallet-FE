@@ -16,11 +16,17 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { FormContainerComponent } from '../../../shared/components/utils/form-container/form-container.component';
 import { MatSort } from '@angular/material/sort';
 import { NgxCurrencyDirective } from 'ngx-currency';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-wallet-entry-table',
   standalone: true,
-  imports: [MaterialModule, FormContainerComponent, NgxCurrencyDirective],
+  imports: [
+    MaterialModule,
+    FormContainerComponent,
+    NgxCurrencyDirective,
+    DatePipe,
+  ],
   templateUrl: './wallet-entry-table.component.html',
   styleUrl: './wallet-entry-table.component.scss',
 })

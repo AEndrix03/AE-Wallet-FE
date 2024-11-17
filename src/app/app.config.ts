@@ -24,12 +24,28 @@ import {
   MomentDateAdapter,
   provideMomentDateAdapter,
 } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { dateTransformInterceptor } from './shared/services/interceptors/date-transform-interceptor';
 import {
   NgxCurrencyInputMode,
   provideEnvironmentNgxCurrency,
 } from 'ngx-currency';
+
+export const WLT_DATE_FORMATS = {
+  parse: {
+    dateInput: ['DD/MM/YYYY'],
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthDayA11yLabel: 'MMMM DD',
+  },
+};
 
 registerLocaleData(NgLocaleLocalization, 'it-IT');
 
@@ -64,6 +80,7 @@ export const appConfig: ApplicationConfig = {
         return adapter;
       },
     },
+    { provide: MAT_DATE_FORMATS, useValue: WLT_DATE_FORMATS },
 
     // Currency
     provideEnvironmentNgxCurrency({
