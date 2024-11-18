@@ -57,3 +57,33 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.large-input {
+  width: 350px;
+}
+
+@media (max-width: 768px) {
+  .large-input {
+    width: 150px;
+  }
+}
+
+.medium-input {
+  width: 250px;
+}
+
+@media (max-width: 768px) {
+  .medium-input {
+    width: 90px;
+  }
+}
+
+.small-input {
+  width: 150px;
+}
+
+@media (max-width: 768px) {
+  .small-input {
+    width: 50px;
+  }
+}

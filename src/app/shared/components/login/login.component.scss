@@ -1,6 +1,14 @@
 .container {
   padding: 12px;
   overflow: hidden;
+  gap: 12px;
+  width: 400px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 65vw;
+  }
 }
 
 .center-cols {

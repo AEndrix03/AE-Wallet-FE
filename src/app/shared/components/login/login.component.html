@@ -1,7 +1,7 @@
 <app-dialog-wrapper [title]="'Login'" (close)="close()">
-  <div class="center-cols container" style="gap: 12px; width: 400px">
+  <div class="center-cols container">
     <div class="center-cols" style="gap: 8px">
-      <mat-form-field appearance="outline" style="width: 350px">
+      <mat-form-field appearance="outline" class="large-input">
         <mat-label>Email</mat-label>
         <input
           matInput
@@ -11,7 +11,7 @@
         />
         <mat-error>Email is required</mat-error>
       </mat-form-field>
-      <mat-form-field appearance="outline" style="width: 350px">
+      <mat-form-field appearance="outline" class="large-input">
         <mat-label>Password</mat-label>
         <input
           matInput
