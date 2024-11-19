@@ -38,19 +38,21 @@
                   "with": "src/app/environments/environment.prod.ts"
                 }
               ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "10mb",
-                  "maximumError": "100mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10mb",
-                  "maximumError": "100mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             },
             "staging": {
               "fileReplacements": [
@@ -58,24 +60,29 @@
                   "replace": "src/app/environments/environment.ts",
                   "with": "src/app/environments/environment.dev.ts"
                 }
-              ]
+              ],
+              "optimization": true,
+              "sourceMap": true
             },
             "development": {
               "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "extractLicenses": false
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json" 
+          },
           "configurations": {
             "production": {
-              "buildTarget": "AE-Wallet:build:production"
+              "browserTarget": "AE-Wallet:build:production"
             },
             "development": {
-              "buildTarget": "AE-Wallet:build:development"
+              "browserTarget": "AE-Wallet:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +90,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "AE-Wallet:build"
+            "browserTarget": "AE-Wallet:build"
           }
         },
         "test": {
