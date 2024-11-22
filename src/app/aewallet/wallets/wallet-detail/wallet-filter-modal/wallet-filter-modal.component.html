@@ -1,0 +1,86 @@
+<app-dialog-wrapper [title]="'Filter results'" (close)="exit()">
+  <div class="col container">
+    <div class="row">
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        style="flex-grow: 1"
+      >
+        <mat-label> Title </mat-label>
+        <input matInput [(ngModel)]="filters.title" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        style="width: 150px"
+      >
+        <mat-label> Value from </mat-label>
+        <input matInput [(ngModel)]="filters.valueFrom" type="number" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        style="width: 150px"
+      >
+        <mat-label> Value to </mat-label>
+        <input matInput [(ngModel)]="filters.valueTo" type="number" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        style="flex-grow: 1 !important"
+      >
+        <mat-label> Description </mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="filters.description"
+          type="text"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        style="flex-grow: 1"
+      >
+        <mat-label> Date from </mat-label>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerFrom"
+        ></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="pickerFrom"
+          [(ngModel)]="filters.dateFrom"
+        />
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        style="flex-grow: 1"
+      >
+        <mat-label> Date to </mat-label>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerTo"
+        ></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="pickerTo"
+          [(ngModel)]="filters.dateTo"
+        />
+        <mat-datepicker #pickerTo></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="end-row" #dialogButtons>
+      <button mat-raised-button color="primary" (click)="filter()">
+        Filter
+      </button>
+      <button mat-raised-button class="reset" (click)="filter()">Reset</button>
+    </div>
+  </div>
+</app-dialog-wrapper>

@@ -1,0 +1,18 @@
+<div class="form-header">
+  <p>{{ title }}</p>
+  <div class="actions">
+    <button mat-fab *ngIf="!hideSave" (click)="save.emit()">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-fab *ngIf="!hideAdd" (click)="add.emit()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-fab *ngIf="!hideRefresh" (click)="refresh.emit()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button mat-fab *ngIf="!hideSearch" (click)="search.emit()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="container"><ng-content></ng-content></div>

@@ -1,0 +1,12 @@
+<app-wallet-list
+  [wallets]="selectedWallets$ | async"
+  (openWallet)="openWallet($event)"
+  (createWallet)="createWallet()"
+  (deleteWallet)="deleteWallet($event)"
+></app-wallet-list>
+<app-all-time-entries
+  [entries]="allTimeEntries$ | async"
+  (filter)="filterAllTimeEntries($event)"
+  (refresh)="refreshAllTimeEntries()"
+>
+</app-all-time-entries>
