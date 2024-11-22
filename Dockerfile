@@ -1,15 +1,19 @@
-FROM node:18 AS build
+FROM node:18.19.0 as build
 
 WORKDIR /app
 
 COPY package*.json ./
+
 RUN npm install
-COPY . . 
+
 RUN npm install -g @angular/cli
 
-RUN ng build --configuration production
-FROM httpd:alpine
+COPY . .
 
-COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
+RUN ng build --configuration=production
+
+FROM nginx:latest
+
+COPY --from=build app/dist/ae-wallet-fe/browser /usr/share/nginx/html
+
 EXPOSE 80
-CMD ["httpd-foreground"]
