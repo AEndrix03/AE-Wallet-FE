@@ -1,12 +1,19 @@
-FROM node:18 AS build
+FROM node:18.19.0 as build
+
 WORKDIR /app
+
 COPY package*.json ./
+
 RUN npm install
+
+RUN npm install -g @angular/cli
+
 COPY . .
-RUN npm run build
 
-FROM nginx:1.25
-COPY --from=build /app/dist/ae-wallet-fe /usr/share/nginx/html
+RUN ng build --configuration=production
 
-EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:latest
+
+COPY --from=build app/dist/ae-wallet-fe/browser /usr/share/nginx/html
+
+EXPOSE 80
