@@ -1,33 +1,25 @@
-import { Routes } from '@angular/router';
-import { NotFoundComponent } from './shared/pages/not-found/not-found.component';
-import { NotAuthorizedComponent } from './shared/pages/not-authorized/not-authorized.component';
+import { Route } from '@angular/router';
+import { authGuard } from '@aredegalli/ng-auth';
 
-export const routes: Routes = [
+export const appRoutes: Route[] = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
-    path: 'home',
     loadChildren: () =>
-      import('./aewallet/home/home.module').then((m) => m.HomeModule),
+      import('./pages/public/public.routes').then((m) => m.publicRoutes),
   },
   {
-    path: 'wallets',
+    path: '',
     loadChildren: () =>
-      import('./aewallet/wallets/wallets.module').then((m) => m.WalletsModule),
+      import('./pages/private/private.routes').then((m) => m.privateRoutes),
+    canActivate: [authGuard],
   },
   {
-    path: 'not-found',
-    component: NotFoundComponent,
-  },
-  {
-    path: 'not-authorized',
-    component: NotAuthorizedComponent,
+    path: '',
+    loadChildren: () =>
+      import('@aredegalli/ng-auth').then((lib) => lib.authRoutes),
   },
   {
     path: '**',
-    redirectTo: 'not-found',
+    redirectTo: '',
   },
 ];

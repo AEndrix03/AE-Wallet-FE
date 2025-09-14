@@ -1,0 +1,74 @@
+<aside
+  class="h-full shadow-xl relative transition-all duration-500 ease-in-out border-r backdrop-blur-sm"
+  [class.w-72]="!collapsed()"
+  [class.w-20]="collapsed()"
+  [ngClass]="{
+    'bg-slate-900/95 border-slate-700': isDarkMode(),
+    'bg-white/95 border-slate-200': !isDarkMode()
+  }"
+  *ngIf="visible()"
+>
+
+  <!-- Navigation Items -->
+  <div class="p-4">
+    <div *ngIf="!collapsed()" class="mb-4">
+      <p class="text-xs font-semibold uppercase tracking-wider mb-3" [ngClass]="{
+        'text-slate-400': isDarkMode(),
+        'text-slate-500': !isDarkMode()
+      }">Main Menu</p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <ng-container *ngFor="let item of navItems">
+        <div class="relative">
+          <button
+            type="button"
+            [routerLink]="item.route"
+            routerLinkActive="active-nav-item"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [title]="collapsed() ? item.label : null"
+            class="w-full p-3 rounded-xl transition-all duration-300 ease-in-out flex items-center group hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2"
+            [class.justify-center]="collapsed()"
+            [class.justify-start]="!collapsed()"
+            [ngClass]="{
+          'hover:bg-slate-800/50 text-slate-400 hover:text-white focus:ring-slate-500': isDarkMode(),
+          'hover:bg-slate-100/50 text-slate-600 hover:text-slate-900 focus:ring-slate-400': !isDarkMode()
+        }"
+          >
+            <!-- Icona -->
+            <i [class]="item.icon" class="text-lg"></i>
+
+            <!-- Testo con spacing -->
+            <span
+              *ngIf="!collapsed()"
+              class="ml-3 font-medium text-sm transition-all duration-300"
+            >
+          {{ item.label }}
+        </span>
+          </button>
+
+          <!-- Active indicator -->
+          <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-r-full opacity-0 transition-opacity duration-300 active-indicator"></div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Collapse Toggle -->
+  <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20">
+    <button
+      type="button"
+      (click)="toggleCollapse()"
+      class="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2"
+      [ngClass]="{
+      'bg-slate-800 hover:bg-slate-700 text-white border border-slate-600 focus:ring-slate-500': isDarkMode(),
+      'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 focus:ring-gray-400': !isDarkMode()
+    }"
+    >
+      <i
+        class="transition-transform duration-300 text-lg"
+        [ngClass]="collapsed() ? 'pi pi-angle-right' : 'pi pi-angle-left'"
+      ></i>
+    </button>
+  </div>
+</aside>

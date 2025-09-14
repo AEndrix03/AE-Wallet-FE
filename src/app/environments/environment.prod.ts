@@ -1,7 +1,7 @@
 export const environment = {
+  applicationName: 'AE-Wallet',
   production: true,
-  //apiUrl: 'http://217.160.248.228:8080/api',
-  apiUrl: 'http://aewallet.aredegalli.it/api',
-  featureFlag: false,
-  debugMode: false,
+  praetorApiUrl: 'https://dev.aredegalli.it:5050/praetor',
+  praetorAuthApplicationName: 'Dominatus',
+  apiUrl: 'https://localhost:8443',
 };

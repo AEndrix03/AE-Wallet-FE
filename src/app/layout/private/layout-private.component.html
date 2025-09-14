@@ -1,0 +1,14 @@
+<wlt-private-navbar
+  [userRole]="userRole()"
+  [userName]="userName()"
+  (toggleSidebar)="visibleSidebar.set(!visibleSidebar())"
+  (logout)="logout()"
+  (profile)="goToProfile()"
+/>
+
+<div class="flex h-[calc(100vh-4rem)]">
+  <wlt-private-sidebar [visible]="true" />
+  <main class="flex-1 px-4 overflow-y-auto">
+    <router-outlet></router-outlet>
+  </main>
+</div>

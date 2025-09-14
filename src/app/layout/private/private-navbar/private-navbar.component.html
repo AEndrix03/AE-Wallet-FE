@@ -1,0 +1,119 @@
+<nav class="w-full h-16 shadow-xl border-b z-50 relative overflow-hidden"
+     [ngClass]="{
+       'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white border-slate-700': isDarkMode(),
+       'bg-gradient-to-r from-slate-50 via-white to-slate-50 text-slate-800 border-slate-200': !isDarkMode()
+     }">
+
+  <!-- Animated background -->
+  <div class="absolute inset-0 animate-pulse"
+       [ngClass]="{
+         'bg-gradient-to-r from-emerald-500/5 via-transparent to-teal-500/5': isDarkMode(),
+         'bg-gradient-to-r from-emerald-500/3 via-transparent to-teal-500/3': !isDarkMode()
+       }"></div>
+
+  <div class="relative z-10 px-6 flex items-center justify-between h-full">
+    <!-- Left Section -->
+    <div class="flex items-center gap-6">
+      <!-- Logo & Brand -->
+      <div class="flex items-center gap-3 group cursor-pointer">
+        <div class="relative">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <img ngSrc="/logo.svg" alt="Logo" class="h-6 w-auto" height="16" width="16" />
+          </div>
+          <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2"
+               [ngClass]="{
+                 'border-white': isDarkMode(),
+                 'border-slate-50': !isDarkMode()
+               }"></div>
+        </div>
+        <div class="hidden sm:block">
+          <span class="text-xl font-bold bg-gradient-to-r bg-clip-text text-transparent"
+                [ngClass]="{
+                  'from-white to-slate-300': isDarkMode(),
+                  'from-slate-800 to-slate-600': !isDarkMode()
+                }">
+            Wallets
+          </span>
+          <p class="text-xs -mt-1"
+             [ngClass]="{
+               'text-slate-400': isDarkMode(),
+               'text-slate-500': !isDarkMode()
+             }">Financial Hub</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="flex items-center gap-4">
+      <!-- Theme Toggle -->
+      <ar-theme-mode-button
+        severity="secondary"
+        [rounded]="true"
+        [text]="true"
+        class="rounded-lg transition-colors p-2"
+        [ngClass]="{
+          'hover:bg-slate-800': isDarkMode(),
+          'hover:bg-slate-100': !isDarkMode()
+        }"
+      />
+
+      <!-- User Role Badge -->
+      <div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-full border border-emerald-500/30">
+        <i class="pi pi-shield text-emerald-400 text-xs"></i>
+        <span class="text-xs font-medium text-emerald-400">{{ userRole }}</span>
+      </div>
+
+      <!-- User Avatar & Menu -->
+      <div class="relative">
+        <button
+          class="flex items-center gap-3 p-2 rounded-lg transition-all duration-300 group"
+          [ngClass]="{
+            'hover:bg-slate-800': isDarkMode(),
+            'hover:bg-slate-100': !isDarkMode()
+          }"
+          (click)="toggleUserMenu($event)"
+        >
+          <div class="relative">
+            <p-avatar
+              icon="pi pi-user"
+              shape="circle"
+              styleClass="cursor-pointer bg-gradient-to-br from-blue-500 to-purple-600"
+            />
+            <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2"
+                 [ngClass]="{
+                   'border-slate-900': isDarkMode(),
+                   'border-white': !isDarkMode()
+                 }"></div>
+          </div>
+          <div class="hidden md:block text-left">
+            <p class="text-sm font-medium transition-colors"
+               [ngClass]="{
+                 'text-white group-hover:text-emerald-400': isDarkMode(),
+                 'text-slate-800 group-hover:text-emerald-600': !isDarkMode()
+               }">
+              {{ userName }}
+            </p>
+            <p class="text-xs"
+               [ngClass]="{
+                 'text-slate-400': isDarkMode(),
+                 'text-slate-500': !isDarkMode()
+               }">{{ userRole }}</p>
+          </div>
+          <i class="pi pi-angle-down text-sm transition-colors hidden md:block"
+             [ngClass]="{
+               'text-slate-400 group-hover:text-white': isDarkMode(),
+               'text-slate-500 group-hover:text-slate-800': !isDarkMode()
+             }"></i>
+        </button>
+
+        <p-menu
+          #userMenu
+          [popup]="true"
+          [model]="userMenuItems"
+          appendTo="body"
+          styleClass="mt-2 min-w-[200px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl backdrop-blur-sm"
+        />
+      </div>
+    </div>
+  </div>
+</nav>
