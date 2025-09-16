@@ -1,14 +1,22 @@
 import {
-  ApplicationConfig, provideAppInitializer,
+  ApplicationConfig,
+  provideAppInitializer,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection
+  provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { initializeAppFn } from './services/app-init.service';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { authInterceptor, PRAETOR_LOGIN_EFFECTS, providePraetor } from '@aredegalli/ng-auth';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
+import {
+  authInterceptor,
+  provideLoginComponentConfig,
+  providePraetor,
+} from '@aredegalli/ng-auth';
 import { dateInterceptor } from '@aredegalli/ng-common';
 import { environment } from './environments/environment.prod';
 import { providePrimeNG } from 'primeng/config';
@@ -45,5 +53,16 @@ export function provideAuth() {
       environment.praetorAuthApplicationName
     ),
     provideLoginEffect(),
+    provideLoginComponentConfig({
+      title: 'Welcome Back',
+      iconCard: 'pi pi-wallet',
+      subtitle: 'Sign in to access your AE Wallet',
+      showCreateAccount: true,
+      showAppleLogin: true,
+      showGoogleLogin: true,
+      showGithubLogin: true,
+      showForgotPassword: true,
+      showRememberMe: true,
+    }),
   ];
 }
