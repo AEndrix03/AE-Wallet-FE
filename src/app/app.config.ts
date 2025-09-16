@@ -20,8 +20,8 @@ import {
 import { dateInterceptor } from '@aredegalli/ng-common';
 import { environment } from './environments/environment.prod';
 import { providePrimeNG } from 'primeng/config';
-import { Preset } from '@nx/workspace/src/generators/utils/presets';
 import { provideLoginEffect } from './services/auth/login-effect.service';
+import { Preset } from './styles/themes/preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
