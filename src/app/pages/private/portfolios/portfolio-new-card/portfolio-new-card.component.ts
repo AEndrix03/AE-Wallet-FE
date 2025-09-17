@@ -8,5 +8,5 @@ import { CardModule } from 'primeng/card';
   templateUrl: './portfolio-new-card.component.html',
 })
 export class PortfolioNewCardComponent {
-  public readonly onCreate = output<void>();
+  public readonly create = output<void>();
 }

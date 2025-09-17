@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
+import { TransactionsFiltersComponent } from './transactions-filters/transactions-filters.component';
 
 @Component({
   selector: 'wlt-transactions',
-  imports: [],
+  imports: [TransactionsFiltersComponent],
   templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.css',
 })
 export class TransactionsComponent {}

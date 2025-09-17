@@ -16,7 +16,7 @@
     "@angular/forms": "~20.2.0",
     "@angular/platform-browser": "~20.2.0",
     "@angular/router": "~20.2.0",
-    "@aredegalli/ng-auth": "^0.0.10",
+    "@aredegalli/ng-auth": "^0.0.11",
     "@aredegalli/ng-common": "^0.0.3",
     "@aredegalli/ng-primeng": "^0.0.7",
     "@ngrx/signals": "^20.0.1",

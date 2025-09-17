@@ -1,18 +1,117 @@
-<p-card [style]="{ width: '20rem', overflow: 'hidden' }">
-  <ng-template #header>
-    <img alt="Card" class="w-full" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
-  </ng-template>
-  <ng-template #title><span class="pl-4">Advanced Card</span></ng-template>
-  <ng-template #subtitle> Card subtitle</ng-template>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
-    deserunt
-    quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-  </p>
-  <ng-template #footer>
-    <div class="flex gap-4 mt-1">
-      <p-button label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
-      <p-button label="Save" class="w-full" styleClass="w-full" />
+<article
+  class="group flex flex-col w-[20rem] h-[30rem] border-4 border-slate-300 dark:border-slate-600 rounded-xl cursor-pointer hover:border-emerald-500 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 ease-in-out bg-white dark:bg-slate-800 overflow-hidden"
+  (click)="view.emit()">
+
+  <div
+    class="h-1/3 max-h-1/3 relative overflow-hidden rounded-t-xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800">
+    <img
+      [src]="portfolio().image || 'https://via.placeholder.com/400x200/64748b/ffffff?text=' + portfolio().name.charAt(0)"
+      [alt]="portfolio().name"
+      class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110">
+
+    <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300"></div>
+
+    <div class="absolute top-2 right-2 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
+      <p-chip
+        [label]="statusConfig().label"
+        [ngClass]="statusConfig().class"
+        class="text-xs px-2 py-1 shadow-md">
+      </p-chip>
     </div>
-  </ng-template>
-</p-card>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-between p-4 space-y-4">
+    <div class="text-center space-y-3">
+      <div class="flex justify-center">
+        <span
+          class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border transition-all duration-300 hover:scale-105"
+          [ngClass]="'bg-' + typeConfig().color + '-50 text-' + typeConfig().color + '-700 border-' + typeConfig().color + '-200 dark:bg-' + typeConfig().color + '-900/20 dark:text-' + typeConfig().color + '-400 dark:border-' + typeConfig().color + '-800'">
+          <i [class]="typeConfig().icon" class="mr-1.5 text-sm"></i>
+          {{ typeConfig().label }}
+        </span>
+      </div>
+
+      <h3
+        class="text-lg font-bold text-slate-800 dark:text-slate-200 truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300"
+        [title]="portfolio().name">
+        {{ portfolio().name }}
+      </h3>
+
+      <div class="space-y-1 transform group-hover:scale-105 transition-transform duration-300">
+        <div class="text-2xl font-bold text-slate-900 dark:text-slate-100">
+          {{ formatCurrency(portfolio().balance) }}
+        </div>
+        @if (portfolio().target) {
+          <div class="text-sm text-slate-600 dark:text-slate-400">
+            {{ formatPercentage(percentageOfTotal()) }} del totale
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (portfolio().target) {
+      <div class="space-y-2 transform group-hover:translate-x-1 transition-transform duration-300">
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-slate-600 dark:text-slate-400">Obiettivo</span>
+          <span class="font-medium text-slate-800 dark:text-slate-200">
+          {{ formatCurrency(portfolio().target!) }}
+        </span>
+        </div>
+
+        <div class="relative">
+          <p-progressBar
+            [value]="targetProgress()"
+            styleClass="h-2 overflow-hidden rounded-full"
+            [showValue]="false">
+          </p-progressBar>
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        </div>
+
+        <div class="text-center text-xs text-slate-500 dark:text-slate-500">
+          {{ formatPercentage(targetProgress()) }} completato
+        </div>
+      </div>
+    }
+
+    <div
+      class="flex justify-between items-center text-xs text-slate-500 dark:text-slate-500 pt-2 border-t border-slate-200 dark:border-slate-700">
+      <span class="font-medium uppercase tracking-wide">{{ portfolio().currency }}</span>
+      <span
+        pTooltip="Ultimo aggiornamento: {{ portfolio().lastUpdated | date:'dd/MM/yyyy HH:mm' }}"
+        tooltipPosition="top"
+        class="flex items-center space-x-1 hover:text-slate-700 dark:hover:text-slate-300 transition-colors duration-200">
+        <i class="pi pi-clock text-xs"></i>
+        <span>{{ daysSinceUpdate() }}d fa</span>
+      </span>
+    </div>
+  </div>
+
+  <div
+    class="action-buttons flex space-x-1 p-2 bg-slate-50 dark:bg-slate-900/50 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+    <p-button
+      icon="pi pi-pencil"
+      [text]="true"
+      [rounded]="true"
+      size="small"
+      severity="secondary"
+      (click)="$event.stopPropagation(); edit.emit()"
+      pTooltip="Modifica"
+      tooltipPosition="top"
+      class="hover:scale-110 transition-transform duration-200">
+    </p-button>
+
+    <p-button
+      icon="pi pi-trash"
+      [text]="true"
+      [rounded]="true"
+      size="small"
+      severity="danger"
+      (click)="$event.stopPropagation(); delete.emit()"
+      pTooltip="Elimina"
+      tooltipPosition="top"
+      class="hover:scale-110 transition-transform duration-200">
+    </p-button>
+  </div>
+
+</article>

@@ -1,0 +1,24 @@
+<article>
+  <wlt-accordion header="Filters">
+    <div class="p-3 flex flex-col gap-2">
+      <div class="flex flex-row flex-wrap gap-4">
+        <ng-content></ng-content>
+      </div>
+      <div class="flex flex-row gap-4 justify-end">
+        <wlt-button
+          label="Reset"
+          icon="pi pi-times"
+          [outlined]="true"
+          severity="secondary"
+          (click)="onReset.emit()"
+        />
+        <wlt-button
+          label="Search"
+          icon="pi pi-search"
+          [outlined]="true"
+          (click)="onSearch.emit()"
+        />
+      </div>
+    </div>
+  </wlt-accordion>
+</article>
