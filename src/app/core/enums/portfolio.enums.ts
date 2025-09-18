@@ -66,10 +66,3 @@ export const PORTFOLIO_TYPE_CONFIG = {
     bgColor: 'bg-yellow-50 dark:bg-yellow-900/20',
   },
 } as const;
-
-export const CURRENCY_SYMBOLS = {
-  USD: '$',
-  EUR: '€',
-  GBP: '£',
-  JPY: '¥',
-} as const;

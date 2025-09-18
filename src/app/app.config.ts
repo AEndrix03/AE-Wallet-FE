@@ -22,6 +22,7 @@ import { environment } from './environments/environment.prod';
 import { providePrimeNG } from 'primeng/config';
 import { provideLoginEffect } from './services/auth/login-effect.service';
 import { Preset } from './styles/themes/preset';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,6 +35,7 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor, dateInterceptor])
     ),
     provideAuth(),
+    provideAnimationsAsync(),
     providePrimeNG({
       theme: {
         preset: Preset,

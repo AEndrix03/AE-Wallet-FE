@@ -1,5 +1,12 @@
 <article class="px-2 py-4">
   <wlt-filters-template>
-
+    <ng-container>
+      <wlt-input-date-range label="Date range" [fromControl]="dateFromFc()" [toControl]="dateToFc()" />
+      <wlt-input-text label="Description" [control]="descriptionFc()" />
+      <wlt-input-number label="Amount" [control]="amountFc()" />
+      <wlt-select label="Type" [control]="typeFc()" [options]="typeOptions()" />
+      <wlt-select label="Currency" [control]="currencyFc()" [options]="currencyOptions()" />
+      <wlt-select label="Category" [control]="categoryFc()" [options]="categoryOptions()" />
+    </ng-container>
   </wlt-filters-template>
 </article>

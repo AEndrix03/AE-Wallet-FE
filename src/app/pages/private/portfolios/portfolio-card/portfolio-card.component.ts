@@ -7,10 +7,10 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { PortfolioDto } from '../../../../core/models/portfolio.models';
 import {
-  CURRENCY_SYMBOLS,
   PORTFOLIO_TYPE_CONFIG,
   PortfolioStatusEnum,
 } from '../../../../core/enums/portfolio.enums';
+import { CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
 
 @Component({
   selector: 'wlt-portfolio-card',

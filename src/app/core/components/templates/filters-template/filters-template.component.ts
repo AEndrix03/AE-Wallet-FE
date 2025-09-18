@@ -6,7 +6,6 @@ import { ButtonComponent } from '../../button/button.component';
   selector: 'wlt-filters-template',
   imports: [AccordionComponent, ButtonComponent],
   templateUrl: './filters-template.component.html',
-  styleUrl: './filters-template.css',
 })
 export class FiltersTemplateComponent {
   public readonly onSearch = output<void>();
