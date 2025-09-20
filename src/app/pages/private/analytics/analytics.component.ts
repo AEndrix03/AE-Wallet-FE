@@ -2,7 +2,12 @@ import { Component, signal, WritableSignal } from '@angular/core';
 import { AnalyticsGeneralPortfoliosComponent } from './analytics-general-portfolios/analytics-general-portfolios.component';
 import { CardComponent } from '../../../core/components/card/card.component';
 import { AnalyticsPortfoliosTopComponent } from './analytics-portfolios-top/analytics-portfolios-top.component';
-import { PortfolioDeviationData } from '../../../core/models/analytics.models';
+import {
+  AllocationData,
+  PortfolioDeviationData,
+  PreferencesData,
+} from '../../../core/models/analytics.models';
+import { AnalyticsPreferencesComponent } from './analytics-preferences/analytics-preferences.component';
 
 @Component({
   selector: 'wlt-analytics',
@@ -10,11 +15,18 @@ import { PortfolioDeviationData } from '../../../core/models/analytics.models';
     AnalyticsGeneralPortfoliosComponent,
     CardComponent,
     AnalyticsPortfoliosTopComponent,
+    AnalyticsPreferencesComponent,
   ],
   templateUrl: './analytics.component.html',
 })
 export class AnalyticsComponent {
   protected readonly deviationData: WritableSignal<PortfolioDeviationData[]> =
+    signal([]);
+
+  protected readonly partitionsData: WritableSignal<AllocationData[]> = signal(
+    []
+  );
+  protected readonly preferedPartitionsData: WritableSignal<PreferencesData[]> =
     signal([]);
 
   constructor() {
@@ -210,6 +222,62 @@ export class AnalyticsComponent {
           rating: 3,
           rank: 3,
         },
+      },
+    ]);
+    this.partitionsData.set([
+      {
+        portfolioId: 'emergency',
+        name: 'Emergency Fund',
+        amount: 15000,
+        percentage: 37.5, // Leggermente sotto target
+        color: '#ef4444',
+      },
+      {
+        portfolioId: 'investment',
+        name: 'Investment Portfolio',
+        amount: 8000,
+        percentage: 20, // Molto sotto target
+        color: '#10b981',
+      },
+      {
+        portfolioId: 'daily',
+        name: 'Daily Expenses',
+        amount: 12000,
+        percentage: 30, // Sopra target
+        color: '#3b82f6',
+      },
+      {
+        portfolioId: 'discretionary',
+        name: 'Fun Money',
+        amount: 5000,
+        percentage: 12.5, // Sopra target
+        color: '#8b5cf6',
+      },
+    ]);
+    this.preferedPartitionsData.set([
+      {
+        portfolioId: 'emergency',
+        name: 'Emergency Fund',
+        targetPercentage: 40,
+        color: '#ef4444',
+      },
+      {
+        portfolioId: 'investment',
+        name: 'Investment Portfolio',
+        targetPercentage: 35, // Target più alto
+        color: '#10b981',
+      },
+      {
+        portfolioId: 'daily',
+        name: 'Daily Expenses',
+        targetPercentage: 20,
+        color: '#3b82f6',
+      },
+      {
+        portfolioId: 'discretionary',
+        name: 'Fun Money',
+        targetPercentage: 5, // Target più basso
+        color: '#8b5cf6',
       },
     ]);
   }

@@ -24,3 +24,18 @@ export interface PortfolioStats {
   rating: number;
   rank: number;
 }
+
+export interface AllocationData {
+  portfolioId: string;
+  name: string;
+  amount: number;
+  percentage: number;
+  color: string;
+}
+
+export interface PreferencesData {
+  portfolioId: string;
+  name: string;
+  targetPercentage: number;
+  color: string;
+}
