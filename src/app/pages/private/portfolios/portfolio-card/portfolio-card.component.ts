@@ -11,6 +11,7 @@ import {
   PortfolioStatusEnum,
 } from '../../../../core/enums/portfolio.enums';
 import { CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
+import { CardComponent } from '../../../../core/components/card/card.component';
 
 @Component({
   selector: 'wlt-portfolio-card',
@@ -22,6 +23,7 @@ import { CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
     ChipModule,
     ProgressBarModule,
     TooltipModule,
+    CardComponent,
   ],
   templateUrl: './portfolio-card.component.html',
 })

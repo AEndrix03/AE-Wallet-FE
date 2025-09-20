@@ -23,8 +23,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class InputTextComponent {
   public readonly control: InputSignal<FormControl<string>> = input.required();
 
-  public readonly id: InputSignal<string> = input();
+  public readonly id: InputSignal<string> = input('input-text');
   public readonly label: InputSignal<string> = input();
-  public readonly size: InputSignal<'large' | 'small' | null> = input();
+  public readonly size: InputSignal<'large' | 'small'> = input('large');
   public readonly class: InputSignal<string> = input();
 }

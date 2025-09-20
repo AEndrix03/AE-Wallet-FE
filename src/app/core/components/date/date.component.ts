@@ -27,9 +27,9 @@ export class InputDateRangeComponent {
   public readonly control: InputSignal<FormControl<Date | null>> =
     input.required();
 
-  public readonly id: InputSignal<string> = input();
+  public readonly id: InputSignal<string> = input('datepicker');
   public readonly label: InputSignal<string> = input();
-  public readonly size: InputSignal<'large' | 'small' | null> = input();
+  public readonly size: InputSignal<'large' | 'small'> = input('large');
   public readonly class: InputSignal<string> = input();
   public readonly readonlyInput: InputSignal<boolean> = input(true);
   public readonly showIcon: InputSignal<boolean> = input(true);
