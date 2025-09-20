@@ -1,26 +1,25 @@
 import { Component, input, InputSignal } from '@angular/core';
 import { IftaLabelModule } from 'primeng/iftalabel';
-import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
-  selector: 'wlt-input-text',
-  imports: [IftaLabelModule, InputTextModule, ReactiveFormsModule],
+  selector: 'wlt-textarea',
+  imports: [IftaLabelModule, TextareaModule, ReactiveFormsModule],
   template: `
     <p-iftalabel [class]="class()">
-      <input
-        pInputText
+      <textarea
+        pTextarea
         [id]="id()"
         [formControl]="control()"
-        [size]="size()"
         class="w-full"
         autocomplete="off"
-      />
+      ></textarea>
       <label [for]="id()">{{ label() }}</label>
     </p-iftalabel>
   `,
 })
-export class InputTextComponent {
+export class TextareaComponent {
   public readonly control: InputSignal<FormControl<string>> = input.required();
 
   public readonly id: InputSignal<string> = input();

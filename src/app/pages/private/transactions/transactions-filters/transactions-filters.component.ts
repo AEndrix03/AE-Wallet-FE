@@ -11,6 +11,8 @@ import { InputDateRangeComponent } from '../../../../core/components/date-range/
 import { InputNumberComponent } from '../../../../core/components/input-number/input-number.component';
 import { Select } from '../../../../core/components/select/select';
 import { TransactionFilterDto } from '../../../../core/models/transaction.models';
+import { DividerModule } from 'primeng/divider';
+import { ButtonComponent } from '../../../../core/components/button/button.component';
 
 @Component({
   selector: 'wlt-transactions-filters',
@@ -20,12 +22,16 @@ import { TransactionFilterDto } from '../../../../core/models/transaction.models
     InputDateRangeComponent,
     InputNumberComponent,
     Select,
+    DividerModule,
+    ButtonComponent,
+    ButtonComponent,
   ],
   templateUrl: './transactions-filters.component.html',
 })
 export class TransactionsFiltersComponent {
   public readonly onSearch = output<TransactionFilterDto>();
   public readonly onReset = output<void>();
+  public readonly onCreate = output<void>();
 
   private readonly form: FormGroup<TransactionFilter>;
   private readonly _fb: FormBuilder = inject(FormBuilder);

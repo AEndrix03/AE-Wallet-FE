@@ -1,0 +1,20 @@
+<article class="p-4 flex flex-col gap-3">
+  <form [formGroup]="form" class="flex flex-col gap-3">
+    <wlt-textarea label="Descrizione" [control]="descriptionFc()" class="min-h-[4rem]" />
+    <div class="flex gap-3 items-end">
+      <wlt-input-number label="Ammontare" [control]="amountFc()" />
+      <wlt-select label="Valuta" [control]="currencyFc()" [options]="currencyOptions()" />
+      <wlt-select label="Tipo" [control]="typeFc()" [options]="typeOptions()" />
+      <wlt-input-date label="Data" [control]="dateFc()" />
+      <wlt-select label="Portfolio" [control]="portfolioIdFc()" [options]="portfolioOptions()"
+                  class="min-w-[12rem] flex-1" />
+    </div>
+    <div class="flex gap-3 items-end">
+      <wlt-textarea label="Note" [control]="noteFc()" class="min-h-[2.5rem] flex-1" />
+    </div>
+    <div class="flex justify-between mt-4">
+      <wlt-button label="BACK" (onClick)="onBack()" severity="secondary" />
+      <wlt-button label="SAVE" (onClick)="onSave()" severity="primary" />
+    </div>
+  </form>
+</article>
