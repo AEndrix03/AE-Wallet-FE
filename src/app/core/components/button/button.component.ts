@@ -5,15 +5,14 @@ import { ButtonModule } from 'primeng/button';
   selector: 'wlt-button',
   imports: [ButtonModule],
   template: ` <p-button
-    type="button"
     [ariaLabel]="label()"
     [label]="label()"
     [icon]="icon()"
-    [disabled]="disabled"
+    [disabled]="disabled()"
     [severity]="severity()"
     [size]="size()"
-    [rounded]="rounded"
-    [text]="text"
+    [rounded]="rounded()"
+    [text]="text()"
     [raised]="raised()"
     [outlined]="outlined()"
     [class]="class()"
@@ -21,17 +20,17 @@ import { ButtonModule } from 'primeng/button';
   />`,
 })
 export class ButtonComponent {
-  public readonly label: InputSignal<string> = input();
-  public readonly icon: InputSignal<string> = input();
-  public readonly class: InputSignal<string> = input();
+  public readonly label: InputSignal<string> = input('');
+  public readonly icon: InputSignal<string> = input('');
+  public readonly class: InputSignal<string> = input('');
   public readonly size: InputSignal<'small' | 'large' | null> = input();
   public readonly severity: InputSignal<'primary' | 'secondary' | 'success'> =
     input('primary');
-  public readonly disabled: InputSignal<boolean> = input();
-  public readonly rounded: InputSignal<boolean> = input();
-  public readonly outlined: InputSignal<boolean> = input();
-  public readonly raised: InputSignal<boolean> = input();
-  public readonly text: InputSignal<boolean> = input();
+  public readonly disabled: InputSignal<boolean> = input(false);
+  public readonly rounded: InputSignal<boolean> = input(false);
+  public readonly outlined: InputSignal<boolean> = input(false);
+  public readonly raised: InputSignal<boolean> = input(false);
+  public readonly text: InputSignal<boolean> = input(false);
 
   public readonly onClick = output<void>();
 }

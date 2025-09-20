@@ -666,11 +666,11 @@ export const Preset = definePreset(Nora, {
         borderColor: '{content.border.color}',
       },
       header: {
-        color: '{text.color}', // OK
-        hoverColor: '{text.color}', // OK
-        activeColor: '{text.color}', // OK
-        padding: '0.5rem', // OK
-        fontWeight: '600', // OK
+        color: '{text.color}',
+        hoverColor: '{text.color}',
+        activeColor: '{text.color}',
+        padding: '1rem',
+        fontWeight: '600',
         borderRadius: '0',
         borderWidth: '0 1px 1px 1px',
         borderColor: '{content.border.color}',

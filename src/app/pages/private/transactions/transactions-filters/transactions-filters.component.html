@@ -1,8 +1,8 @@
-<article class="px-2 py-4">
-  <wlt-filters-template>
+<article>
+  <wlt-filters-template (onSearch)="_onSearch()" (onReset)="_onReset()">
     <ng-container>
       <wlt-input-date-range label="Date range" [fromControl]="dateFromFc()" [toControl]="dateToFc()" />
-      <wlt-input-text label="Description" [control]="descriptionFc()" />
+      <wlt-input-text label="Description" [control]="descriptionFc()" class="min-w-[16rem]" />
       <wlt-input-number label="Amount" [control]="amountFc()" />
       <wlt-select label="Type" [control]="typeFc()" [options]="typeOptions()" />
       <wlt-select label="Currency" [control]="currencyFc()" [options]="currencyOptions()" />

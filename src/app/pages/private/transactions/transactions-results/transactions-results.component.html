@@ -1,1 +1,58 @@
-<p>transactions-results works!</p>
+<article [ngClass]="transactions()?.content?.length == 0 ? 'invisible' : ''">
+  <p-table
+    [value]="transactions()?.content"
+    [paginator]="true"
+    [rows]="transactions()?.page?.size || 50"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[50, 100, 200]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="!px-4">Id</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Portfolio</th>
+        <th class="!px-4">Note</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td
+          [ngClass]="{ 'bg-green-50 hover:bg-green-100 text-green-700': row.type === 'INCOME', 'bg-red-50 hover:bg-red-100 text-red-700': row.type === 'EXPENSE' }">{{ row.id }}
+        </td>
+        <td
+          [ngClass]="{ 'bg-green-50 hover:bg-green-100 text-green-700': row.type === 'INCOME', 'bg-red-50 hover:bg-red-100 text-red-700': row.type === 'EXPENSE' }">{{ row.description }}
+        </td>
+        <td
+          [ngClass]="{ 'bg-green-50 hover:bg-green-100 text-green-700': row.type === 'INCOME', 'bg-red-50 hover:bg-red-100 text-red-700': row.type === 'EXPENSE' }">{{ row.amount }} {{ row.currency }}
+        </td>
+        <td
+          [ngClass]="{ 'bg-green-50 hover:bg-green-100 text-green-700': row.type === 'INCOME', 'bg-red-50 hover:bg-red-100 text-red-700': row.type === 'EXPENSE' }">{{ row.category }}
+        </td>
+        <td
+          [ngClass]="{ 'bg-green-50 hover:bg-green-100 text-green-700': row.type === 'INCOME', 'bg-red-50 hover:bg-red-100 text-red-700': row.type === 'EXPENSE' }">{{ row.date | date: 'dd/MM/YYYY HH:mm:ss' }}
+        </td>
+        <td
+          [ngClass]="{ 'bg-green-50 hover:bg-green-100 text-green-700': row.type === 'INCOME', 'bg-red-50 hover:bg-red-100 text-red-700': row.type === 'EXPENSE' }">{{ row.portfolioName }}
+        </td>
+        <td class="!px-4"
+            [ngClass]="{ 'bg-green-50 hover:bg-green-100 text-green-700': row.type === 'INCOME', 'bg-red-50 hover:bg-red-100 text-red-700': row.type === 'EXPENSE' }">{{ row.note }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</article>
+
+<!-- <article>
+
+id
+description
+amount
+currency
+category
+type
+date
+portfolioId
+note-->

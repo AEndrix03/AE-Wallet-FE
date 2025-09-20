@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FiltersTemplateComponent } from '../../../../core/components/templates/filters-template/filters-template.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Currency, CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
@@ -10,6 +10,7 @@ import { InputTextComponent } from '../../../../core/components/input-text/input
 import { InputDateRangeComponent } from '../../../../core/components/date-range/date-range.component';
 import { InputNumberComponent } from '../../../../core/components/input-number/input-number.component';
 import { Select } from '../../../../core/components/select/select';
+import { TransactionFilterDto } from '../../../../core/models/transaction.models';
 
 @Component({
   selector: 'wlt-transactions-filters',
@@ -23,6 +24,9 @@ import { Select } from '../../../../core/components/select/select';
   templateUrl: './transactions-filters.component.html',
 })
 export class TransactionsFiltersComponent {
+  public readonly onSearch = output<TransactionFilterDto>();
+  public readonly onReset = output<void>();
+
   private readonly form: FormGroup<TransactionFilter>;
   private readonly _fb: FormBuilder = inject(FormBuilder);
 
@@ -92,6 +96,17 @@ export class TransactionsFiltersComponent {
       code: type,
       description: type,
     }));
+  }
+
+  protected _onSearch(): void {
+    if (this.form.valid) {
+      this.onSearch.emit(this.form.getRawValue());
+    }
+  }
+
+  protected _onReset(): void {
+    this.form.reset();
+    this.onReset.emit();
   }
 }
 

@@ -27,7 +27,7 @@
             routerLinkActive="active-nav-item"
             [routerLinkActiveOptions]="{ exact: true }"
             [title]="collapsed() ? item.label : null"
-            class="w-full p-3 rounded-xl transition-all duration-300 ease-in-out flex items-center group hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2"
+            class="cursor-pointer w-full p-3 rounded-xl transition-all duration-300 ease-in-out flex items-center group hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2"
             [class.justify-center]="collapsed()"
             [class.justify-start]="!collapsed()"
             [ngClass]="{
@@ -48,7 +48,8 @@
           </button>
 
           <!-- Active indicator -->
-          <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-r-full opacity-0 transition-opacity duration-300 active-indicator"></div>
+          <div
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-r-full opacity-0 transition-opacity duration-300 active-indicator"></div>
         </div>
       </ng-container>
     </div>
