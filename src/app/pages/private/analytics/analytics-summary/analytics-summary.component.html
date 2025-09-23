@@ -1,0 +1,72 @@
+<article class="flex flex-col gap-4 h-full">
+  <h2 class="pl-4 m-0 text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+    Financial Summary & Insights
+  </h2>
+
+  <div class="flex-1 px-4 space-y-6">
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      @for (kpi of kpis(); track kpi.label) {
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-3">
+            <div [class]="'p-2 rounded-lg ' + kpi.bgColor + ' dark:bg-opacity-20'">
+              <i [class]="kpi.icon + ' ' + kpi.color + ' text-lg'"></i>
+            </div>
+
+            <div class="flex-1">
+              <div class="text-sm text-gray-600 dark:text-gray-400">
+                {{ kpi.label }}
+              </div>
+              <div class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                {{ formatValue(kpi.value, kpi.format) }}
+              </div>
+
+              @if (kpi.change !== undefined) {
+                <div [class]="'text-xs flex items-center gap-1 ' + getChangeClass(kpi.change)">
+                  <i [class]="getChangeIcon(kpi.change)"></i>
+                  {{ Math.abs(kpi.change).toFixed(1) }}% vs last month
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Insights Section -->
+    @if (insights().length > 0) {
+      <div class="space-y-3">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Smart Insights & Recommendations
+        </h3>
+
+        @for (insight of insights(); track insight.title) {
+          <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+            <div class="flex items-start gap-3">
+              <div [class]="'p-1 rounded-full ' + getSeverityBgClass(insight.type)">
+                <i [class]="insight.icon + ' text-sm ' + getSeverityTextClass(insight.type)"></i>
+              </div>
+
+              <div class="flex-1">
+                <div class="font-medium text-gray-900 dark:text-gray-100 mb-1">
+                  {{ insight.title }}
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  {{ insight.message }}
+                </div>
+
+                @if (insight.actionable) {
+                  <p-badge
+                    value="Action Needed"
+                    severity="warn"
+                    class="text-xs">
+                  </p-badge>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</article>

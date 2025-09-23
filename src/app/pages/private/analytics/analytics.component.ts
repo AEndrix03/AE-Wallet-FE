@@ -8,6 +8,15 @@ import {
   PreferencesData,
 } from '../../../core/models/analytics.models';
 import { AnalyticsPreferencesComponent } from './analytics-preferences/analytics-preferences.component';
+import { AnalyticsIncomeExpenseComponent } from './analytics-income-expense/analytics-income-expense.component';
+import { AnalyticsSummaryComponent } from './analytics-summary/analytics-summary.component';
+import {
+  CategorySpendingData,
+  FinancialSummaryData,
+  IncomeExpenseData,
+} from '../../../core/models/transaction.models';
+import { TransactionCategoryEnum } from '../../../core/enums/transaction.enums';
+import { AnalyticsCategoryComponent } from './analytics-category/analytics-category.component';
 
 @Component({
   selector: 'wlt-analytics',
@@ -16,20 +25,38 @@ import { AnalyticsPreferencesComponent } from './analytics-preferences/analytics
     CardComponent,
     AnalyticsPortfoliosTopComponent,
     AnalyticsPreferencesComponent,
+    AnalyticsIncomeExpenseComponent,
+    AnalyticsSummaryComponent,
+    AnalyticsCategoryComponent,
   ],
   templateUrl: './analytics.component.html',
 })
 export class AnalyticsComponent {
   protected readonly deviationData: WritableSignal<PortfolioDeviationData[]> =
     signal([]);
-
   protected readonly partitionsData: WritableSignal<AllocationData[]> = signal(
     []
   );
   protected readonly preferedPartitionsData: WritableSignal<PreferencesData[]> =
     signal([]);
+  protected readonly incomeExpenseData: WritableSignal<IncomeExpenseData[]> =
+    signal([]);
+  protected readonly summaryData: WritableSignal<FinancialSummaryData> = signal(
+    {
+      currentBalance: 0,
+      monthlyIncome: 0,
+      monthlyExpenses: 0,
+      netFlow: 0,
+      savingsRate: 0,
+      expenseChange: 0,
+      incomeChange: 0,
+    }
+  );
+  protected readonly categoryData: WritableSignal<CategorySpendingData[]> =
+    signal([]);
 
   constructor() {
+    // Dati esistenti per deviation
     this.deviationData.set([
       {
         portfolioId: 'emergency',
@@ -224,36 +251,39 @@ export class AnalyticsComponent {
         },
       },
     ]);
+
+    // Dati esistenti per partitions
     this.partitionsData.set([
       {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
         amount: 15000,
-        percentage: 37.5, // Leggermente sotto target
+        percentage: 37.5,
         color: '#ef4444',
       },
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
         amount: 8000,
-        percentage: 20, // Molto sotto target
+        percentage: 20,
         color: '#10b981',
       },
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
         amount: 12000,
-        percentage: 30, // Sopra target
+        percentage: 30,
         color: '#3b82f6',
       },
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
         amount: 5000,
-        percentage: 12.5, // Sopra target
+        percentage: 12.5,
         color: '#8b5cf6',
       },
     ]);
+
     this.preferedPartitionsData.set([
       {
         portfolioId: 'emergency',
@@ -264,7 +294,7 @@ export class AnalyticsComponent {
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
-        targetPercentage: 35, // Target più alto
+        targetPercentage: 35,
         color: '#10b981',
       },
       {
@@ -276,20 +306,117 @@ export class AnalyticsComponent {
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
-        targetPercentage: 5, // Target più basso
+        targetPercentage: 5,
         color: '#8b5cf6',
+      },
+    ]);
+
+    // NUOVI DATI - Income Expense
+    this.incomeExpenseData.set([
+      {
+        month: '2024-06',
+        date: new Date('2024-06-01'),
+        income: 4200.0,
+        expense: 3675.5,
+        netFlow: 524.5,
+      },
+      {
+        month: '2024-07',
+        date: new Date('2024-07-01'),
+        income: 4800.0,
+        expense: 4200.25,
+        netFlow: 599.75,
+      },
+      {
+        month: '2024-08',
+        date: new Date('2024-08-01'),
+        income: 4200.0,
+        expense: 3950.8,
+        netFlow: 249.2,
+      },
+      {
+        month: '2024-09',
+        date: new Date('2024-09-01'),
+        income: 4650.0,
+        expense: 3425.75,
+        netFlow: 1224.25,
+      },
+      {
+        month: '2024-10',
+        date: new Date('2024-10-01'),
+        income: 4200.0,
+        expense: 3780.5,
+        netFlow: 419.5,
+      },
+      {
+        month: '2024-11',
+        date: new Date('2024-11-01'),
+        income: 4350.0,
+        expense: 4850.25,
+        netFlow: -500.25,
+      },
+    ]);
+
+    // NUOVI DATI - Summary
+    this.summaryData.set({
+      currentBalance: 18750.25,
+      monthlyIncome: 4650.0,
+      monthlyExpenses: 3425.75,
+      netFlow: 1224.25,
+      savingsRate: 26.3,
+      expenseChange: -12.5,
+      incomeChange: 10.7,
+    });
+
+    this.categoryData.set([
+      {
+        category: TransactionCategoryEnum.CHECKING,
+        name: 'Daily Expenses',
+        amount: 2850.75,
+        percentage: 32.5,
+        color: '#3b82f6',
+        transactionCount: 47,
+      },
+      {
+        category: TransactionCategoryEnum.SAVINGS,
+        name: 'Savings',
+        amount: 1500.0,
+        percentage: 17.1,
+        color: '#10b981',
+        transactionCount: 4,
+      },
+      {
+        category: TransactionCategoryEnum.INVESTMENT,
+        name: 'Investments',
+        amount: 1200.0,
+        percentage: 13.7,
+        color: '#8b5cf6',
+        transactionCount: 3,
+      },
+      {
+        category: TransactionCategoryEnum.EMERGENCY,
+        name: 'Emergency Fund',
+        amount: 800.0,
+        percentage: 9.1,
+        color: '#ef4444',
+        transactionCount: 2,
+      },
+      {
+        category: TransactionCategoryEnum.CASH,
+        name: 'Cash Expenses',
+        amount: 650.25,
+        percentage: 7.4,
+        color: '#f59e0b',
+        transactionCount: 19,
+      },
+      {
+        category: TransactionCategoryEnum.CRYPTO,
+        name: 'Cryptocurrency',
+        amount: 700.0,
+        percentage: 8.0,
+        color: '#f97316',
+        transactionCount: 5,
       },
     ]);
   }
 }
-
-/*
-Idee:
-
-- Grafici di categoria
-- Grafiici di andamento spese/entrate
-- Grafici di trend mensile/annuale
-- Torta di ripartizione spese/entrate + torta di ripartizione desiderata
-- Valutazioni e suggerimenti basati sui dati delle torte: si calcoala la differenza tra spese effettive e desiderate e si forniscono consigli su come migliorare la gestione finanziaria.
-- Grafico multilinea con l'andamento delle valutazioni dei portfolio nel tempo: si calcola per ogni periodo la vlautazione (quanto il desiderato viene sforato dal reale) in percentuale e si reappresenta per ogni portfolio. Di  lato mettere una classifica dei primi 10
- */
