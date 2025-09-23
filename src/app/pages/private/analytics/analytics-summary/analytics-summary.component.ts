@@ -1,215 +1,117 @@
-import { Component, computed, input, InputSignal, Signal } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BadgeModule } from 'primeng/badge';
-import { MessageModule } from 'primeng/message';
-import {
-  FinancialInsight,
-  FinancialSummaryData,
-} from '../../../../core/models/transaction.models';
+import { FinancialSummaryData } from '../../../../core/models/transaction.models';
+
+interface KpiCard {
+  readonly label: string;
+  readonly value: number;
+  readonly format: 'currency' | 'percentage';
+  readonly icon: string;
+  readonly trend?: number;
+  readonly variant: 'primary' | 'success' | 'danger' | 'warning' | 'info';
+}
 
 @Component({
   selector: 'wlt-analytics-summary',
   standalone: true,
-  imports: [CommonModule, BadgeModule, MessageModule],
+  imports: [CommonModule],
   templateUrl: './analytics-summary.component.html',
 })
 export class AnalyticsSummaryComponent {
-  public readonly data: InputSignal<FinancialSummaryData> = input.required();
+  public readonly data = input.required<FinancialSummaryData>();
 
-  protected readonly insights: Signal<FinancialInsight[]> = computed(() => {
-    const data = this.data();
-    if (!data) return [];
-
-    const insights: FinancialInsight[] = [];
-
-    // Savings Rate Insights
-    if (data.savingsRate >= 20) {
-      insights.push({
-        type: 'success',
-        title: 'Excellent Savings Rate',
-        message: `Your ${data.savingsRate.toFixed(
-          1
-        )}% savings rate is outstanding! Keep up the great work.`,
-        icon: 'pi pi-check-circle',
-        actionable: false,
-      });
-    } else if (data.savingsRate >= 10) {
-      insights.push({
-        type: 'info',
-        title: 'Good Savings Habit',
-        message: `Your ${data.savingsRate.toFixed(
-          1
-        )}% savings rate is solid. Consider increasing it to 20% for optimal financial health.`,
-        icon: 'pi pi-info-circle',
-        actionable: true,
-      });
-    } else {
-      insights.push({
-        type: 'warn',
-        title: 'Low Savings Rate',
-        message: `Your ${data.savingsRate.toFixed(
-          1
-        )}% savings rate needs improvement. Aim for at least 10-15% of income.`,
-        icon: 'pi pi-exclamation-triangle',
-        actionable: true,
-      });
-    }
-
-    // Cash Flow Insights
-    if (data.netFlow < 0) {
-      insights.push({
-        type: 'error',
-        title: 'Negative Cash Flow',
-        message:
-          "You're spending more than you earn this month. Review your expenses immediately.",
-        icon: 'pi pi-times-circle',
-        actionable: true,
-      });
-    }
-
-    // Expense Change Insights
-    if (data.expenseChange > 15) {
-      insights.push({
-        type: 'warn',
-        title: 'Spending Spike',
-        message: `Expenses increased by ${data.expenseChange.toFixed(
-          1
-        )}% this month. Identify what caused this increase.`,
-        icon: 'pi pi-arrow-up',
-        actionable: true,
-      });
-    } else if (data.expenseChange < -10) {
-      insights.push({
-        type: 'success',
-        title: 'Spending Reduction',
-        message: `Great job! Expenses decreased by ${Math.abs(
-          data.expenseChange
-        ).toFixed(1)}% this month.`,
-        icon: 'pi pi-arrow-down',
-        actionable: false,
-      });
-    }
-
-    // Income Change Insights
-    if (data.incomeChange > 10) {
-      insights.push({
-        type: 'success',
-        title: 'Income Boost',
-        message: `Income increased by ${data.incomeChange.toFixed(
-          1
-        )}%! Consider allocating extra funds to savings or investments.`,
-        icon: 'pi pi-trending-up',
-        actionable: true,
-      });
-    }
-
-    return insights;
-  });
-
-  protected readonly kpis = computed(() => {
+  protected readonly kpis = computed((): KpiCard[] => {
     const data = this.data();
     if (!data) return [];
 
     return [
       {
-        label: 'Current Balance',
+        label: 'Total Balance',
         value: data.currentBalance,
         format: 'currency',
         icon: 'pi pi-wallet',
-        color: 'text-blue-600',
-        bgColor: 'bg-blue-100',
+        variant: 'primary',
       },
       {
         label: 'Monthly Income',
         value: data.monthlyIncome,
         format: 'currency',
         icon: 'pi pi-arrow-up',
-        color: 'text-green-600',
-        bgColor: 'bg-green-100',
-        change: data.incomeChange,
+        variant: 'success',
+        trend: data.incomeChange,
       },
       {
         label: 'Monthly Expenses',
         value: data.monthlyExpenses,
         format: 'currency',
         icon: 'pi pi-arrow-down',
-        color: 'text-red-600',
-        bgColor: 'bg-red-100',
-        change: data.expenseChange,
+        variant: 'danger',
+        trend: data.expenseChange,
       },
       {
         label: 'Net Flow',
         value: data.netFlow,
         format: 'currency',
-        icon: data.netFlow >= 0 ? 'pi pi-plus' : 'pi pi-minus',
-        color: data.netFlow >= 0 ? 'text-green-600' : 'text-red-600',
-        bgColor: data.netFlow >= 0 ? 'bg-green-100' : 'bg-red-100',
+        icon: data.netFlow >= 0 ? 'pi pi-trending-up' : 'pi pi-trending-down',
+        variant: data.netFlow >= 0 ? 'success' : 'danger',
       },
       {
         label: 'Savings Rate',
         value: data.savingsRate,
         format: 'percentage',
         icon: 'pi pi-chart-pie',
-        color: 'text-purple-600',
-        bgColor: 'bg-purple-100',
+        variant: 'info',
       },
     ];
   });
 
-  protected formatValue(value: number, format: string): string {
+  protected formatValue(
+    value: number,
+    format: 'currency' | 'percentage'
+  ): string {
     switch (format) {
       case 'currency':
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('it-IT', {
           style: 'currency',
-          currency: 'USD',
+          currency: 'EUR',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: value < 1000 ? 2 : 0,
         }).format(value);
       case 'percentage':
         return `${value.toFixed(1)}%`;
-      default:
-        return value.toString();
     }
   }
 
-  protected getChangeIcon(change: number): string {
-    if (change > 0) return 'pi pi-arrow-up';
-    if (change < 0) return 'pi pi-arrow-down';
-    return 'pi pi-minus';
+  protected getBackgroundClass(variant: KpiCard['variant']): string {
+    const classes = {
+      primary: 'from-neutral-800 to-neutral-900 text-white',
+      success: 'from-emerald-500 to-emerald-600 text-white',
+      danger: 'from-red-500 to-red-600 text-white',
+      warning: 'from-amber-500 to-amber-600 text-white',
+      info: 'from-blue-500 to-blue-600 text-white',
+    };
+    return classes[variant];
   }
 
-  protected getChangeClass(change: number): string {
-    if (change > 0) return 'text-green-600';
-    if (change < 0) return 'text-red-600';
-    return 'text-gray-600';
+  protected getIconWrapperClass(variant: KpiCard['variant']): string {
+    return 'inline-flex p-2 rounded-lg bg-white/10 backdrop-blur-sm';
   }
 
-  protected getSeverityBgClass(type: string): string {
-    switch (type) {
-      case 'success':
-        return 'bg-green-100 dark:bg-green-900';
-      case 'info':
-        return 'bg-blue-100 dark:bg-blue-900';
-      case 'warn':
-        return 'bg-yellow-100 dark:bg-yellow-900';
-      case 'error':
-        return 'bg-red-100 dark:bg-red-900';
-      default:
-        return 'bg-gray-100 dark:bg-gray-700';
-    }
+  protected getIconClass(variant: KpiCard['variant']): string {
+    return 'text-white/90';
   }
 
-  protected getSeverityTextClass(type: string): string {
-    switch (type) {
-      case 'success':
-        return 'text-green-600 dark:text-green-400';
-      case 'info':
-        return 'text-blue-600 dark:text-blue-400';
-      case 'warn':
-        return 'text-yellow-600 dark:text-yellow-400';
-      case 'error':
-        return 'text-red-600 dark:text-red-400';
-      default:
-        return 'text-gray-600 dark:text-gray-400';
-    }
+  protected getTextClass(variant: KpiCard['variant']): string {
+    return 'text-white';
+  }
+
+  protected getTrendIcon(trend: number): string {
+    return trend >= 0 ? 'pi pi-arrow-up' : 'pi pi-arrow-down';
+  }
+
+  protected getTrendClass(trend: number, variant: KpiCard['variant']): string {
+    const baseClass = 'text-white/80';
+    return baseClass;
   }
 
   protected readonly Math = Math;

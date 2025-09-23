@@ -45,7 +45,7 @@ export class AnalyticsGeneralPortfoliosComponent {
   protected readonly chartConfig: ChartConfig = {
     type: 'line',
     title: 'Portfolio Allocation Performance',
-    height: '22.5rem',
+    height: '27rem',
     showTitle: true,
     dataType: 'percentage',
   };

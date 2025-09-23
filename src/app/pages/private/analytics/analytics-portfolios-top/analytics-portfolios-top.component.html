@@ -1,48 +1,96 @@
-<article class="flex flex-col gap-4 h-full">
-  <h2 class="pl-4 m-0 text-xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
-    <i class="pi pi-trophy text-yellow-500"></i>
-    Top Performers
-  </h2>
+<div class="h-full flex flex-col">
+  <!-- Header -->
+  <div class="flex items-center gap-3 mb-6">
+    <div class="p-2 bg-amber-100 rounded-lg dark:bg-amber-900/20">
+      <i class="pi pi-trophy text-amber-600 dark:text-amber-400 text-lg"></i>
+    </div>
+    <div>
+      <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">
+        Performance Rankings
+      </h3>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+        Based on allocation accuracy
+      </p>
+    </div>
+  </div>
 
-  <div class="flex-1 px-4 space-y-3 overflow-y-auto py-1">
+  <!-- Rankings List -->
+  <div class="flex-1 space-y-3 overflow-y-auto p-1">
     @for (portfolio of rankedPortfolios(); let i = $index; track portfolio.rank) {
-      <div
-        class="flex items-center gap-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
-        [class.ring-2]="i < 2"
-        [class.ring-yellow-400]="i === 0"
-        [class.ring-gray-400]="i === 1">
+      <div class="group relative overflow-hidden rounded-xl border transition-all duration-200 hover:shadow-md"
+           [class]="getRankCardClass(i)">
 
         <!-- Rank Badge -->
-        <p-badge
-          [value]="portfolio.rank"
-          [severity]="getBadgeSeverity(i)"
-          class="text-sm font-bold">
-        </p-badge>
-
-        <!-- Color Indicator -->
-        <div
-          class="w-3 h-3 rounded-full"
-          [style.backgroundColor]="portfolio.color">
-        </div>
-
-        <div class="flex-1 min-w-0">
-          <div class="font-medium text-gray-900 dark:text-gray-100 truncate">
-            {{ portfolio.name }}
-          </div>
-          <div class="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
-            <span>{{ portfolio.avgDeviation | number:'1.1-1' }}% avg deviation</span>
-            <i [class]="getTrendIcon(portfolio.trend) + ' ' + getTrendClass(portfolio.trend)"></i>
+        <div class="absolute top-3 left-3 z-10">
+          <div [class]="getRankBadgeClass(i)">
+            <span class="text-sm font-bold">{{ portfolio.rank }}</span>
           </div>
         </div>
 
-        <div (click)="$event.stopPropagation()">
-          <p-rating
-            [ngModel]="portfolio.rating"
-            [disabled]="true"
-            class="text-sm">
-          </p-rating>
+        <!-- Content -->
+        <div class="p-4 pl-12">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3 min-w-0 flex-1">
+              <!-- Color Indicator -->
+              <div class="w-3 h-3 rounded-full border-2 border-white shadow-sm"
+                   [style.backgroundColor]="portfolio.color">
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <h4 class="font-medium text-neutral-900 dark:text-neutral-100 truncate">
+                  {{ portfolio.name }}
+                </h4>
+                <div class="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+                  <span>{{ portfolio.avgDeviation | number:'1.1-1' }}% deviation</span>
+                  <div class="flex items-center gap-1"
+                       [class]="getTrendClass(portfolio.trend)">
+                    <i [class]="getTrendIcon(portfolio.trend)" class="text-xs"></i>
+                    <span class="text-xs">{{ portfolio.trend }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Rating Stars -->
+            <div class="flex items-center gap-1">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
+                <i class="pi text-sm transition-colors"
+                   [class]="star <= portfolio.rating ? 'pi-star-fill text-amber-400' : 'pi-star text-neutral-300 dark:text-neutral-600'">
+                </i>
+              }
+            </div>
+          </div>
         </div>
+
+        <!-- Gradient overlay for top performers -->
+        @if (i < 2) {
+          <div class="absolute inset-0 bg-gradient-to-r opacity-5 pointer-events-none"
+               [class]="getGradientClass(i)">
+          </div>
+        }
       </div>
     }
   </div>
-</article>
+
+  <!-- Footer Stats -->
+  <div class="mt-6 pt-4 border-t border-neutral-200 dark:border-neutral-700">
+    <div class="grid grid-cols-2 gap-4 text-center">
+      <div>
+        <p class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+          {{ getAverageDeviation() | number:'1.1-1' }}%
+        </p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          Avg Deviation
+        </p>
+      </div>
+      <div>
+        <p class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+          {{ getImprovingCount() }}/{{ rankedPortfolios().length }}
+        </p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          Improving
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

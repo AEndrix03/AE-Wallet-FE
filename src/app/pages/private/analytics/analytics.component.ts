@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { AnalyticsGeneralPortfoliosComponent } from './analytics-general-portfolios/analytics-general-portfolios.component';
 import { CardComponent } from '../../../core/components/card/card.component';
 import { AnalyticsPortfoliosTopComponent } from './analytics-portfolios-top/analytics-portfolios-top.component';
@@ -18,22 +18,38 @@ import {
 } from '../../../core/models/transaction.models';
 import { TransactionCategoryEnum } from '../../../core/enums/transaction.enums';
 
-// Palette colori moderna per tutto il sistema
-const MODERN_PALETTE = {
-  // Portfolio colors (sofisticati e moderni)
-  emergency: '#dc2626', // red-600
-  investment: '#059669', // emerald-600
-  daily: '#2563eb', // blue-600
-  discretionary: '#7c3aed', // violet-600
-
-  // Category colors (gradazioni neutre)
-  category1: '#1e293b', // slate-800
-  category2: '#334155', // slate-700
-  category3: '#475569', // slate-600
-  category4: '#64748b', // slate-500
-  category5: '#94a3b8', // slate-400
-  category6: '#e2e8f0', // slate-200
-};
+// Modern color palette inspired by Figma/Linear design systems
+const DESIGN_SYSTEM = {
+  // Brand colors (sophisticated neutrals)
+  neutral: {
+    50: '#fafafa',
+    100: '#f5f5f5',
+    200: '#e5e5e5',
+    300: '#d4d4d4',
+    400: '#a3a3a3',
+    500: '#737373',
+    600: '#525252',
+    700: '#404040',
+    800: '#262626',
+    900: '#171717',
+  },
+  // Semantic colors (modern and accessible)
+  semantic: {
+    success: '#10b981', // emerald-500
+    warning: '#f59e0b', // amber-500
+    danger: '#ef4444', // red-500
+    info: '#3b82f6', // blue-500
+    purple: '#8b5cf6', // violet-500
+    indigo: '#6366f1', // indigo-500
+  },
+  // Portfolio-specific colors (sophisticated)
+  portfolio: {
+    emergency: '#dc2626', // red-600 - urgent but professional
+    investment: '#059669', // emerald-600 - growth
+    daily: '#2563eb', // blue-600 - reliable
+    discretionary: '#7c3aed', // violet-600 - creative
+  },
+} as const;
 
 @Component({
   selector: 'wlt-analytics',
@@ -49,35 +65,30 @@ const MODERN_PALETTE = {
   templateUrl: './analytics.component.html',
 })
 export class AnalyticsComponent {
-  protected readonly deviationData: WritableSignal<PortfolioDeviationData[]> =
-    signal([]);
-  protected readonly partitionsData: WritableSignal<AllocationData[]> = signal(
-    []
-  );
-  protected readonly preferedPartitionsData: WritableSignal<PreferencesData[]> =
-    signal([]);
-  protected readonly incomeExpenseData: WritableSignal<IncomeExpenseData[]> =
-    signal([]);
-  protected readonly summaryData: WritableSignal<FinancialSummaryData> = signal(
-    {
-      currentBalance: 0,
-      monthlyIncome: 0,
-      monthlyExpenses: 0,
-      netFlow: 0,
-      savingsRate: 0,
-      expenseChange: 0,
-      incomeChange: 0,
-    }
-  );
-  protected readonly categoryData: WritableSignal<CategorySpendingData[]> =
-    signal([]);
+  protected readonly deviationData = signal<PortfolioDeviationData[]>([]);
+  protected readonly partitionsData = signal<AllocationData[]>([]);
+  protected readonly preferedPartitionsData = signal<PreferencesData[]>([]);
+  protected readonly incomeExpenseData = signal<IncomeExpenseData[]>([]);
+  protected readonly summaryData = signal<FinancialSummaryData>({
+    currentBalance: 0,
+    monthlyIncome: 0,
+    monthlyExpenses: 0,
+    netFlow: 0,
+    savingsRate: 0,
+    expenseChange: 0,
+    incomeChange: 0,
+  });
+  protected readonly categoryData = signal<CategorySpendingData[]>([]);
+
+  // Computed for dynamic theming
+  protected readonly themeColors = computed(() => DESIGN_SYSTEM);
 
   constructor() {
     this.deviationData.set([
       {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
-        color: MODERN_PALETTE.emergency,
+        color: DESIGN_SYSTEM.portfolio.emergency,
         targetAllocation: 40,
         monthlyData: [
           {
@@ -125,7 +136,7 @@ export class AnalyticsComponent {
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
-        color: MODERN_PALETTE.investment,
+        color: DESIGN_SYSTEM.portfolio.investment,
         targetAllocation: 35,
         monthlyData: [
           {
@@ -173,7 +184,7 @@ export class AnalyticsComponent {
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
-        color: MODERN_PALETTE.daily,
+        color: DESIGN_SYSTEM.portfolio.daily,
         targetAllocation: 20,
         monthlyData: [
           {
@@ -221,7 +232,7 @@ export class AnalyticsComponent {
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
-        color: MODERN_PALETTE.discretionary,
+        color: DESIGN_SYSTEM.portfolio.discretionary,
         targetAllocation: 5,
         monthlyData: [
           {
@@ -268,35 +279,34 @@ export class AnalyticsComponent {
       },
     ]);
 
-    // Allocation Data (aggiornata con nuovi colori)
     this.partitionsData.set([
       {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
         amount: 18750.25,
         percentage: 39.7,
-        color: MODERN_PALETTE.emergency,
+        color: DESIGN_SYSTEM.portfolio.emergency,
       },
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
         amount: 17050.8,
         percentage: 36.1,
-        color: MODERN_PALETTE.investment,
+        color: DESIGN_SYSTEM.portfolio.investment,
       },
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
         amount: 9820.5,
         percentage: 20.8,
-        color: MODERN_PALETTE.daily,
+        color: DESIGN_SYSTEM.portfolio.daily,
       },
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
         amount: 1510.25,
         percentage: 3.2,
-        color: MODERN_PALETTE.discretionary,
+        color: DESIGN_SYSTEM.portfolio.discretionary,
       },
     ]);
 
@@ -305,29 +315,28 @@ export class AnalyticsComponent {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
         targetPercentage: 40,
-        color: MODERN_PALETTE.emergency,
+        color: DESIGN_SYSTEM.portfolio.emergency,
       },
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
         targetPercentage: 35,
-        color: MODERN_PALETTE.investment,
+        color: DESIGN_SYSTEM.portfolio.investment,
       },
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
         targetPercentage: 20,
-        color: MODERN_PALETTE.daily,
+        color: DESIGN_SYSTEM.portfolio.daily,
       },
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
         targetPercentage: 5,
-        color: MODERN_PALETTE.discretionary,
+        color: DESIGN_SYSTEM.portfolio.discretionary,
       },
     ]);
 
-    // Income Expense Data (valori monetari reali)
     this.incomeExpenseData.set([
       {
         month: '2024-06',
@@ -373,9 +382,8 @@ export class AnalyticsComponent {
       },
     ]);
 
-    // Summary Data
     this.summaryData.set({
-      currentBalance: 47131.8, // Somma dei portfolio
+      currentBalance: 47131.8,
       monthlyIncome: 4650.0,
       monthlyExpenses: 3425.75,
       netFlow: 1224.25,
@@ -384,14 +392,13 @@ export class AnalyticsComponent {
       incomeChange: 10.7,
     });
 
-    // Category Data (con palette neutra)
     this.categoryData.set([
       {
         category: TransactionCategoryEnum.CHECKING,
         name: 'Daily Expenses',
         amount: 2850.75,
         percentage: 32.5,
-        color: MODERN_PALETTE.category1,
+        color: DESIGN_SYSTEM.neutral[800],
         transactionCount: 47,
       },
       {
@@ -399,7 +406,7 @@ export class AnalyticsComponent {
         name: 'Savings',
         amount: 1500.0,
         percentage: 17.1,
-        color: MODERN_PALETTE.category2,
+        color: DESIGN_SYSTEM.semantic.success,
         transactionCount: 4,
       },
       {
@@ -407,7 +414,7 @@ export class AnalyticsComponent {
         name: 'Investments',
         amount: 1200.0,
         percentage: 13.7,
-        color: MODERN_PALETTE.category3,
+        color: DESIGN_SYSTEM.semantic.info,
         transactionCount: 3,
       },
       {
@@ -415,7 +422,7 @@ export class AnalyticsComponent {
         name: 'Emergency Fund',
         amount: 800.0,
         percentage: 9.1,
-        color: MODERN_PALETTE.category4,
+        color: DESIGN_SYSTEM.semantic.warning,
         transactionCount: 2,
       },
       {
@@ -423,7 +430,7 @@ export class AnalyticsComponent {
         name: 'Cash Expenses',
         amount: 650.25,
         percentage: 7.4,
-        color: MODERN_PALETTE.category5,
+        color: DESIGN_SYSTEM.neutral[600],
         transactionCount: 19,
       },
       {
@@ -431,7 +438,7 @@ export class AnalyticsComponent {
         name: 'Cryptocurrency',
         amount: 700.0,
         percentage: 8.0,
-        color: MODERN_PALETTE.category6,
+        color: DESIGN_SYSTEM.semantic.purple,
         transactionCount: 5,
       },
     ]);

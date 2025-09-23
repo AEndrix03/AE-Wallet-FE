@@ -53,11 +53,3 @@ export interface FinancialSummaryData {
   expenseChange: number; // % change from previous month
   incomeChange: number; // % change from previous month
 }
-
-export interface FinancialInsight {
-  type: 'success' | 'info' | 'warn' | 'error';
-  title: string;
-  message: string;
-  icon: string;
-  actionable: boolean;
-}

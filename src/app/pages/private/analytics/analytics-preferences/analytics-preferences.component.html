@@ -1,15 +1,90 @@
-<article class="flex flex-col h-full">
-  <h2 class="pl-4 m-0 text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-    Portfolio Allocation Comparison
-  </h2>
+<div class="h-full flex flex-col">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-1">
+        Portfolio Allocation Analysis
+      </h3>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+        Current vs target allocation comparison
+      </p>
+    </div>
 
-  <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <wlt-chart
-      [config]="actualChartConfig"
-      [data]="actualChartData()" />
-
-    <wlt-chart
-      [config]="desiredChartConfig"
-      [data]="desiredChartData()" />
+    <!-- Overall Health Indicator -->
+    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800">
+      <div [class]="'w-2 h-2 rounded-full ' + getHealthIndicatorColor()"></div>
+      <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+            {{ getOverallHealth() }}
+          </span>
+    </div>
   </div>
-</article>
+
+  <!-- Charts Grid -->
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- Current Allocation -->
+    <div class="flex flex-col">
+      <div class="mb-4">
+        <h4 class="font-medium text-neutral-900 dark:text-neutral-100 mb-1">
+          Current Allocation
+        </h4>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          {{ formatCurrency(getTotalAmount()) }} total
+        </p>
+      </div>
+
+      <div class="flex-1 relative min-h-64">
+        <wlt-chart [config]="actualChartConfig" [data]="actualChartData()" />
+      </div>
+    </div>
+
+    <!-- Target Allocation -->
+    <div class="flex flex-col">
+      <div class="mb-4">
+        <h4 class="font-medium text-neutral-900 dark:text-neutral-100 mb-1">
+          Target Allocation
+        </h4>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          Ideal distribution goals
+        </p>
+      </div>
+
+      <div class="flex-1 relative min-h-64">
+        <wlt-chart [config]="desiredChartConfig" [data]="desiredChartData()" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Allocation Details -->
+  <div class="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+    <h4 class="font-medium text-neutral-900 dark:text-neutral-100 mb-4">
+      Allocation Details
+    </h4>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      @for (allocation of allocationComparison(); track allocation.name) {
+        <div class="flex items-center justify-between p-3 rounded-lg bg-neutral-50 dark:bg-neutral-800/50">
+          <div class="flex items-center gap-3">
+            <div class="w-3 h-3 rounded-full" [style.backgroundColor]="allocation.color"></div>
+            <span class="font-medium text-neutral-900 dark:text-neutral-100">
+                  {{ allocation.name }}
+                </span>
+          </div>
+
+          <div class="flex items-center gap-4 text-sm">
+                <span class="text-neutral-600 dark:text-neutral-400">
+                  {{ allocation.actual }}%
+                </span>
+            <span class="text-neutral-400 dark:text-neutral-500">→</span>
+            <span class="text-neutral-600 dark:text-neutral-400">
+                  {{ allocation.target }}%
+                </span>
+            <span [class]="getDeviationClass(allocation.deviation)">
+                  {{ allocation.deviation > 0 ? '+' : '' }}{{ allocation.deviation.toFixed(1) }}%
+                </span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

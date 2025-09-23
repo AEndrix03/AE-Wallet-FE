@@ -17,7 +17,7 @@ export class AnalyticsIncomeExpenseComponent {
   public readonly data: InputSignal<IncomeExpenseData[]> = input.required();
 
   protected readonly chartData: Signal<ChartData> = computed(() => {
-    const data = this.data() || [];
+    const data = [...this.data()];
     const labels = data.map((d) =>
       new Date(d.date).toLocaleDateString('en-US', {
         month: 'short',
@@ -69,7 +69,7 @@ export class AnalyticsIncomeExpenseComponent {
   protected readonly chartConfig: ChartConfig = {
     type: 'line',
     title: 'Income vs Expenses Trend',
-    height: '14rem',
+    height: '17.5rem',
     showTitle: true,
     dataType: 'currency',
     currency: 'EUR',
