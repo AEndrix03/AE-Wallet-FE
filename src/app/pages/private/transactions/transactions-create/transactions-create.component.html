@@ -5,7 +5,9 @@
       <wlt-input-number label="Ammontare" [control]="amountFc()" />
       <wlt-select label="Valuta" [control]="currencyFc()" [options]="currencyOptions()" />
       <wlt-select label="Tipo" [control]="typeFc()" [options]="typeOptions()" />
-      <wlt-input-date label="Data" [control]="dateFc()" />
+      <div class="w-[12rem]">
+        <wlt-input-date label="Data" [control]="dateFc()" />
+      </div>
       <wlt-select label="Portfolio" [control]="portfolioIdFc()" [options]="portfolioOptions()"
                   class="min-w-[12rem] flex-1" />
     </div>

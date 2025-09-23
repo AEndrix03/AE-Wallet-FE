@@ -11,8 +11,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
       <input
         pInputText
         [id]="id()"
+        [pSize]="size()"
         [formControl]="control()"
-        [size]="size()"
         class="w-full"
         autocomplete="off"
       />

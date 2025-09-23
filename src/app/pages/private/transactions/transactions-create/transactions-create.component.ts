@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { TextareaComponent } from '../../../../core/components/textarea/textarea.component';
 import { InputNumberComponent } from '../../../../core/components/input-number/input-number.component';
-import { Select } from '../../../../core/components/select/select';
+import { SelectComponent } from '../../../../core/components/select/select.component';
 import { InputDateRangeComponent } from '../../../../core/components/date/date.component';
 import { ButtonComponent } from '../../../../core/components/button/button.component';
 import { Subject, takeUntil } from 'rxjs';
@@ -22,7 +22,7 @@ import { Currency, CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
     ReactiveFormsModule,
     TextareaComponent,
     InputNumberComponent,
-    Select,
+    SelectComponent,
     InputDateRangeComponent,
     ButtonComponent,
   ],

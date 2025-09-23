@@ -9,7 +9,7 @@ import {
 import { InputTextComponent } from '../../../../core/components/input-text/input-text.component';
 import { InputDateRangeComponent } from '../../../../core/components/date-range/date-range.component';
 import { InputNumberComponent } from '../../../../core/components/input-number/input-number.component';
-import { Select } from '../../../../core/components/select/select';
+import { SelectComponent } from '../../../../core/components/select/select.component';
 import { TransactionFilterDto } from '../../../../core/models/transaction.models';
 import { DividerModule } from 'primeng/divider';
 import { ButtonComponent } from '../../../../core/components/button/button.component';
@@ -21,7 +21,7 @@ import { ButtonComponent } from '../../../../core/components/button/button.compo
     InputTextComponent,
     InputDateRangeComponent,
     InputNumberComponent,
-    Select,
+    SelectComponent,
     DividerModule,
     ButtonComponent,
     ButtonComponent,

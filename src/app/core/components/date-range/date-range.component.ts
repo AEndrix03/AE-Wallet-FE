@@ -17,9 +17,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
         [showIcon]="showIcon()"
         [dateFormat]="dateFormat()"
         [placeholder]="placeholder()"
+        appendTo="body"
         class="w-full"
         autocomplete="off"
-      />
+      ></p-datepicker>
       <label [for]="id()">{{ label() }}</label>
     </p-iftalabel>
   `,

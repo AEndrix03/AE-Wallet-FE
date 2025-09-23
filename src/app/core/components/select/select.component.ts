@@ -16,13 +16,14 @@ import { SelectModule } from 'primeng/select';
         [optionLabel]="optionLabel()"
         [optionValue]="optionValue()"
         [showClear]="showClear()"
+        appendTo="body"
         class="w-full"
       />
       <label [for]="label()">{{ label() }}</label>
     </p-iftalabel>
   `,
 })
-export class Select<T, L> {
+export class SelectComponent<T, L> {
   public readonly control: InputSignal<FormControl<T>> = input.required();
   public readonly options: InputSignal<L[]> = input.required();
 

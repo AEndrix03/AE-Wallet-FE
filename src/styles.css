@@ -150,3 +150,11 @@ html {
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.p-select {
+    padding: 30px 10px 8px 10px !important;
+}
+
+.p-select-label {
+    padding: 0 !important;
+}

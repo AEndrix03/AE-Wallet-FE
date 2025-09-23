@@ -20,7 +20,7 @@ export class TransactionsComponent {
       modal: true,
       closeOnEscape: true,
       closable: true,
-      width: '50vw',
+      width: '60vw',
     });
   }
 }
