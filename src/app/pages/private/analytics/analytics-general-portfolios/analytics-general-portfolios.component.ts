@@ -47,5 +47,6 @@ export class AnalyticsGeneralPortfoliosComponent {
     title: 'Portfolio Allocation Performance',
     height: '22.5rem',
     showTitle: true,
+    dataType: 'percentage',
   };
 }

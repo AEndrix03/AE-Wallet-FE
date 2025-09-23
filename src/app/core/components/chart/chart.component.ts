@@ -10,6 +10,10 @@ export interface ChartConfig {
   showTitle?: boolean;
   titleIcon?: string;
   titleClass?: string;
+  // Nuove opzioni per customizzare il comportamento
+  dataType?: 'currency' | 'percentage' | 'number';
+  currency?: string;
+  locale?: string;
 }
 
 @Component({
@@ -48,9 +52,59 @@ export class ChartComponent<T> {
   @Input({ required: true }) config!: ChartConfig;
   @Input({ required: true }) data!: T;
 
+  // Palette colori moderna per Nora design system
+  private readonly MODERN_COLORS = {
+    // Colori primari (neutri sofisticati)
+    primary: '#334155', // slate-700
+    secondary: '#475569', // slate-600
+    accent: '#64748b', // slate-500
+    muted: '#94a3b8', // slate-400
+
+    // Portfolio colors (più sofisticati)
+    portfolio: {
+      emergency: '#dc2626', // red-600 (più scuro)
+      investment: '#059669', // emerald-600 (più sofisticato del verde)
+      daily: '#2563eb', // blue-600 (meno saturo)
+      discretionary: '#7c3aed', // violet-600 (più elegante del purple)
+    },
+
+    // Categorie con gradazioni del tema principale
+    category: {
+      primary: '#1e293b', // slate-800
+      secondary: '#334155', // slate-700
+      tertiary: '#475569', // slate-600
+      quaternary: '#64748b', // slate-500
+      quinary: '#94a3b8', // slate-400
+      senary: '#cbd5e1', // slate-300
+    },
+  };
+
   get mergedOptions() {
     const defaultOptions = this.getDefaultOptions();
     return { ...defaultOptions, ...this.config.options };
+  }
+
+  private formatValue(value: number): string {
+    const dataType = this.config.dataType || 'number';
+    const currency = this.config.currency || 'EUR';
+    const locale = this.config.locale || 'it-IT';
+
+    switch (dataType) {
+      case 'currency':
+        return new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: currency,
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        }).format(value);
+
+      case 'percentage':
+        const sign = value >= 0 ? '+' : '';
+        return `${sign}${value.toFixed(2)}%`;
+
+      default:
+        return new Intl.NumberFormat(locale).format(value);
+    }
   }
 
   private getDefaultOptions() {
@@ -61,10 +115,26 @@ export class ChartComponent<T> {
         legend: {
           display: true,
           position: 'top',
+          labels: {
+            usePointStyle: true,
+            padding: 15,
+            font: {
+              size: 12,
+              family: 'Inter, system-ui, sans-serif',
+            },
+            color: '#475569', // slate-600 per testi
+          },
         },
         tooltip: {
           mode: 'index',
           intersect: false,
+          backgroundColor: 'rgba(15, 23, 42, 0.9)', // slate-900 con opacity
+          titleColor: '#f1f5f9', // slate-100
+          bodyColor: '#e2e8f0', // slate-200
+          borderColor: '#475569', // slate-600
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 12,
         },
       },
     };
@@ -81,10 +151,7 @@ export class ChartComponent<T> {
               callbacks: {
                 label: (context: any) => {
                   const value = context.parsed.y;
-                  const sign = value >= 0 ? '+' : '';
-                  return `${context.dataset.label}: ${sign}${value.toFixed(
-                    2
-                  )}%`;
+                  return `${context.dataset.label}: ${this.formatValue(value)}`;
                 },
               },
             },
@@ -94,25 +161,59 @@ export class ChartComponent<T> {
               beginAtZero: true,
               title: {
                 display: true,
-                text: 'Deviation from Target (%)',
+                text: this.getYAxisLabel(),
+                color: '#64748b', // slate-500
+                font: {
+                  size: 13,
+                  weight: '500',
+                  family: 'Inter, system-ui, sans-serif',
+                },
               },
               grid: {
-                color: 'rgba(0,0,0,0.1)',
+                color: 'rgba(148, 163, 184, 0.2)', // slate-400 molto trasparente
+                drawBorder: false,
               },
               ticks: {
-                callback: function (value: any) {
-                  return value >= 0 ? `+${value}%` : `${value}%`;
+                color: '#94a3b8', // slate-400
+                font: {
+                  size: 11,
+                  family: 'Inter, system-ui, sans-serif',
                 },
+                callback: (value: any) => this.formatValue(value),
               },
             },
             x: {
               title: {
                 display: true,
                 text: 'Time Period',
+                color: '#64748b', // slate-500
+                font: {
+                  size: 13,
+                  weight: '500',
+                  family: 'Inter, system-ui, sans-serif',
+                },
               },
               grid: {
                 display: false,
               },
+              ticks: {
+                color: '#94a3b8', // slate-400
+                font: {
+                  size: 11,
+                  family: 'Inter, system-ui, sans-serif',
+                },
+              },
+            },
+          },
+          elements: {
+            line: {
+              borderWidth: 2.5,
+            },
+            point: {
+              radius: 3,
+              hoverRadius: 6,
+              borderWidth: 2,
+              backgroundColor: '#ffffff',
             },
           },
         };
@@ -120,17 +221,61 @@ export class ChartComponent<T> {
       case 'bar':
         return {
           ...baseOptions,
+          plugins: {
+            ...baseOptions.plugins,
+            tooltip: {
+              ...baseOptions.plugins.tooltip,
+              callbacks: {
+                label: (context: any) => {
+                  const value = context.parsed.y;
+                  return `${context.dataset.label}: ${this.formatValue(value)}`;
+                },
+              },
+            },
+          },
           scales: {
             y: {
               beginAtZero: true,
+              title: {
+                display: true,
+                text: this.getYAxisLabel(),
+                color: '#64748b',
+                font: {
+                  size: 13,
+                  weight: '500',
+                  family: 'Inter, system-ui, sans-serif',
+                },
+              },
               grid: {
-                color: 'rgba(0,0,0,0.1)',
+                color: 'rgba(148, 163, 184, 0.2)',
+                drawBorder: false,
+              },
+              ticks: {
+                color: '#94a3b8',
+                font: {
+                  size: 11,
+                  family: 'Inter, system-ui, sans-serif',
+                },
+                callback: (value: any) => this.formatValue(value),
               },
             },
             x: {
               grid: {
                 display: false,
               },
+              ticks: {
+                color: '#94a3b8',
+                font: {
+                  size: 11,
+                  family: 'Inter, system-ui, sans-serif',
+                },
+              },
+            },
+          },
+          elements: {
+            bar: {
+              borderRadius: 4,
+              borderSkipped: false,
             },
           },
         };
@@ -142,6 +287,7 @@ export class ChartComponent<T> {
           plugins: {
             ...baseOptions.plugins,
             tooltip: {
+              ...baseOptions.plugins.tooltip,
               callbacks: {
                 label: (context: any) => {
                   const value = context.parsed;
@@ -150,9 +296,19 @@ export class ChartComponent<T> {
                     0
                   );
                   const percentage = ((value / total) * 100).toFixed(1);
-                  return `${context.label}: ${percentage}%`;
+                  const formattedValue =
+                    this.config.dataType === 'currency'
+                      ? this.formatValue(value)
+                      : `${percentage}%`;
+                  return `${context.label}: ${formattedValue}`;
                 },
               },
+            },
+          },
+          elements: {
+            arc: {
+              borderWidth: 2,
+              borderColor: '#1e293b', // slate-800 per separare le sezioni
             },
           },
         };
@@ -160,5 +316,22 @@ export class ChartComponent<T> {
       default:
         return baseOptions;
     }
+  }
+
+  private getYAxisLabel(): string {
+    const dataType = this.config.dataType || 'number';
+    switch (dataType) {
+      case 'currency':
+        return `Amount (${this.config.currency || 'EUR'})`;
+      case 'percentage':
+        return 'Deviation from Target (%)';
+      default:
+        return 'Value';
+    }
+  }
+
+  // Metodo pubblico per ottenere i colori del tema
+  getThemeColors() {
+    return this.MODERN_COLORS;
   }
 }

@@ -56,6 +56,7 @@ export class AnalyticsPreferencesComponent {
     title: 'Current Allocation',
     height: '20rem',
     showTitle: true,
+    dataType: 'percentage',
   };
 
   protected readonly desiredChartConfig: ChartConfig = {
@@ -63,5 +64,6 @@ export class AnalyticsPreferencesComponent {
     title: 'Desired Allocation',
     height: '20rem',
     showTitle: true,
+    dataType: 'percentage',
   };
 }

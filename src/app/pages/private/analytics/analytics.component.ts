@@ -10,13 +10,30 @@ import {
 import { AnalyticsPreferencesComponent } from './analytics-preferences/analytics-preferences.component';
 import { AnalyticsIncomeExpenseComponent } from './analytics-income-expense/analytics-income-expense.component';
 import { AnalyticsSummaryComponent } from './analytics-summary/analytics-summary.component';
+import { AnalyticsCategoryComponent } from './analytics-category/analytics-category.component';
 import {
   CategorySpendingData,
   FinancialSummaryData,
   IncomeExpenseData,
 } from '../../../core/models/transaction.models';
 import { TransactionCategoryEnum } from '../../../core/enums/transaction.enums';
-import { AnalyticsCategoryComponent } from './analytics-category/analytics-category.component';
+
+// Palette colori moderna per tutto il sistema
+const MODERN_PALETTE = {
+  // Portfolio colors (sofisticati e moderni)
+  emergency: '#dc2626', // red-600
+  investment: '#059669', // emerald-600
+  daily: '#2563eb', // blue-600
+  discretionary: '#7c3aed', // violet-600
+
+  // Category colors (gradazioni neutre)
+  category1: '#1e293b', // slate-800
+  category2: '#334155', // slate-700
+  category3: '#475569', // slate-600
+  category4: '#64748b', // slate-500
+  category5: '#94a3b8', // slate-400
+  category6: '#e2e8f0', // slate-200
+};
 
 @Component({
   selector: 'wlt-analytics',
@@ -56,12 +73,11 @@ export class AnalyticsComponent {
     signal([]);
 
   constructor() {
-    // Dati esistenti per deviation
     this.deviationData.set([
       {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
-        color: '#ef4444',
+        color: MODERN_PALETTE.emergency,
         targetAllocation: 40,
         monthlyData: [
           {
@@ -109,55 +125,55 @@ export class AnalyticsComponent {
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
-        color: '#10b981',
-        targetAllocation: 30,
+        color: MODERN_PALETTE.investment,
+        targetAllocation: 35,
         monthlyData: [
           {
             month: '2024-06',
             date: new Date('2024-06-01'),
             actualAllocation: 25.2,
-            targetAllocation: 30,
-            deviationPercentage: -16.0,
-            absoluteDeviation: 16.0,
+            targetAllocation: 35,
+            deviationPercentage: -28.0,
+            absoluteDeviation: 28.0,
           },
           {
             month: '2024-07',
             date: new Date('2024-07-01'),
             actualAllocation: 27.8,
-            targetAllocation: 30,
-            deviationPercentage: -7.33,
-            absoluteDeviation: 7.33,
+            targetAllocation: 35,
+            deviationPercentage: -20.6,
+            absoluteDeviation: 20.6,
           },
           {
             month: '2024-08',
             date: new Date('2024-08-01'),
             actualAllocation: 31.5,
-            targetAllocation: 30,
-            deviationPercentage: +5.0,
-            absoluteDeviation: 5.0,
+            targetAllocation: 35,
+            deviationPercentage: -10.0,
+            absoluteDeviation: 10.0,
           },
           {
             month: '2024-09',
             date: new Date('2024-09-01'),
-            actualAllocation: 29.1,
-            targetAllocation: 30,
-            deviationPercentage: -3.0,
-            absoluteDeviation: 3.0,
+            actualAllocation: 34.1,
+            targetAllocation: 35,
+            deviationPercentage: -2.6,
+            absoluteDeviation: 2.6,
           },
         ],
         statistics: {
-          averageDeviation: 7.83,
-          maxDeviation: 16.0,
-          minDeviation: 3.0,
+          averageDeviation: 15.3,
+          maxDeviation: 28.0,
+          minDeviation: 2.6,
           trend: 'improving',
-          rating: 4,
+          rating: 3,
           rank: 2,
         },
       },
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
-        color: '#3b82f6',
+        color: MODERN_PALETTE.daily,
         targetAllocation: 20,
         monthlyData: [
           {
@@ -187,100 +203,100 @@ export class AnalyticsComponent {
           {
             month: '2024-09',
             date: new Date('2024-09-01'),
-            actualAllocation: 22.8,
+            actualAllocation: 18.5,
             targetAllocation: 20,
-            deviationPercentage: +14.0,
-            absoluteDeviation: 14.0,
+            deviationPercentage: -7.5,
+            absoluteDeviation: 7.5,
           },
         ],
         statistics: {
-          averageDeviation: 13.625,
+          averageDeviation: 12.0,
           maxDeviation: 24.0,
           minDeviation: 6.0,
-          trend: 'worsening',
-          rating: 2,
-          rank: 4,
+          trend: 'improving',
+          rating: 3,
+          rank: 3,
         },
       },
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
-        color: '#8b5cf6',
-        targetAllocation: 10,
+        color: MODERN_PALETTE.discretionary,
+        targetAllocation: 5,
         monthlyData: [
           {
             month: '2024-06',
             date: new Date('2024-06-01'),
             actualAllocation: 11.5,
-            targetAllocation: 10,
-            deviationPercentage: +15.0,
-            absoluteDeviation: 15.0,
+            targetAllocation: 5,
+            deviationPercentage: +130.0,
+            absoluteDeviation: 130.0,
           },
           {
             month: '2024-07',
             date: new Date('2024-07-01'),
             actualAllocation: 8.9,
-            targetAllocation: 10,
-            deviationPercentage: -11.0,
-            absoluteDeviation: 11.0,
+            targetAllocation: 5,
+            deviationPercentage: +78.0,
+            absoluteDeviation: 78.0,
           },
           {
             month: '2024-08',
             date: new Date('2024-08-01'),
             actualAllocation: 7.5,
-            targetAllocation: 10,
-            deviationPercentage: -25.0,
-            absoluteDeviation: 25.0,
+            targetAllocation: 5,
+            deviationPercentage: +50.0,
+            absoluteDeviation: 50.0,
           },
           {
             month: '2024-09',
             date: new Date('2024-09-01'),
-            actualAllocation: 8.0,
-            targetAllocation: 10,
-            deviationPercentage: -20.0,
-            absoluteDeviation: 20.0,
+            actualAllocation: 7.3,
+            targetAllocation: 5,
+            deviationPercentage: +46.0,
+            absoluteDeviation: 46.0,
           },
         ],
         statistics: {
-          averageDeviation: 17.75,
-          maxDeviation: 25.0,
-          minDeviation: 11.0,
-          trend: 'stable',
-          rating: 3,
-          rank: 3,
+          averageDeviation: 76.0,
+          maxDeviation: 130.0,
+          minDeviation: 46.0,
+          trend: 'improving',
+          rating: 1,
+          rank: 4,
         },
       },
     ]);
 
-    // Dati esistenti per partitions
+    // Allocation Data (aggiornata con nuovi colori)
     this.partitionsData.set([
       {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
-        amount: 15000,
-        percentage: 37.5,
-        color: '#ef4444',
+        amount: 18750.25,
+        percentage: 39.7,
+        color: MODERN_PALETTE.emergency,
       },
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
-        amount: 8000,
-        percentage: 20,
-        color: '#10b981',
+        amount: 17050.8,
+        percentage: 36.1,
+        color: MODERN_PALETTE.investment,
       },
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
-        amount: 12000,
-        percentage: 30,
-        color: '#3b82f6',
+        amount: 9820.5,
+        percentage: 20.8,
+        color: MODERN_PALETTE.daily,
       },
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
-        amount: 5000,
-        percentage: 12.5,
-        color: '#8b5cf6',
+        amount: 1510.25,
+        percentage: 3.2,
+        color: MODERN_PALETTE.discretionary,
       },
     ]);
 
@@ -289,29 +305,29 @@ export class AnalyticsComponent {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
         targetPercentage: 40,
-        color: '#ef4444',
+        color: MODERN_PALETTE.emergency,
       },
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
         targetPercentage: 35,
-        color: '#10b981',
+        color: MODERN_PALETTE.investment,
       },
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
         targetPercentage: 20,
-        color: '#3b82f6',
+        color: MODERN_PALETTE.daily,
       },
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
         targetPercentage: 5,
-        color: '#8b5cf6',
+        color: MODERN_PALETTE.discretionary,
       },
     ]);
 
-    // NUOVI DATI - Income Expense
+    // Income Expense Data (valori monetari reali)
     this.incomeExpenseData.set([
       {
         month: '2024-06',
@@ -357,9 +373,9 @@ export class AnalyticsComponent {
       },
     ]);
 
-    // NUOVI DATI - Summary
+    // Summary Data
     this.summaryData.set({
-      currentBalance: 18750.25,
+      currentBalance: 47131.8, // Somma dei portfolio
       monthlyIncome: 4650.0,
       monthlyExpenses: 3425.75,
       netFlow: 1224.25,
@@ -368,13 +384,14 @@ export class AnalyticsComponent {
       incomeChange: 10.7,
     });
 
+    // Category Data (con palette neutra)
     this.categoryData.set([
       {
         category: TransactionCategoryEnum.CHECKING,
         name: 'Daily Expenses',
         amount: 2850.75,
         percentage: 32.5,
-        color: '#3b82f6',
+        color: MODERN_PALETTE.category1,
         transactionCount: 47,
       },
       {
@@ -382,7 +399,7 @@ export class AnalyticsComponent {
         name: 'Savings',
         amount: 1500.0,
         percentage: 17.1,
-        color: '#10b981',
+        color: MODERN_PALETTE.category2,
         transactionCount: 4,
       },
       {
@@ -390,7 +407,7 @@ export class AnalyticsComponent {
         name: 'Investments',
         amount: 1200.0,
         percentage: 13.7,
-        color: '#8b5cf6',
+        color: MODERN_PALETTE.category3,
         transactionCount: 3,
       },
       {
@@ -398,7 +415,7 @@ export class AnalyticsComponent {
         name: 'Emergency Fund',
         amount: 800.0,
         percentage: 9.1,
-        color: '#ef4444',
+        color: MODERN_PALETTE.category4,
         transactionCount: 2,
       },
       {
@@ -406,7 +423,7 @@ export class AnalyticsComponent {
         name: 'Cash Expenses',
         amount: 650.25,
         percentage: 7.4,
-        color: '#f59e0b',
+        color: MODERN_PALETTE.category5,
         transactionCount: 19,
       },
       {
@@ -414,7 +431,7 @@ export class AnalyticsComponent {
         name: 'Cryptocurrency',
         amount: 700.0,
         percentage: 8.0,
-        color: '#f97316',
+        color: MODERN_PALETTE.category6,
         transactionCount: 5,
       },
     ]);

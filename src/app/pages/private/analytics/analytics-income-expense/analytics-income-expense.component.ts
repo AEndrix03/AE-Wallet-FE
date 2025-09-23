@@ -71,5 +71,8 @@ export class AnalyticsIncomeExpenseComponent {
     title: 'Income vs Expenses Trend',
     height: '14rem',
     showTitle: true,
+    dataType: 'currency',
+    currency: 'EUR',
+    locale: 'it-IT',
   };
 }

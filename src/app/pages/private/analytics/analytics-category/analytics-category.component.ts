@@ -39,5 +39,8 @@ export class AnalyticsCategoryComponent {
     title: 'Spending by Category',
     height: '17.5rem',
     showTitle: true,
+    dataType: 'currency',
+    currency: 'EUR',
+    locale: 'it-IT',
   };
 }
