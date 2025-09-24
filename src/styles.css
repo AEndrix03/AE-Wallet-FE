@@ -151,7 +151,7 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.p-select {
+.p-select :not(.p-paginator-rpp-dropdown) {
     padding: 30px 10px 8px 10px !important;
 }
 

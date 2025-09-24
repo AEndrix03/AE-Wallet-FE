@@ -5,13 +5,13 @@ import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { PortfolioDto } from '../../../../core/models/portfolio.models';
+import { PortfolioDto } from '../../../../../core/models/portfolio.models';
 import {
   PORTFOLIO_TYPE_CONFIG,
   PortfolioStatusEnum,
-} from '../../../../core/enums/portfolio.enums';
-import { CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
-import { CardComponent } from '../../../../core/components/card/card.component';
+} from '../../../../../core/enums/portfolio.enums';
+import { CURRENCY_SYMBOLS } from '../../../../../core/enums/core.enums';
+import { CardComponent } from '../../../../../core/components/card/card.component';
 
 @Component({
   selector: 'wlt-portfolio-card',
@@ -29,7 +29,7 @@ import { CardComponent } from '../../../../core/components/card/card.component';
 })
 export class PortfolioCardComponent {
   public readonly portfolio = input.required<PortfolioDto>();
-  public readonly view = output<void>();
+  public readonly view = output<string>();
   public readonly edit = output<void>();
   public readonly delete = output<void>();
 

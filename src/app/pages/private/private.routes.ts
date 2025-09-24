@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutPrivateComponent } from '../../layout/private/layout-private.component';
-import { PortfoliosComponent } from './portfolios/portfolios.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { BudgetComponent } from './budget/budget.component';
@@ -19,7 +18,8 @@ export const privateRoutes: Routes = [
       },
       {
         path: 'portfolios',
-        component: PortfoliosComponent,
+        loadChildren: () =>
+          import('./portfolios/portfolios.routes').then((m) => m.routes),
       },
       {
         path: 'transactions',

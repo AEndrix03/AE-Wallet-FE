@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { PortfolioNewCardComponent } from './portfolio-new-card/portfolio-new-card.component';
-import { PortfolioCardComponent } from './portfolio-card/portfolio-card.component';
+import { Component, inject } from '@angular/core';
+import { PortfolioNewCardComponent } from './components/portfolio-new-card/portfolio-new-card.component';
+import { PortfolioCardComponent } from './components/portfolio-card/portfolio-card.component';
 import { PortfolioTypeEnum } from '../../../core/enums/portfolio.enums';
 import { PortfolioDto } from '../../../core/models/portfolio.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'wlt-portfolios',
@@ -10,6 +11,8 @@ import { PortfolioDto } from '../../../core/models/portfolio.models';
   templateUrl: './portfolios.component.html',
 })
 export class PortfoliosComponent {
+  private readonly router: Router = inject(Router);
+
   public readonly portfolio: PortfolioDto = {
     id: '392',
     name: 'Università',
@@ -19,4 +22,8 @@ export class PortfoliosComponent {
     currency: 'EUR',
     lastUpdated: new Date(),
   };
+
+  protected openDetail(id: string) {
+    this.router.navigate([`portfolios/detail`], { queryParams: { id } });
+  }
 }

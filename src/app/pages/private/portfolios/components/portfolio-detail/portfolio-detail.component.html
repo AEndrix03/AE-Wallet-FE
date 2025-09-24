@@ -1,0 +1,35 @@
+<article class="py-6 px-2 flex flex-col gap-4 h-full">
+  <section>
+    <wlt-accordion header="Info">
+      <div class="flex flex-col gap-2">
+        <div class="flex gap-2">
+          <span class="font-semibold">Name:</span>
+          <span>{{ portfolio()?.name }}</span>
+        </div>
+        <div class="flex gap-2">
+          <span class="font-semibold">Type:</span>
+          <span>{{ portfolio()?.type || 'N/A' }}</span>
+        </div>
+        <div class="flex gap-2">
+          <span class="font-semibold">Balance:</span>
+          <span>{{ portfolio()?.currency }} {{ portfolio()?.balance }}</span>
+        </div>
+        <div class="flex gap-2">
+          <span class="font-semibold">Last Update:</span>
+          <span>{{ portfolio()?.lastUpdated | date: 'medium' }}</span>
+        </div>
+      </div>
+    </wlt-accordion>
+  </section>
+  <section>
+    <wlt-accordion header="Transactions">
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-row gap-4">
+          <wlt-button label="Add new Transaction" (onClick)="addNewTransaction()" />
+          <wlt-button label="Import Transactions" severity="secondary" />
+        </div>
+        <wlt-transactions-results [transactions]="transactions()" [pagination]="pagination()" />
+      </div>
+    </wlt-accordion>
+  </section>
+</article>

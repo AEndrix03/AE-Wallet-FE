@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, inject, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  input,
+  InputSignal,
+  OnDestroy,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -28,6 +35,8 @@ import { Currency, CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
   ],
 })
 export class TransactionsCreateComponent implements AfterViewInit, OnDestroy {
+  public readonly hidePortfolio: InputSignal<boolean> = input(false);
+
   public readonly form: FormGroup;
   private readonly _fb: FormBuilder = inject(FormBuilder);
   private readonly ref: DynamicDialogRef = inject(DynamicDialogRef);
