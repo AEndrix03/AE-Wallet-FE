@@ -24,6 +24,6 @@ export class TextareaComponent {
 
   public readonly id: InputSignal<string> = input();
   public readonly label: InputSignal<string> = input();
-  public readonly size: InputSignal<'large' | 'small'> = input('large');
+  public readonly size: InputSignal<number> = input(24);
   public readonly class: InputSignal<string> = input();
 }

@@ -1,4 +1,7 @@
-import { PortfolioTypeEnum } from '../enums/portfolio.enums';
+import {
+  PortfolioStatusEnum,
+  PortfolioTypeEnum,
+} from '../enums/portfolio.enums';
 
 export interface PortfolioDto {
   id: string;
@@ -9,4 +12,18 @@ export interface PortfolioDto {
   image?: string;
   currency: 'USD' | 'EUR' | 'GBP' | 'JPY';
   lastUpdated: Date;
+}
+
+export interface PortfolioTypeDto {
+  code: PortfolioTypeEnum;
+  description: string;
+}
+
+export interface PortfolioStatusDto {
+  code: PortfolioStatusEnum;
+  description: string;
+}
+
+export interface PortfolioSaveDto extends PortfolioDto {
+  userId: string;
 }

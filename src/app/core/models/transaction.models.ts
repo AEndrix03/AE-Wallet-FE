@@ -53,3 +53,13 @@ export interface FinancialSummaryData {
   expenseChange: number; // % change from previous month
   incomeChange: number; // % change from previous month
 }
+
+export interface TransactionTypeDto {
+  code: TransactionTypeEnum;
+  description: string;
+}
+
+export interface TransactionCategoryDto {
+  code: TransactionCategoryEnum;
+  description: string;
+}
