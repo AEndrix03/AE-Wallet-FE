@@ -18,7 +18,7 @@ import {
   providePraetor,
 } from '@aredegalli/ng-auth';
 import { dateInterceptor } from '@aredegalli/ng-common';
-import { environment } from './environments/environment.prod';
+import { environment } from './environments/environment';
 import { providePrimeNG } from 'primeng/config';
 import { provideLoginEffect } from './services/auth/login-effect.service';
 import { Preset } from './styles/themes/preset';
@@ -52,7 +52,10 @@ export function provideAuth() {
     providePraetor(
       environment.praetorApiUrl,
       environment.applicationName,
-      environment.praetorAuthApplicationName
+      environment.praetorAuthApplicationName,
+      {
+        includedUrls: [],
+      }
     ),
     provideLoginEffect(),
     provideLoginComponentConfig({
