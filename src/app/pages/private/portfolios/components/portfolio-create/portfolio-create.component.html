@@ -1,0 +1,24 @@
+<article class="p-4 flex flex-col gap-3">
+  <form [formGroup]="form" class="flex flex-col gap-3">
+    <div class="flex gap-3 items-end">
+      <wlt-input-text label="Nome Portfolio" [control]="nameFc()" class="flex-1" />
+      <wlt-select label="Tipo" [control]="typeFc()" [options]="portfolioTypeOptions()" class="min-w-[12rem]" />
+    </div>
+
+    <div class="flex gap-3 items-end">
+      <wlt-input-number label="Saldo Iniziale" [control]="balanceFc()" />
+      <wlt-input-number label="Target (Opzionale)" [control]="targetFc()" />
+      <wlt-select label="Valuta" [control]="currencyFc()" [options]="currencyOptions()" />
+    </div>
+
+    <div class="flex gap-3 items-end">
+      <wlt-input-text label="Immagine URL (Opzionale)" [control]="imageFc()" class="flex-1" />
+    </div>
+
+    <div class="flex justify-between mt-4">
+      <wlt-button label="ANNULLA" (onClick)="onBack()" severity="secondary" />
+      <wlt-button label="SALVA" (onClick)="onSave()" severity="primary" [disabled]="!isFormValid()" />
+    </div>
+  </form>
+</article>
+
