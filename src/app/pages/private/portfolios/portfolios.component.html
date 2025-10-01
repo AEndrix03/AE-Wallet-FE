@@ -1,6 +1,7 @@
 <article class="py-4 px-2 flex flex-row flex-wrap gap-4">
   <wlt-portfolio-new-card (create)="addNewPortfolio()" />
   @for (portfolio of portfolios$ | async; track portfolio.id) {
-    <wlt-portfolio-card [portfolio]="portfolio" (view)="openDetail($event)" />
+    <wlt-portfolio-card [portfolio]="portfolio" (view)="openDetail($event)" (delete)="deletePortfolio($event)"
+                        (edit)="editPortfolio($event)" />
   }
 </article>

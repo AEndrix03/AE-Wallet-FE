@@ -15,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
     [text]="text()"
     [raised]="raised()"
     [outlined]="outlined()"
+    [loading]="loading()"
     [class]="class()"
     (onClick)="onClick.emit()"
   />`,
@@ -31,6 +32,8 @@ export class ButtonComponent {
   public readonly outlined: InputSignal<boolean> = input(false);
   public readonly raised: InputSignal<boolean> = input(false);
   public readonly text: InputSignal<boolean> = input(false);
+
+  public readonly loading: InputSignal<boolean> = input(false);
 
   public readonly onClick = output<void>();
 }

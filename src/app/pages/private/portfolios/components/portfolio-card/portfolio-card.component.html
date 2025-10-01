@@ -95,7 +95,7 @@
           [rounded]="true"
           size="small"
           severity="secondary"
-          (click)="$event.stopPropagation(); edit.emit()"
+          (click)="$event.stopPropagation(); edit.emit(portfolio()?.id)"
           pTooltip="Modifica"
           tooltipPosition="top"
           class="hover:scale-110 transition-transform duration-200">
@@ -107,7 +107,7 @@
           [rounded]="true"
           size="small"
           severity="danger"
-          (click)="$event.stopPropagation(); delete.emit()"
+          (click)="$event.stopPropagation(); delete.emit(portfolio()?.id)"
           pTooltip="Elimina"
           tooltipPosition="top"
           class="hover:scale-110 transition-transform duration-200">

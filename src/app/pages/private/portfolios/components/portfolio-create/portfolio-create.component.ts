@@ -1,9 +1,12 @@
 import {
   Component,
+  effect,
   inject,
   input,
   InputSignal,
   OnDestroy,
+  signal,
+  WritableSignal,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -16,16 +19,16 @@ import { InputTextComponent } from '../../../../../core/components/input-text/in
 import { InputNumberComponent } from '../../../../../core/components/input-number/input-number.component';
 import { SelectComponent } from '../../../../../core/components/select/select.component';
 import { ButtonComponent } from '../../../../../core/components/button/button.component';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, take } from 'rxjs';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PortfolioTypeEnum } from '../../../../../core/enums/portfolio.enums';
-import {
-  Currency,
-  CURRENCY_SYMBOLS,
-} from '../../../../../core/enums/core.enums';
+import { Currency } from '../../../../../core/enums/core.enums';
 import { PortfolioService } from '../../../../../core/services/portfolio.service';
 import { userStore } from '@aredegalli/ng-auth';
-import { PortfolioSaveDto } from '../../../../../core/models/portfolio.models';
+import {
+  PortfolioDto,
+  PortfolioSaveDto,
+} from '../../../../../core/models/portfolio.models';
 
 @Component({
   selector: 'wlt-portfolio-create',
@@ -42,6 +45,7 @@ import { PortfolioSaveDto } from '../../../../../core/models/portfolio.models';
 export class PortfolioCreateComponent implements OnDestroy {
   public readonly portfolioTypeOptions: InputSignal<PortfolioTypeEnum[]> =
     input.required();
+  public readonly portfolio: InputSignal<PortfolioDto> = input();
 
   public readonly form: FormGroup;
   private readonly _fb: FormBuilder = inject(FormBuilder);
@@ -50,6 +54,7 @@ export class PortfolioCreateComponent implements OnDestroy {
   private readonly userStore = inject(userStore);
 
   private readonly unsubscribe$ = new Subject<void>();
+  protected readonly isSaving: WritableSignal<boolean> = signal(false);
 
   constructor() {
     this.form = this._fb.group({
@@ -59,6 +64,13 @@ export class PortfolioCreateComponent implements OnDestroy {
       target: this._fb.control(null),
       image: this._fb.control(''),
       currency: this._fb.control('EUR' as Currency, [Validators.required]),
+    });
+
+    effect(() => {
+      const portfolio = this.portfolio();
+      if (portfolio) {
+        this.form.patchValue(portfolio);
+      }
     });
   }
 
@@ -93,10 +105,10 @@ export class PortfolioCreateComponent implements OnDestroy {
 
   public currencyOptions() {
     return [
-      { code: 'EUR', description: CURRENCY_SYMBOLS.EUR },
-      { code: 'USD', description: CURRENCY_SYMBOLS.USD },
-      { code: 'GBP', description: CURRENCY_SYMBOLS.GBP },
-      { code: 'JPY', description: CURRENCY_SYMBOLS.JPY },
+      { code: 'EUR', description: 'EUR' },
+      { code: 'USD', description: 'USD' },
+      { code: 'GBP', description: 'GBP' },
+      { code: 'JPY', description: 'JPY' },
     ];
   }
 
@@ -116,14 +128,19 @@ export class PortfolioCreateComponent implements OnDestroy {
 
       const portfolioSaveDto: PortfolioSaveDto = {
         ...formValue,
-        id: '', // Sarà generato dal backend
+        id: this.portfolio()?.id || '',
         userId: userId,
         lastUpdated: new Date(),
+        type: formValue.type.toUpperCase(),
       };
 
+      this.isSaving.set(true);
       this.portfolioService
         .savePortfolio(portfolioSaveDto)
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(
+          take(1),
+          finalize(() => this.isSaving.set(false))
+        )
         .subscribe({
           next: (result) => {
             this.ref.close(result);

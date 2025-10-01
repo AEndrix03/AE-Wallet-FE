@@ -30,8 +30,8 @@ import { CardComponent } from '../../../../../core/components/card/card.componen
 export class PortfolioCardComponent {
   public readonly portfolio = input.required<PortfolioDto>();
   public readonly view = output<string>();
-  public readonly edit = output<void>();
-  public readonly delete = output<void>();
+  public readonly edit = output<string>();
+  public readonly delete = output<string>();
 
   public readonly typeConfig = computed(
     () => PORTFOLIO_TYPE_CONFIG[this.portfolio().type]

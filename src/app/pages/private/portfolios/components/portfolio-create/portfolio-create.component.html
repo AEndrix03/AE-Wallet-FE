@@ -17,7 +17,8 @@
 
     <div class="flex justify-between mt-4">
       <wlt-button label="ANNULLA" (onClick)="onBack()" severity="secondary" />
-      <wlt-button label="SALVA" (onClick)="onSave()" severity="primary" [disabled]="!isFormValid()" />
+      <wlt-button label="SALVA" (onClick)="onSave()" severity="primary" [disabled]="!isFormValid()"
+                  [loading]="isSaving()" />
     </div>
   </form>
 </article>
