@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   PortfolioDto,
@@ -8,6 +8,7 @@ import {
   PortfolioTypeDto,
 } from '../models/portfolio.models';
 import { UriConstants } from '../utils/uri-constants';
+import { HttpUtils } from '../utils/http.utils';
 
 @Injectable()
 export class PortfolioService {
@@ -26,14 +27,14 @@ export class PortfolioService {
   }
 
   public getAllUserPortfolios(id: string): Observable<PortfolioDto[]> {
-    const params = new HttpParams().set('id', id);
+    const params = HttpUtils.getParams({ id });
     return this.http.get<PortfolioDto[]>(`${UriConstants.portfolioUrl}/user`, {
       params,
     });
   }
 
   public getPortfolioById(id: string): Observable<PortfolioDto | null> {
-    const params = new HttpParams().set('id', id);
+    const params = HttpUtils.getParams({ id });
     return this.http.get<PortfolioDto | null>(`${UriConstants.portfolioUrl}`, {
       params,
     });
@@ -44,7 +45,7 @@ export class PortfolioService {
   }
 
   public deletePortfolio(id: string): Observable<string> {
-    const params = new HttpParams().set('id', id);
+    const params = HttpUtils.getParams({ id });
     return this.http.delete<string>(`${UriConstants.portfolioUrl}`, { params });
   }
 }

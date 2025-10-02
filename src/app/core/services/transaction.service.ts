@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   TransactionCategoryDto,
@@ -7,7 +7,7 @@ import {
   TransactionFilterDto,
   TransactionTypeDto,
 } from '../models/transaction.models';
-import { Page, Pagination } from '../models/core.models';
+import { Page, PaginationParams } from '../models/core.models';
 import { UriConstants } from '../utils/uri-constants';
 import { HttpUtils } from '../utils/http.utils';
 
@@ -29,8 +29,8 @@ export class TransactionService {
 
   public getUserTransactionsFiltered(
     userId: string,
-    filter: TransactionFilterDto,
-    pageable: Pagination
+    filter: Partial<TransactionFilterDto>,
+    pageable: PaginationParams
   ): Observable<Page<TransactionDto>> {
     const params = HttpUtils.getParams({ userId, ...filter, ...pageable });
     return this.http.get<Page<TransactionDto>>(
@@ -41,7 +41,7 @@ export class TransactionService {
 
   public getPortfolioTransactions(
     portfolioId: string,
-    pageable: Pagination
+    pageable: PaginationParams
   ): Observable<Page<TransactionDto>> {
     const params = HttpUtils.getParams({ portfolioId, ...pageable });
     return this.http.get<Page<TransactionDto>>(
@@ -55,7 +55,7 @@ export class TransactionService {
   }
 
   public deleteTransaction(id: string): Observable<string> {
-    const params = new HttpParams().set('id', id);
+    const params = HttpUtils.getParams({ id });
     return this.http.delete<string>(`${UriConstants.transactionUrl}`, {
       params,
     });

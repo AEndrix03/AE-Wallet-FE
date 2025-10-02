@@ -4,7 +4,7 @@ import { PortfolioDto } from '../../../../../core/models/portfolio.models';
 import { TransactionDto } from '../../../../../core/models/transaction.models';
 import { DatePipe } from '@angular/common';
 import { TransactionsResultsComponent } from '../../../transactions/transactions-results/transactions-results.component';
-import { Page, Pagination } from '../../../../../core/models/core.models';
+import { Page, PaginationParams } from '../../../../../core/models/core.models';
 import { ButtonComponent } from '../../../../../core/components/button/button.component';
 import { TransactionsCreateComponent } from '../../../transactions/transactions-create/transactions-create.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -27,7 +27,7 @@ export class PortfolioDetailComponent {
   public readonly portfolio: WritableSignal<PortfolioDto> = signal(null);
   public readonly transactions: WritableSignal<Page<TransactionDto>> =
     signal(null);
-  public readonly pagination: WritableSignal<Pagination> = signal(null);
+  public readonly pagination: WritableSignal<PaginationParams> = signal(null);
 
   protected addNewTransaction() {
     this.ref = this.dialogService.open(TransactionsCreateComponent, {
