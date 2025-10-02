@@ -1,14 +1,12 @@
 import { Currency } from '../enums/core.enums';
-import {
-  TransactionCategoryEnum,
-  TransactionTypeEnum,
-} from '../enums/transaction.enums';
+import { TransactionTypeEnum } from '../enums/transaction.enums';
+import { PortfolioTypeEnum } from '../enums/portfolio.enums';
 
 export interface TransactionFilterDto {
   description: string;
   amount: number;
   currency: Currency;
-  category: TransactionCategoryEnum;
+  category: PortfolioTypeEnum;
   type: TransactionTypeEnum;
   dateFrom: Date;
   dateTo: Date;
@@ -19,7 +17,6 @@ export interface TransactionDto {
   description: string;
   amount: number;
   currency: Currency;
-  category: TransactionCategoryEnum;
   type: TransactionTypeEnum;
   date: Date;
   portfolioId: string;
@@ -36,7 +33,7 @@ export interface IncomeExpenseData {
 }
 
 export interface CategorySpendingData {
-  category: TransactionCategoryEnum;
+  category: PortfolioTypeEnum;
   name: string;
   amount: number;
   percentage: number;
@@ -56,10 +53,5 @@ export interface FinancialSummaryData {
 
 export interface TransactionTypeDto {
   code: TransactionTypeEnum;
-  description: string;
-}
-
-export interface TransactionCategoryDto {
-  code: TransactionCategoryEnum;
   description: string;
 }

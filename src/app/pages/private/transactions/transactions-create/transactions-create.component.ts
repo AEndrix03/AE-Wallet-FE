@@ -17,10 +17,16 @@ import { InputNumberComponent } from '../../../../core/components/input-number/i
 import { SelectComponent } from '../../../../core/components/select/select.component';
 import { InputDateRangeComponent } from '../../../../core/components/date/date.component';
 import { ButtonComponent } from '../../../../core/components/button/button.component';
-import { Subject, takeUntil } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TransactionTypeEnum } from '../../../../core/enums/transaction.enums';
-import { Currency, CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
+import { Currency } from '../../../../core/enums/core.enums';
+import { PortfolioService } from '../../../../core/services/portfolio.service';
+import { TransactionService } from '../../../../core/services/transaction.service';
+import { TransactionTypeDto } from '../../../../core/models/transaction.models';
+import { PortfolioDto } from '../../../../core/models/portfolio.models';
+import { userStore } from '@aredegalli/ng-auth';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'wlt-transactions-create',
@@ -32,7 +38,9 @@ import { Currency, CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
     SelectComponent,
     InputDateRangeComponent,
     ButtonComponent,
+    AsyncPipe,
   ],
+  providers: [PortfolioService, TransactionService],
 })
 export class TransactionsCreateComponent implements AfterViewInit, OnDestroy {
   public readonly hidePortfolio: InputSignal<boolean> = input(false);
@@ -42,6 +50,24 @@ export class TransactionsCreateComponent implements AfterViewInit, OnDestroy {
   private readonly ref: DynamicDialogRef = inject(DynamicDialogRef);
 
   private readonly unsubscribe$ = new Subject<void>();
+
+  private readonly userStore = inject(userStore);
+  private readonly portfolioService: PortfolioService =
+    inject(PortfolioService);
+  private readonly transactionService: TransactionService =
+    inject(TransactionService);
+
+  protected readonly transactionTypes$: Observable<TransactionTypeDto[]> =
+    this.transactionService.getAllTransactionTypes().pipe(
+      map((v) =>
+        v.map((t) => ({
+          ...t,
+          description: t.description.toUpperCase(),
+        }))
+      )
+    );
+  protected readonly userPortfolios$: Observable<PortfolioDto[]> =
+    this.portfolioService.getAllUserPortfolios(this.userStore.user()?.id);
 
   constructor() {
     this.form = this._fb.group({
@@ -96,26 +122,10 @@ export class TransactionsCreateComponent implements AfterViewInit, OnDestroy {
 
   public currencyOptions() {
     return [
-      { code: 'EUR', description: CURRENCY_SYMBOLS.EUR },
-      { code: 'USD', description: CURRENCY_SYMBOLS.USD },
-      { code: 'GBP', description: CURRENCY_SYMBOLS.GBP },
-      { code: 'JPY', description: CURRENCY_SYMBOLS.JPY },
-    ];
-  }
-
-  public typeOptions() {
-    return [
-      { code: TransactionTypeEnum.INCOME, description: 'INCOME' },
-      { code: TransactionTypeEnum.EXPENSE, description: 'EXPENSE' },
-      { code: TransactionTypeEnum.TRANSFER, description: 'TRANSFER' },
-    ];
-  }
-
-  public portfolioOptions() {
-    // Da sostituire con chiamata reale
-    return [
-      { code: '1', description: 'Portfolio Principale' },
-      { code: '2', description: 'Risparmi' },
+      { code: 'EUR', description: 'EUR' },
+      { code: 'USD', description: 'USD' },
+      { code: 'GBP', description: 'GBP' },
+      { code: 'JPY', description: 'JPY' },
     ];
   }
 
@@ -132,6 +142,9 @@ export class TransactionsCreateComponent implements AfterViewInit, OnDestroy {
   }
 
   public onSave() {
-    this.ref.close(this.form.getRawValue());
+    this.ref.close({
+      ...this.form.getRawValue(),
+      type: this.typeFc().value?.toString()?.toUpperCase(),
+    });
   }
 }

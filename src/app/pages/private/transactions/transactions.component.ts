@@ -14,6 +14,7 @@ import { TransactionsCreateComponent } from './transactions-create/transactions-
 import {
   TransactionDto,
   TransactionFilterDto,
+  TransactionTypeDto,
 } from '../../../core/models/transaction.models';
 import { TransactionService } from '../../../core/services/transaction.service';
 import {
@@ -23,10 +24,13 @@ import {
 } from '../../../core/models/core.models';
 import {
   BehaviorSubject,
+  filter,
   Observable,
   Subject,
   switchMap,
+  take,
   takeUntil,
+  tap,
 } from 'rxjs';
 import { userStore } from '@aredegalli/ng-auth';
 import { AsyncPipe } from '@angular/common';
@@ -48,6 +52,7 @@ export class TransactionsComponent implements OnDestroy {
   private readonly userStore = inject(userStore);
 
   protected readonly transactions$: Observable<Page<TransactionDto>>;
+  protected readonly transactionTypes$: Observable<TransactionTypeDto[]>;
   private readonly transactionsSubject: Subject<Partial<TransactionFilterDto>> =
     new BehaviorSubject(null);
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -69,6 +74,8 @@ export class TransactionsComponent implements OnDestroy {
       )
     );
 
+    this.transactionTypes$ = this.transactionService.getAllTransactionTypes();
+
     effect(() => {
       const _ = this.pagination();
       this.transactionsSubject.next(untracked(() => this.filter()));
@@ -88,6 +95,18 @@ export class TransactionsComponent implements OnDestroy {
       closable: true,
       width: '60vw',
     });
+
+    this.ref.onClose
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(Boolean),
+        switchMap((transaction) =>
+          this.transactionService.saveTransaction(transaction)
+        ),
+        take(1),
+        tap(() => this.transactionsSubject.next(untracked(() => this.filter())))
+      )
+      .subscribe();
   }
 
   protected searchTransactions(filter: Partial<TransactionFilterDto>) {

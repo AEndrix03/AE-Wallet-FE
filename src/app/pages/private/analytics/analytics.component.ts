@@ -16,7 +16,7 @@ import {
   FinancialSummaryData,
   IncomeExpenseData,
 } from '../../../core/models/transaction.models';
-import { TransactionCategoryEnum } from '../../../core/enums/transaction.enums';
+import { PortfolioTypeEnum } from '../../../core/enums/portfolio.enums';
 
 // Modern color palette inspired by Figma/Linear design systems
 const DESIGN_SYSTEM = {
@@ -394,7 +394,7 @@ export class AnalyticsComponent {
 
     this.categoryData.set([
       {
-        category: TransactionCategoryEnum.CHECKING,
+        category: PortfolioTypeEnum.CHECKING,
         name: 'Daily Expenses',
         amount: 2850.75,
         percentage: 32.5,
@@ -402,7 +402,7 @@ export class AnalyticsComponent {
         transactionCount: 47,
       },
       {
-        category: TransactionCategoryEnum.SAVINGS,
+        category: PortfolioTypeEnum.SAVINGS,
         name: 'Savings',
         amount: 1500.0,
         percentage: 17.1,
@@ -410,7 +410,7 @@ export class AnalyticsComponent {
         transactionCount: 4,
       },
       {
-        category: TransactionCategoryEnum.INVESTMENT,
+        category: PortfolioTypeEnum.INVESTMENT,
         name: 'Investments',
         amount: 1200.0,
         percentage: 13.7,
@@ -418,7 +418,7 @@ export class AnalyticsComponent {
         transactionCount: 3,
       },
       {
-        category: TransactionCategoryEnum.EMERGENCY,
+        category: PortfolioTypeEnum.EMERGENCY,
         name: 'Emergency Fund',
         amount: 800.0,
         percentage: 9.1,
@@ -426,7 +426,7 @@ export class AnalyticsComponent {
         transactionCount: 2,
       },
       {
-        category: TransactionCategoryEnum.CASH,
+        category: PortfolioTypeEnum.CASH,
         name: 'Cash Expenses',
         amount: 650.25,
         percentage: 7.4,
@@ -434,7 +434,7 @@ export class AnalyticsComponent {
         transactionCount: 19,
       },
       {
-        category: TransactionCategoryEnum.CRYPTO,
+        category: PortfolioTypeEnum.CRYPTO,
         name: 'Cryptocurrency',
         amount: 700.0,
         percentage: 8.0,

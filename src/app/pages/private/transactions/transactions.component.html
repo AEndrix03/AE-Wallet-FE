@@ -1,5 +1,6 @@
 <article class="py-6 px-2 flex flex-col gap-1">
-  <wlt-transactions-filters (onCreate)="addNewTransaction()" (onSearch)="searchTransactions($event)" />
+  <wlt-transactions-filters [transactionTypesOptions]="transactionTypes$ | async" (onCreate)="addNewTransaction()"
+                            (onSearch)="searchTransactions($event)" />
   <wlt-transactions-results [transactions]="transactions$ | async" [pagination]="pagination()"
                             (onPaginationChange)="this.pagination.set($event)"
   />

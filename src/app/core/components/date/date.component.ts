@@ -14,6 +14,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
         [size]="size()"
         [readonlyInput]="readonlyInput()"
         [showIcon]="showIcon()"
+        [showTime]="showTime()"
+        [hourFormat]="hourFormat()"
         [dateFormat]="dateFormat()"
         [placeholder]="placeholder()"
         appendTo="body"
@@ -34,6 +36,8 @@ export class InputDateRangeComponent {
   public readonly class: InputSignal<string> = input();
   public readonly readonlyInput: InputSignal<boolean> = input(true);
   public readonly showIcon: InputSignal<boolean> = input(true);
+  public readonly showTime: InputSignal<boolean> = input(false);
+  public readonly hourFormat: InputSignal<'12' | '24'> = input('24');
   public readonly dateFormat: InputSignal<string> = input('dd/mm/yy');
   public readonly placeholder: InputSignal<string> = input();
 }

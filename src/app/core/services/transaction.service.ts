@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  TransactionCategoryDto,
   TransactionDto,
   TransactionFilterDto,
   TransactionTypeDto,
@@ -18,12 +17,6 @@ export class TransactionService {
   public getAllTransactionTypes(): Observable<TransactionTypeDto[]> {
     return this.http.get<TransactionTypeDto[]>(
       `${UriConstants.transactionUrl}/types`
-    );
-  }
-
-  public getAllTransactionCategories(): Observable<TransactionCategoryDto[]> {
-    return this.http.get<TransactionCategoryDto[]>(
-      `${UriConstants.transactionUrl}/category`
     );
   }
 

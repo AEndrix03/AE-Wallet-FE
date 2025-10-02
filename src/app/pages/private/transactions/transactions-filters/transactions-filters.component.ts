@@ -1,18 +1,19 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, input, InputSignal, output } from '@angular/core';
 import { FiltersTemplateComponent } from '../../../../core/components/templates/filters-template/filters-template.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Currency, CURRENCY_SYMBOLS } from '../../../../core/enums/core.enums';
-import {
-  TransactionCategoryEnum,
-  TransactionTypeEnum,
-} from '../../../../core/enums/transaction.enums';
+import { Currency } from '../../../../core/enums/core.enums';
+import { TransactionTypeEnum } from '../../../../core/enums/transaction.enums';
 import { InputTextComponent } from '../../../../core/components/input-text/input-text.component';
 import { InputDateRangeComponent } from '../../../../core/components/date-range/date-range.component';
 import { InputNumberComponent } from '../../../../core/components/input-number/input-number.component';
 import { SelectComponent } from '../../../../core/components/select/select.component';
-import { TransactionFilterDto } from '../../../../core/models/transaction.models';
+import {
+  TransactionFilterDto,
+  TransactionTypeDto,
+} from '../../../../core/models/transaction.models';
 import { DividerModule } from 'primeng/divider';
 import { ButtonComponent } from '../../../../core/components/button/button.component';
+import { PortfolioTypeEnum } from '../../../../core/enums/portfolio.enums';
 
 @Component({
   selector: 'wlt-transactions-filters',
@@ -29,6 +30,11 @@ import { ButtonComponent } from '../../../../core/components/button/button.compo
   templateUrl: './transactions-filters.component.html',
 })
 export class TransactionsFiltersComponent {
+  /*public readonly portfoliosOptions: InputSignal<PortfolioDto[]> =
+    input.required();*/
+  public readonly transactionTypesOptions: InputSignal<TransactionTypeDto[]> =
+    input.required();
+
   public readonly onSearch = output<TransactionFilterDto>();
   public readonly onReset = output<void>();
   public readonly onCreate = output<void>();
@@ -61,7 +67,7 @@ export class TransactionsFiltersComponent {
     return this.form.controls.currency;
   }
 
-  public categoryFc(): FormControl<TransactionCategoryEnum> {
+  public categoryFc(): FormControl<PortfolioTypeEnum> {
     return this.form.controls.category;
   }
 
@@ -83,25 +89,15 @@ export class TransactionsFiltersComponent {
 
   protected currencyOptions() {
     return [
-      { code: 'EUR', description: CURRENCY_SYMBOLS.EUR },
-      { code: 'USD', description: CURRENCY_SYMBOLS.USD },
-      { code: 'GBP', description: CURRENCY_SYMBOLS.GBP },
-      { code: 'JPY', description: CURRENCY_SYMBOLS.JPY },
+      { code: 'EUR', description: 'EUR' },
+      { code: 'USD', description: 'USD' },
+      { code: 'GBP', description: 'GBP' },
+      { code: 'JPY', description: 'JPY' },
     ];
   }
 
   protected categoryOptions() {
-    return Object.values(TransactionCategoryEnum).map((category) => ({
-      code: category,
-      description: category,
-    }));
-  }
-
-  protected typeOptions() {
-    return Object.values(TransactionTypeEnum).map((type) => ({
-      code: type,
-      description: type,
-    }));
+    return [];
   }
 
   protected _onSearch(): void {
@@ -120,7 +116,7 @@ interface TransactionFilter {
   description: FormControl<string>;
   amount: FormControl<number>;
   currency: FormControl<Currency>;
-  category: FormControl<TransactionCategoryEnum>;
+  category: FormControl<PortfolioTypeEnum>;
   type: FormControl<TransactionTypeEnum>;
   dateFrom: FormControl<Date>;
   dateTo: FormControl<Date>;

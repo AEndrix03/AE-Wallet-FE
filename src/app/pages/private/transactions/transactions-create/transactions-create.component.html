@@ -4,12 +4,16 @@
     <div class="flex gap-3 items-end">
       <wlt-input-number label="Ammontare" [control]="amountFc()" />
       <wlt-select label="Valuta" [control]="currencyFc()" [options]="currencyOptions()" />
-      <wlt-select label="Tipo" [control]="typeFc()" [options]="typeOptions()" />
-      <div class="w-[12rem]">
-        <wlt-input-date label="Data" [control]="dateFc()" />
+      <wlt-select label="Tipo" [control]="typeFc()" [options]="transactionTypes$ | async" />
+      <div class="w-[15rem]">
+        <wlt-input-date label="Data" [control]="dateFc()" [showTime]="true" dateFormat="dd/mm/yy" />
       </div>
       @if (!hidePortfolio()) {
-        <wlt-select label="Portfolio" [control]="portfolioIdFc()" [options]="portfolioOptions()"
+        <wlt-select label="Portfolio"
+                    [control]="portfolioIdFc()"
+                    [options]="userPortfolios$ | async"
+                    optionValue="id"
+                    optionLabel="name"
                     class="min-w-[12rem] flex-1" />
       }
     </div>
