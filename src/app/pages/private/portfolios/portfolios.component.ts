@@ -55,8 +55,6 @@ export class PortfoliosComponent implements OnDestroy {
     );
   }
 
-  // Rimuovi ngOnInit completamente
-
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
