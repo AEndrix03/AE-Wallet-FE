@@ -113,4 +113,14 @@ export class TransactionsComponent implements OnDestroy {
     this.filter.set(filter);
     this.transactionsSubject.next(filter);
   }
+
+  protected deleteTransaction(id: string) {
+    this.transactionService
+      .deleteTransaction(id)
+      .pipe(
+        take(1),
+        tap(() => this.transactionsSubject.next(untracked(() => this.filter())))
+      )
+      .subscribe();
+  }
 }

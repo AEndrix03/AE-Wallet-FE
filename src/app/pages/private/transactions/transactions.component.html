@@ -3,5 +3,6 @@
                             (onSearch)="searchTransactions($event)" />
   <wlt-transactions-results [transactions]="transactions$ | async" [pagination]="pagination()"
                             (onPaginationChange)="this.pagination.set($event)"
+                            (onDelete)="deleteTransaction($event)"
   />
 </article>

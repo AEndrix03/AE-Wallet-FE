@@ -4,10 +4,11 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TransactionDto } from '../../../../core/models/transaction.models';
 import { Page, PaginationParams } from '../../../../core/models/core.models';
 import { CommonModule, DatePipe } from '@angular/common';
+import { ButtonModule } from 'primeng/button'; // <-- Aggiungi
 
 @Component({
   selector: 'wlt-transactions-results',
-  imports: [CommonModule, DatePipe, TableModule, PaginatorModule],
+  imports: [CommonModule, DatePipe, TableModule, PaginatorModule, ButtonModule], // <-- Aggiungi
   templateUrl: './transactions-results.component.html',
 })
 export class TransactionsResultsComponent {
@@ -16,6 +17,7 @@ export class TransactionsResultsComponent {
   public readonly pagination: InputSignal<PaginationParams> = input.required();
 
   public readonly onPaginationChange = output<PaginationParams>();
+  public readonly onDelete = output<string>(); // <-- Nuovo output
 
   protected onPaginationChangeEvent(event: TableLazyLoadEvent) {
     const params: PaginationParams = {
@@ -26,5 +28,10 @@ export class TransactionsResultsComponent {
     };
 
     this.onPaginationChange.emit(params);
+  }
+
+  protected deleteTransaction(id: string) {
+    // <-- Nuovo metodo
+    this.onDelete.emit(id);
   }
 }

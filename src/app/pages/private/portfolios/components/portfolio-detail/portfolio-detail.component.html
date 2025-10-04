@@ -31,8 +31,10 @@
           <wlt-button label="Add new Transaction" (onClick)="addNewTransaction()" />
           <wlt-button label="Import Transactions" severity="secondary" />
         </div>
-        <wlt-transactions-results [transactions]="transactions$ | async" [pagination]="pagination()" />
+        <wlt-transactions-results [transactions]="transactions$ | async" [pagination]="pagination()"
+                                  (onPaginationChange)="pagination.set($event)"
+                                  (onDelete)="deleteTransaction($event)" />
       </div>
     </wlt-accordion>
   </section>
-</article>
+</article>'

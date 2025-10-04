@@ -136,4 +136,21 @@ export class PortfolioDetailComponent implements OnDestroy {
       )
       .subscribe();
   }
+
+  protected deleteTransaction(id: string) {
+    this.transactionService
+      .deleteTransaction(id)
+      .pipe(
+        take(1),
+        tap(
+          () =>
+            (this.transactions$ =
+              this.transactionService.getPortfolioTransactions(
+                this.portfolioId(),
+                this.pagination()
+              ))
+        )
+      )
+      .subscribe();
+  }
 }
