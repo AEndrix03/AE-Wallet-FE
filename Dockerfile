@@ -3,22 +3,31 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copia i file di dipendenze
-COPY package*.json ./
+# Copia .npmrc per l'autenticazione Verdaccio
+COPY .npmrc ./
 
-# Installa le dipendenze
-RUN npm ci --silent
+# Copia TUTTI i file di configurazione npm
+COPY package.json package-lock.json ./
 
-# Copia il resto del codice
+# Installa dipendenze usando npm ci (più affidabile)
+# --legacy-peer-deps per ignorare conflitti peer deps
+# Senza --production per includere devDependencies
+RUN npm ci --legacy-peer-deps
+
+# Verifica installazione
+RUN ls -la node_modules/@angular-devkit/ && \
+    npx nx --version
+
+# Copia il codice sorgente
 COPY . .
 
-# Build con Nx per produzione
+# Build per produzione
 RUN npx nx build wallet-fe --configuration=production
 
 # Stage 2: Production
 FROM nginx:alpine
 
-# Copia la configurazione nginx
+# Copia configurazione nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copia i file buildati
