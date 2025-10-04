@@ -12,6 +12,7 @@ export interface PortfolioDto {
   image?: string;
   currency: 'USD' | 'EUR' | 'GBP' | 'JPY';
   lastUpdated: Date;
+  color: string;
 }
 
 export interface PortfolioTypeDto {

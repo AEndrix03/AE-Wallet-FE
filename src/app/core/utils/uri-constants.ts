@@ -5,5 +5,7 @@ export class UriConstants {
 
   public static readonly portfolioUrl: string = `${UriConstants.base}/portfolio`;
   public static readonly transactionUrl: string = `${UriConstants.base}/transaction`;
+  public static readonly analyticsUrl: string = `${UriConstants.base}/analytics`;
+  public static readonly settingsUrl: string = `${UriConstants.base}/settings`;
   public static readonly userUrl: string = `${UriConstants.base}/user`;
 }

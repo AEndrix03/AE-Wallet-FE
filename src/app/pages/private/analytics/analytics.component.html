@@ -4,7 +4,7 @@
     <!-- KPI Overview -->
     <section>
       <wlt-card>
-        <wlt-analytics-summary [data]="summaryData()" />
+        <wlt-analytics-summary [data]="kpi$ | async" />
       </wlt-card>
     </section>
 
@@ -12,13 +12,13 @@
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <wlt-card>
         <div class="p-6 h-full">
-          <wlt-analytics-income-expense [data]="incomeExpenseData()" />
+          <wlt-analytics-income-expense [data]="incomeExpenseData$ | async" />
         </div>
       </wlt-card>
 
       <wlt-card>
         <div class="p-6 h-full">
-          <wlt-analytics-category [data]="categoryData()" />
+          <wlt-analytics-category [data]="categoryData$ | async" />
         </div>
       </wlt-card>
     </section>

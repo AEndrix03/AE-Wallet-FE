@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AnalyticsGeneralPortfoliosComponent } from './analytics-general-portfolios/analytics-general-portfolios.component';
 import { CardComponent } from '../../../core/components/card/card.component';
 import { AnalyticsPortfoliosTopComponent } from './analytics-portfolios-top/analytics-portfolios-top.component';
@@ -7,7 +7,6 @@ import {
   PortfolioDeviationData,
   PreferencesData,
 } from '../../../core/models/analytics.models';
-import { AnalyticsPreferencesComponent } from './analytics-preferences/analytics-preferences.component';
 import { AnalyticsIncomeExpenseComponent } from './analytics-income-expense/analytics-income-expense.component';
 import { AnalyticsSummaryComponent } from './analytics-summary/analytics-summary.component';
 import { AnalyticsCategoryComponent } from './analytics-category/analytics-category.component';
@@ -16,40 +15,11 @@ import {
   FinancialSummaryData,
   IncomeExpenseData,
 } from '../../../core/models/transaction.models';
-import { PortfolioTypeEnum } from '../../../core/enums/portfolio.enums';
-
-// Modern color palette inspired by Figma/Linear design systems
-const DESIGN_SYSTEM = {
-  // Brand colors (sophisticated neutrals)
-  neutral: {
-    50: '#fafafa',
-    100: '#f5f5f5',
-    200: '#e5e5e5',
-    300: '#d4d4d4',
-    400: '#a3a3a3',
-    500: '#737373',
-    600: '#525252',
-    700: '#404040',
-    800: '#262626',
-    900: '#171717',
-  },
-  // Semantic colors (modern and accessible)
-  semantic: {
-    success: '#10b981', // emerald-500
-    warning: '#f59e0b', // amber-500
-    danger: '#ef4444', // red-500
-    info: '#3b82f6', // blue-500
-    purple: '#8b5cf6', // violet-500
-    indigo: '#6366f1', // indigo-500
-  },
-  // Portfolio-specific colors (sophisticated)
-  portfolio: {
-    emergency: '#dc2626', // red-600 - urgent but professional
-    investment: '#059669', // emerald-600 - growth
-    daily: '#2563eb', // blue-600 - reliable
-    discretionary: '#7c3aed', // violet-600 - creative
-  },
-} as const;
+import { AnalyticsPreferencesComponent } from './analytics-preferences/analytics-preferences.component';
+import { Observable, of } from 'rxjs';
+import { AnalyticsService } from '../../../core/services/analytics.service';
+import { userStore } from '@aredegalli/ng-auth';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'wlt-analytics',
@@ -57,38 +27,34 @@ const DESIGN_SYSTEM = {
     AnalyticsGeneralPortfoliosComponent,
     CardComponent,
     AnalyticsPortfoliosTopComponent,
-    AnalyticsPreferencesComponent,
     AnalyticsIncomeExpenseComponent,
     AnalyticsSummaryComponent,
     AnalyticsCategoryComponent,
+    AnalyticsPreferencesComponent,
+    AsyncPipe,
   ],
   templateUrl: './analytics.component.html',
+  providers: [AnalyticsService],
 })
 export class AnalyticsComponent {
   protected readonly deviationData = signal<PortfolioDeviationData[]>([]);
   protected readonly partitionsData = signal<AllocationData[]>([]);
   protected readonly preferedPartitionsData = signal<PreferencesData[]>([]);
-  protected readonly incomeExpenseData = signal<IncomeExpenseData[]>([]);
-  protected readonly summaryData = signal<FinancialSummaryData>({
-    currentBalance: 0,
-    monthlyIncome: 0,
-    monthlyExpenses: 0,
-    netFlow: 0,
-    savingsRate: 0,
-    expenseChange: 0,
-    incomeChange: 0,
-  });
-  protected readonly categoryData = signal<CategorySpendingData[]>([]);
+  protected readonly incomeExpenseData$: Observable<IncomeExpenseData[]> = of(
+    []
+  );
+  protected readonly kpi$: Observable<FinancialSummaryData> = of(null);
+  protected readonly categoryData$: Observable<CategorySpendingData[]> = of([]);
 
-  // Computed for dynamic theming
-  protected readonly themeColors = computed(() => DESIGN_SYSTEM);
+  private readonly analyticsService = inject(AnalyticsService);
+  private readonly userStore = inject(userStore);
 
   constructor() {
     this.deviationData.set([
       {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
-        color: DESIGN_SYSTEM.portfolio.emergency,
+        color: '#dc2626',
         targetAllocation: 40,
         monthlyData: [
           {
@@ -136,7 +102,7 @@ export class AnalyticsComponent {
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
-        color: DESIGN_SYSTEM.portfolio.investment,
+        color: '#059669',
         targetAllocation: 35,
         monthlyData: [
           {
@@ -184,7 +150,7 @@ export class AnalyticsComponent {
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
-        color: DESIGN_SYSTEM.portfolio.daily,
+        color: '#2563eb',
         targetAllocation: 20,
         monthlyData: [
           {
@@ -232,7 +198,7 @@ export class AnalyticsComponent {
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
-        color: DESIGN_SYSTEM.portfolio.discretionary,
+        color: '#7c3aed',
         targetAllocation: 5,
         monthlyData: [
           {
@@ -285,28 +251,28 @@ export class AnalyticsComponent {
         name: 'Emergency Fund',
         amount: 18750.25,
         percentage: 39.7,
-        color: DESIGN_SYSTEM.portfolio.emergency,
+        color: '#dc2626',
       },
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
         amount: 17050.8,
         percentage: 36.1,
-        color: DESIGN_SYSTEM.portfolio.investment,
+        color: '#059669',
       },
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
         amount: 9820.5,
         percentage: 20.8,
-        color: DESIGN_SYSTEM.portfolio.daily,
+        color: '#2563eb',
       },
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
         amount: 1510.25,
         percentage: 3.2,
-        color: DESIGN_SYSTEM.portfolio.discretionary,
+        color: '#7c3aed',
       },
     ]);
 
@@ -315,132 +281,34 @@ export class AnalyticsComponent {
         portfolioId: 'emergency',
         name: 'Emergency Fund',
         targetPercentage: 40,
-        color: DESIGN_SYSTEM.portfolio.emergency,
+        color: '#dc2626',
       },
       {
         portfolioId: 'investment',
         name: 'Investment Portfolio',
         targetPercentage: 35,
-        color: DESIGN_SYSTEM.portfolio.investment,
+        color: '#059669',
       },
       {
         portfolioId: 'daily',
         name: 'Daily Expenses',
         targetPercentage: 20,
-        color: DESIGN_SYSTEM.portfolio.daily,
+        color: '#2563eb',
       },
       {
         portfolioId: 'discretionary',
         name: 'Fun Money',
         targetPercentage: 5,
-        color: DESIGN_SYSTEM.portfolio.discretionary,
+        color: '#7c3aed',
       },
     ]);
 
-    this.incomeExpenseData.set([
-      {
-        month: '2024-06',
-        date: new Date('2024-06-01'),
-        income: 4200.0,
-        expense: 3675.5,
-        netFlow: 524.5,
-      },
-      {
-        month: '2024-07',
-        date: new Date('2024-07-01'),
-        income: 4800.0,
-        expense: 4200.25,
-        netFlow: 599.75,
-      },
-      {
-        month: '2024-08',
-        date: new Date('2024-08-01'),
-        income: 4200.0,
-        expense: 3950.8,
-        netFlow: 249.2,
-      },
-      {
-        month: '2024-09',
-        date: new Date('2024-09-01'),
-        income: 4650.0,
-        expense: 3425.75,
-        netFlow: 1224.25,
-      },
-      {
-        month: '2024-10',
-        date: new Date('2024-10-01'),
-        income: 4200.0,
-        expense: 3780.5,
-        netFlow: 419.5,
-      },
-      {
-        month: '2024-11',
-        date: new Date('2024-11-01'),
-        income: 4350.0,
-        expense: 4850.25,
-        netFlow: -500.25,
-      },
-    ]);
-
-    this.summaryData.set({
-      currentBalance: 47131.8,
-      monthlyIncome: 4650.0,
-      monthlyExpenses: 3425.75,
-      netFlow: 1224.25,
-      savingsRate: 26.3,
-      expenseChange: -12.5,
-      incomeChange: 10.7,
-    });
-
-    this.categoryData.set([
-      {
-        category: PortfolioTypeEnum.CHECKING,
-        name: 'Daily Expenses',
-        amount: 2850.75,
-        percentage: 32.5,
-        color: DESIGN_SYSTEM.neutral[800],
-        transactionCount: 47,
-      },
-      {
-        category: PortfolioTypeEnum.SAVINGS,
-        name: 'Savings',
-        amount: 1500.0,
-        percentage: 17.1,
-        color: DESIGN_SYSTEM.semantic.success,
-        transactionCount: 4,
-      },
-      {
-        category: PortfolioTypeEnum.INVESTMENT,
-        name: 'Investments',
-        amount: 1200.0,
-        percentage: 13.7,
-        color: DESIGN_SYSTEM.semantic.info,
-        transactionCount: 3,
-      },
-      {
-        category: PortfolioTypeEnum.EMERGENCY,
-        name: 'Emergency Fund',
-        amount: 800.0,
-        percentage: 9.1,
-        color: DESIGN_SYSTEM.semantic.warning,
-        transactionCount: 2,
-      },
-      {
-        category: PortfolioTypeEnum.CASH,
-        name: 'Cash Expenses',
-        amount: 650.25,
-        percentage: 7.4,
-        color: DESIGN_SYSTEM.neutral[600],
-        transactionCount: 19,
-      },
-      {
-        category: PortfolioTypeEnum.CRYPTO,
-        name: 'Cryptocurrency',
-        amount: 700.0,
-        percentage: 8.0,
-        color: DESIGN_SYSTEM.semantic.purple,
-        transactionCount: 5,
-      },
-    ]);
+    this.kpi$ = this.analyticsService.getKpi(this.userStore.user()?.id);
+    this.incomeExpenseData$ = this.analyticsService.getIncomeExpenseData(
+      this.userStore.user()?.id
+    );
+    this.categoryData$ = this.analyticsService.getCategorySpendingData(
+      this.userStore.user()?.id
+    );
   }
 }

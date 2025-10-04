@@ -17,8 +17,8 @@ export class AnalyticsIncomeExpenseComponent {
   public readonly data: InputSignal<IncomeExpenseData[]> = input.required();
 
   protected readonly chartData: Signal<ChartData> = computed(() => {
-    const data = [...this.data()];
-    const labels = data.map((d) =>
+    const data = [...(this.data() || [])];
+    const labels = data?.map((d) =>
       new Date(d.date).toLocaleDateString('en-US', {
         month: 'short',
         year: 'numeric',

@@ -34,11 +34,9 @@ export interface IncomeExpenseData {
 
 export interface CategorySpendingData {
   category: PortfolioTypeEnum;
-  name: string;
   amount: number;
   percentage: number;
   color: string;
-  transactionCount: number;
 }
 
 export interface FinancialSummaryData {

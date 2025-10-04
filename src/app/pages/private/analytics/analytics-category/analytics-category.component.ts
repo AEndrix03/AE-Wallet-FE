@@ -21,7 +21,7 @@ export class AnalyticsCategoryComponent {
     const sortedData = data.sort((a, b) => b.amount - a.amount);
 
     return {
-      labels: sortedData.map((d) => d.name),
+      labels: sortedData.map((d) => d.category),
       datasets: [
         {
           label: 'Spending Amount',
