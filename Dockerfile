@@ -7,12 +7,9 @@ WORKDIR /app
 COPY .npmrc ./
 
 # Copia TUTTI i file di configurazione npm
-COPY package.json package-lock.json ./
+COPY package.json ./
 
-# Installa dipendenze usando npm ci (più affidabile)
-# --legacy-peer-deps per ignorare conflitti peer deps
-# Senza --production per includere devDependencies
-RUN npm ci --legacy-peer-deps
+RUN npm i --legacy-peer-deps
 
 # Verifica installazione
 RUN ls -la node_modules/@angular-devkit/ && \
