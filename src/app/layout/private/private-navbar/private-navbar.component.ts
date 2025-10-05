@@ -2,13 +2,18 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output, signal,
-  ViewChild, WritableSignal
+  Output,
+  signal,
+  ViewChild,
+  WritableSignal,
 } from '@angular/core';
 import { Menu, MenuModule } from 'primeng/menu';
-import { Avatar, AvatarModule } from 'primeng/avatar';
+import { AvatarModule } from 'primeng/avatar';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { ThemeModeButtonComponent, ThemeModeService } from '@aredegalli/ng-primeng';
+import {
+  ThemeModeButtonComponent,
+  ThemeModeService,
+} from '@aredegalli/ng-primeng';
 
 @Component({
   selector: 'wlt-private-navbar',
@@ -21,24 +26,60 @@ import { ThemeModeButtonComponent, ThemeModeService } from '@aredegalli/ng-prime
     CommonModule,
   ],
   templateUrl: './private-navbar.component.html',
-  styles: [`
-    /* Custom menu styling */
-    :host ::ng-deep .p-menu {
-      @apply bg-white/95 dark:bg-slate-800/95 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl backdrop-blur-sm;
-    }
-    
-    :host ::ng-deep .p-menu .p-menuitem-link {
-      @apply text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors rounded-lg;
-    }
-    
-    :host ::ng-deep .p-menu .p-menuitem-link:hover {
-      @apply bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/30 dark:to-teal-900/30;
-    }
-    
-    :host ::ng-deep .p-menu .p-menuitem-icon {
-      @apply text-emerald-600 dark:text-emerald-400;
-    }
-  `]
+  styles: [
+    `
+      /* Custom menu styling */
+      :host ::ng-deep .p-menu {
+        background-color: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgb(226, 232, 240);
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(12px);
+      }
+
+      :host-context(.dark) ::ng-deep .p-menu {
+        background-color: rgba(30, 41, 59, 0.95);
+        border-color: rgb(51, 65, 85);
+      }
+
+      :host ::ng-deep .p-menu .p-menuitem-link {
+        color: rgb(51, 65, 85);
+        transition: all 0.2s;
+        border-radius: 0.5rem;
+      }
+
+      :host-context(.dark) ::ng-deep .p-menu .p-menuitem-link {
+        color: rgb(203, 213, 225);
+      }
+
+      :host ::ng-deep .p-menu .p-menuitem-link:hover {
+        background-color: rgb(249, 250, 251);
+        background-image: linear-gradient(
+          to right,
+          rgb(236, 253, 245),
+          rgb(240, 253, 250)
+        );
+      }
+
+      :host-context(.dark) ::ng-deep .p-menu .p-menuitem-link:hover {
+        background-color: rgb(51, 65, 85);
+        background-image: linear-gradient(
+          to right,
+          rgba(16, 185, 129, 0.3),
+          rgba(20, 184, 166, 0.3)
+        );
+      }
+
+      :host ::ng-deep .p-menu .p-menuitem-icon {
+        color: rgb(16, 185, 129);
+      }
+
+      :host-context(.dark) ::ng-deep .p-menu .p-menuitem-icon {
+        color: rgb(52, 211, 153);
+      }
+    `,
+  ],
 })
 export class PrivateNavbarComponent {
   @Input() userRole = 'No Role';
@@ -59,13 +100,13 @@ export class PrivateNavbarComponent {
       command: () => this.profile.emit(),
     },
     {
-      separator: true
+      separator: true,
     },
     {
       label: 'Logout',
       icon: 'pi pi-sign-out',
       command: () => this.logout.emit(),
-      styleClass: 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30'
+      styleClass: 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30',
     },
   ];
 
