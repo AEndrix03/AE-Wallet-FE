@@ -3,5 +3,5 @@ export const environment = {
   production: false,
   praetorApiUrl: 'https://dev.aredegalli.it:5050/praetor',
   praetorAuthApplicationName: 'dominatus-backend',
-  apiUrl: 'https://localhost:8443',
+  apiUrl: '/api',
 };
